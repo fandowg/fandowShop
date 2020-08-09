@@ -1,20 +1,20 @@
 <template>
   <div>
-    <loading :active.sync="isLoading">
-      <template slot="before">讀取中</template>
-      <template slot="default">
-        <i class="fas fa-spinner"></i>
-      </template>
-    </loading>
-    <button>測試</button>
+   
+  <Navbar/>
+<router-view/>
   </div>
 </template>
 <script>
+import Navbar from "../components/Navbar.vue"
 export default {
   data() {
     return {
-      isLoading: true,
+    
     };
   },
+  components:{
+    Navbar,
+  }
 };
 </script>

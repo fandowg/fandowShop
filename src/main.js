@@ -24,7 +24,7 @@ axios.defaults.withCredentials = true
 // Vue.use(VeeValidate);
 // VeeValidate.Validator.localize('zh_TW', zhTWValidate)
 
-Vue.component('Loading',Loading)
+Vue.component('Loading', Loading)
 // Vue.filter('currency',currencyFilter)
 // Vue.filter('date',date)
 
@@ -34,3 +34,24 @@ new Vue({
   router,
   render: h => h(App)
 }).$mount('#app')
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    const url = `${process.env.VUE_APP_APIPATH}/api/user/check`;
+    axios.post(url).then((response) => {
+      if (response.data.success) {
+        next();
+      } else {
+        next({
+          path: '/',
+        });
+
+      }
+
+    })
+
+  } else {
+    next();
+  }
+
+})
