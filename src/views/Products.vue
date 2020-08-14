@@ -6,55 +6,104 @@
         <i class="fas fa-spinner"></i>
       </template>
     </loading>
+    <EditProduct @close="closeModal" @get-products="getProducts" @is-loading="changeLoading" :is-new="isNew" :temp-product="tempProduct" />
     <div class="products">
-        <div class="head">
-            <div class="one">分類</div>
-            <div class="one">產品名稱</div>
-            <div class="one">原價</div>
-            <div class="one">售價</div>
-            <div class="one">啟用</div>
-            <div class="one">編輯</div>
-            <div class="one">刪除</div>
-        </div>
-        <div class="cont" v-for="item in products" :key="item.id">
-            <div class="one-line">
-                <div class="one">{{item.category}}</div>
-                <div class="one">{{item.title}}</div>
-                <div class="one">{{item.origin_price}}</div>
-                <div class="one">{{item.price}}</div>
-                <div class="one"><span v-if="is_enabled=1">啟用</span><span v-else>未啟用</span></div>
-                <div class="one"><button>編輯</button></div>
-                <div class="one"><button>刪除</button></div>
-            </div>
-            
+      <div class="top">
+        <h1>產品列表</h1>
+        <button class="newBtn" @click="openModal(true)">新增產品</button>
+      </div>
 
+      <div class="head">
+        <div class="one">分類</div>
+        <div class="one">產品名稱</div>
+        <div class="one">原價</div>
+        <div class="one">售價</div>
+        <div class="one">啟用</div>
+        <div class="one">編輯</div>
+        <div class="one">刪除</div>
+      </div>
+      <div class="cont">
+        <div class="one-line" v-for="item in products" :key="item.id">
+          <div class="one">{{item.category}}</div>
+          <div class="one">{{item.title}}</div>
+          <div class="one">{{item.origin_price}}</div>
+          <div class="one">{{item.price}}</div>
+          <div class="one">
+            <span v-if="is_enabled=1">啟用</span>
+            <span v-else>未啟用</span>
+          </div>
+          <div class="one">
+            <button @click="openModal(false,item)">編輯</button>
+          </div>
+          <div class="one">
+            <button @click="deleteProduct(item.id)">刪除</button>
+          </div>
         </div>
+      </div>
+      <Page :pagination="pagination" @get-products="getProducts" />
     </div>
   </div>
 </template>
 <script>
+import EditProduct from "../views/EditProduct.vue";
+import Page from "../components/Pagination.vue";
 export default {
   data() {
     return {
-      products: [
-
-      ],
-      isLoading: false
+      products: [],
+      tempProduct: {},
+      pagination:'',
+      isNew: true,
+      isLoading: false,
     };
   },
   methods: {
     getProducts(page = 1) {
-      this.isLoading=true;
-        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
-        this.$http.get(url).then((response)=>{
-            this.products=response.data.products;
-            this.isLoading=false;
-        })
-         
-    }
+      this.isLoading = true;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
+      this.$http.get(url).then(response => {
+        this.products = response.data.products;
+        this.pagination = response.data.pagination;
+        this.isLoading = false;
+        console.log(this.pagination);
+      });
+    },
+    deleteProduct(id){
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${id}`;
+       this.isLoading = true;
+       this.$http.delete(url).then(response => {
+         console.log(response.data);
+         this.getProducts();     
+        this.isLoading = false;
+      });
+    },
+    openModal(isNew, item) {
+      if (isNew) {
+        this.tempProduct = {
+           is_enabled: 0,
+          //  imageUrl:'',
+        };
+        this.isNew = isNew;
+      } else {
+        this.tempProduct = Object.assign({}, item);     
+        this.isNew = isNew;
+      }
+
+      this.$modal.show("editProduct");
+    },
+    closeModal() {
+      this.$modal.hide("editProduct");
+    },
+    changeLoading(v){
+      this.isLoading=v;
+    },
+  },
+  components: {
+    EditProduct,
+    Page
   },
   created() {
     this.getProducts();
-  }
+  },
 };
 </script>

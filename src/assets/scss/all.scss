@@ -1,71 +1,188 @@
 @import "./mixin";
 @import "./helpers/reboot";
 
-body{
-    font-family: Arial, "Helvetica Neue", Helvetica,'微軟正黑體', sans-serif;
+body {
+    font-family: Arial, "Helvetica Neue", Helvetica, '微軟正黑體', sans-serif;
 }
-ul{
+
+ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    li{
 
-    }
+    li {}
 }
 
-a{
-color: #999;
+a {
+    color: #333;
+    text-decoration: none;
 }
-.vm--modal{
+
+img{
+    max-width: 100%;
+    height: auto;
+}
+.vm--modal {
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    
+
 
 }
 
-.sighForm{
-    h1{
-        font-size: 36px;
-        text-align:center;
+.text-danger{
+    color: #c00;
+}
+.sighForm {
+    h1 {
+        font-size:2rem;
+        text-align: center;
 
     }
-    input{
-        height: 36px;
+
+    input {
+        height: 2rem;
         width: 100%;
         margin-bottom: 15px;
         padding-left: 10px;
     }
-    .signBtn{
+
+    .signBtn {
         border: 0;
-        background-color:$mainColor;
+        background-color: $mainColor;
         color: #fff;
-        text-align:center;
+        text-align: center;
         width: 100%;
         padding: 10px 0;
 
     }
-    .close{
-        position: absolute;
-        right: 15px;
-        top: 15px;
 
-    }
+    
 
 }
 
-.products{
-.head{
-    display: flex;
-    .one{
+.dashboard {
+    nav {
+        .top {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+
+        }
+        .cont{
+            padding: 1rem;
+            display: flex;
+        }
 
     }
 }
-.cont{
-    .one-line{
+
+.products {
+    padding: 1rem;
+    // width: 80%;
+    .top{
         display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .head {
+        display: flex;
+        justify-content: space-between;
+        .one {
+            padding: 1rem;
+            width: 100%;
+        }
+        
     }
 
+    .cont {
+        .one-line {
+            display: flex;
+            justify-content: space-between;
+            .one {
+                padding: 1rem;
+                width: 100%;
+            }
+        }
+
+    }
 }
+.close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+
+}
+.editProduct{
+    width: 100%;
+    padding: 2rem;
+    position: relative;
+    
+    h2{
+
+    }
+    .edit-row{
+        display: flex;
+        margin-left: -1%;
+        margin-right: -1%;
+        margin-bottom: 1rem;
+        .one{
+            margin-right: 1%;
+            margin-left: 1%;
+            width: 100%;
+            
+            label{
+                
+            }
+            input{
+                height: 2rem;
+                width: 100% ;
+                display: block;
+            }
+            textarea{
+                display: block;
+                width: 100%;
+            }
+            input[type=checkbox]{
+                width:1rem;
+                height: auto;
+                display: inline-block;
+            }
+        }
+
+    }
+}
+
+.pagination{
+    display: flex;
+   
+        li{
+            margin:0 0.5rem;
+            a{
+                color:#ccc;
+
+            }
+            &.active{
+                a{
+                    color: #333;
+                }
+                
+            }
+           
+            &.prev,&.next{
+                a{
+                    color: #333;
+                }
+            }
+            &.disabled{
+                a{
+                    color: #ccc;
+                    pointer-events: none;
+                    cursor: auto;
+                }
+            }
+           
+        }
+    
 }

@@ -1,8 +1,8 @@
 <template>
   <nav>
     <div class="top">
-      <router-link to="/admin">很硬的後台</router-link>
-      <button @click="logOut">登出</button>
+      <router-link to="/admin" class="logo">很硬的後台</router-link>
+      <button @click="logOut" class="logOut">登出</button>
     </div>
     <div class="cont">
       <router-link to="/admin/products">產品頁面</router-link>

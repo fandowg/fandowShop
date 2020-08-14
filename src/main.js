@@ -5,14 +5,30 @@ import 'bootstrap'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import VModal from 'vue-js-modal'
-// import VeeValidate from 'vee-validate'
-// import zhTWValidate from 'vee-validate/dist/locale/zh_TW'
+import { ValidationProvider, extend } from 'vee-validate';
+import { ValidationObserver } from 'vee-validate';
+import { localize } from 'vee-validate';
+import TW from './assets/validate/zh_TW.json'
+import { required, email, digits } from 'vee-validate/dist/rules';
+
 
 import App from './App.vue'
 import router from './router'
+import './bus'
 // import './bus'
 // import currencyFilter from './filters/currency'
 // import date from './filters/date'
+extend('required',required);
+extend('email',email);
+extend('digits',digits);
+// extend('email', {
+// ...email,
+// message: '叫你填資料'
+// });
+// extend('required', {
+//   ...required,
+//   message: '媽的你不填阿'
+// });
 Vue.use(VModal, {
   dialog: true,
   dynamicDefaults: {
@@ -21,8 +37,19 @@ Vue.use(VModal, {
 })
 Vue.use(VueAxios, axios)
 axios.defaults.withCredentials = true
-// Vue.use(VeeValidate);
-// VeeValidate.Validator.localize('zh_TW', zhTWValidate)
+Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
+localize('zh_TW',TW);
+// localize({
+//   zh_TW: {
+//     messages: {
+//       required: 'gggg',
+//       min: 'this field must have no less than {length} characters',
+//       max: (_, { length }) => `this field must have no more than ${length} characters`
+//     }
+//   }
+// });
+
 
 Vue.component('Loading', Loading)
 // Vue.filter('currency',currencyFilter)
