@@ -6,6 +6,7 @@
     </div>
     <div class="cont">
       <router-link to="/admin/products">產品頁面</router-link>
+      <router-link to="/admin/coupons">優惠券頁面</router-link>
     </div>
   </nav>
 </template>
@@ -17,6 +18,7 @@ export default {
       this.$http.post(url).then(response => {
         if (response.data.success) {
           console.log(response.data);
+          this.$bus.$emit('message:push',response.data.message);   
           this.$router.push("/");
         }
       });

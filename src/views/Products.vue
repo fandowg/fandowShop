@@ -1,13 +1,18 @@
 <template>
-  <div>
-    <loading :active.sync="isLoading">
+   <div class="products">
+    <!-- <loading :active.sync="isLoading">
       <template slot="before">讀取中</template>
       <template slot="default">
         <i class="fas fa-spinner"></i>
       </template>
+    </loading> -->
+     <loading :active.sync="isLoading" color="#006699" loader="bars" background-color="#fff">
+       <template slot="before" >讀取中 </template>
+      
     </loading>
+    
     <EditProduct @close="closeModal" @get-products="getProducts" @is-loading="changeLoading" :is-new="isNew" :temp-product="tempProduct" />
-    <div class="products">
+   
       <div class="top">
         <h1>產品列表</h1>
         <button class="newBtn" @click="openModal(true)">新增產品</button>
@@ -29,7 +34,7 @@
           <div class="one">{{item.origin_price}}</div>
           <div class="one">{{item.price}}</div>
           <div class="one">
-            <span v-if="is_enabled=1">啟用</span>
+            <span v-if="item.is_enabled===1">啟用</span>
             <span v-else>未啟用</span>
           </div>
           <div class="one">
@@ -41,7 +46,8 @@
         </div>
       </div>
       <Page :pagination="pagination" @get-products="getProducts" />
-    </div>
+    
+    <button @click="$bus.$emit('message:push','哈哈','fail')">哇哈哈</button>
   </div>
 </template>
 <script>
@@ -62,6 +68,7 @@ export default {
       this.isLoading = true;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
       this.$http.get(url).then(response => {
+        
         this.products = response.data.products;
         this.pagination = response.data.pagination;
         this.isLoading = false;
@@ -72,6 +79,7 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${id}`;
        this.isLoading = true;
        this.$http.delete(url).then(response => {
+         this.$bus.$emit('message:push',response.data.message);  
          console.log(response.data);
          this.getProducts();     
         this.isLoading = false;
@@ -85,7 +93,7 @@ export default {
         };
         this.isNew = isNew;
       } else {
-        this.tempProduct = Object.assign({}, item);     
+        this.tempProduct = item;     
         this.isNew = isNew;
       }
 
@@ -103,7 +111,7 @@ export default {
     Page
   },
   created() {
-    this.getProducts();
+    this.getProducts(1);
   },
 };
 </script>

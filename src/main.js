@@ -14,6 +14,7 @@ import { required, email, digits } from 'vee-validate/dist/rules';
 
 import App from './App.vue'
 import router from './router'
+import Alert from './components/Alert.vue'
 import './bus'
 // import './bus'
 // import currencyFilter from './filters/currency'
@@ -54,6 +55,7 @@ localize('zh_TW',TW);
 Vue.component('Loading', Loading)
 // Vue.filter('currency',currencyFilter)
 // Vue.filter('date',date)
+Vue.component('Alert', Alert)
 
 Vue.config.productionTip = false
 
@@ -69,6 +71,7 @@ router.beforeEach((to, from, next) => {
       if (response.data.success) {
         next();
       } else {
+        this.$bus.$emit('message:push',response.data.message);  
         next({
           path: '/',
         });

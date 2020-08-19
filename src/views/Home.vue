@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <button @click="openModal">登入</button>
  <Login @close="closeModal"/>
     

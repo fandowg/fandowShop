@@ -73,6 +73,9 @@ img{
         .cont{
             padding: 1rem;
             display: flex;
+            a{
+                margin-right: 1rem;
+            }
         }
 
     }
@@ -108,13 +111,45 @@ img{
 
     }
 }
+
+.coupons {
+    padding: 1rem;
+    // width: 80%;
+    .top{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .head {
+        display: flex;
+        justify-content: space-between;
+        .one {
+            padding: 1rem;
+            width: 100%;
+        }
+        
+    }
+
+    .cont {
+        .one-line {
+            display: flex;
+            justify-content: space-between;
+            .one {
+                padding: 1rem;
+                width: 100%;
+            }
+        }
+
+    }
+}
+
 .close {
     position: absolute;
     right: 15px;
     top: 15px;
 
 }
-.editProduct{
+.edit{
     width: 100%;
     padding: 2rem;
     position: relative;
@@ -185,4 +220,23 @@ img{
            
         }
     
+}
+
+.alert{
+    z-index: 1000;
+    position: absolute;
+    right:1rem;
+    top:1rem;
+    display: flex;
+    .one{
+        border:#ccc 1px solid;
+        padding: 1rem;
+        background-color: #fff;
+        &.success{
+            color: #666;
+        }
+        &.fail{
+            color: #c00;
+        }
+    }
 }

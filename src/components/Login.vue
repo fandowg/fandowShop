@@ -29,8 +29,12 @@ export default {
       this.$http.post(url, this.user).then(response => {
         console.log(response.data);
         if (response.data.success) {
+          this.$bus.$emit('message:push',response.data.message);   
           this.$emit("close");
           this.$router.push("/admin");
+                  
+        }else{
+          this.$bus.$emit('message:push',response.data.message,'fail');
         }
       });
     }
