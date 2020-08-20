@@ -3,7 +3,14 @@
     <loading :active.sync="isLoading" color="#006699" loader="bars" background-color="#fff">
       <template slot="before">讀取中</template>
     </loading>
-    <EditCoupons @close="closeModal" @get-coupons="getCoupons" @is-loading="changeLoading" :is-new="isNew" :temp-coupon="tempCoupon"  />
+    <EditCoupons
+      @close="closeModal"
+      @get-coupons="getCoupons"
+      @is-loading="changeLoading"
+      :is-new="isNew"   
+      :temp-coupon="tempCoupon"
+      :due_date="due_date"
+    />
 
     <div class="top">
       <h1>優惠券列表</h1>
@@ -42,17 +49,10 @@ export default {
     return {
       isLoading: false,
       coupons: {},
-      tempCoupon:{
-        //   title: "",
-        // code: "",
-        // is_enabled: 0,
-        // percent: 100,
-        // due_date: 0
-      },
-      pagination:'',
-      due_date_model:'',
+      tempCoupon: {},
+      pagination: "",
+      due_date: "2020-01-01",
       isNew: false,
-   
     };
   },
   methods: {
@@ -60,25 +60,28 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`;
       this.$http.get(url).then((response) => {
         this.coupons = response.data.coupons;
-          this.pagination = response.data.pagination;
+        this.pagination = response.data.pagination;
       });
     },
-    openModal(isNew,item) {
+    openModal(isNew, item) {
       this.$modal.show("editCoupons");
 
-      if(isNew){
-          this.tempCoupon={};
-          this.isNew = isNew;
-      }else{
-          this.tempCoupon=Object.assign({},item);
-          this.isNew = isNew;
-      }     
+      if (isNew) {
+        this.tempCoupon = {};
+        this.due_date = new Date().toISOString().split('T')[0]; 
+        this.isNew=isNew;    
+      } else {
+        this.tempCoupon = item;
+         this.due_date = new Date(item.due_date*1000).toISOString().split('T')[0];
+         this.isNew=isNew;   
+         console.log(this.due_date);
+      }
     },
-     closeModal() {
+    closeModal() {
       this.$modal.hide("editCoupons");
     },
-    changeLoading(v){
-      this.isLoading=v;
+    changeLoading(v) {
+      this.isLoading = v;
     },
   },
   components: {
