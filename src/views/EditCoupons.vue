@@ -54,7 +54,7 @@
           </div>
         </div>
         <!-- <button @click="updateProduct">送出</button> -->
-        <button @click="handleSubmit(updateProduct)">送出</button>
+        <button @click="handleSubmit(updateCoupon)">送出</button>
 
         <button @click="$emit('close')">取消</button>
       </ValidationObserver>
@@ -64,46 +64,63 @@
 
 <script>
 export default {
-  props: ["isNew", "tempCoupon","due_date"],
+  props: ["isNew", "tempCoupon"],
   data() {
     return {
       due_date_model: "",
-      editTemp:"",
+      editTemp: {},  
     };
   },
-  watch:{
-    due_date(){
-      this.due_date_model=this.due_date;
-      console.log(typeof(this.due_date));
-    },
-    due_date_model(){
+  watch: {
+    due_date_model() {
       //Math.floor(new Date(日期)) 把日期轉成timestamp，input date取得的時間格式為xxxx-xx-xx，要先轉成正式的格式才能轉成timestamp
-      this.editTemp.due_date=Math.floor(new Date(this.due_date_model)/1000) ;
+      this.editTemp.due_date = Math.floor(new Date(this.due_date_model)) / 1000;
       console.log(this.editTemp.due_date);
-      console.log(new Date(this.due_date_model));  
+      console.log(new Date(this.due_date_model));
     },
-    tempCoupon(){
-      this.editTemp=Object.assign({},this.tempCoupon);
-      console.log('我有變')
+    tempCoupon() {
+      let today = new Date().toISOString().split("T")[0];
+      if (this.isNew) {
+        this.editTemp = Object.assign({}, this.tempCoupon);
+        this.due_date_model = today;
+      } else {
+        this.editTemp = Object.assign({}, this.tempCoupon);
+        // if (!this.tempCoupon.due_date) {
+        //   this.due_date_model = today;
+        //   return;
+        // }
+        this.due_date_model = new Date(this.editTemp.due_date * 1000)
+          .toISOString()
+          .split("T")[0];
+      }
     },
-    // isNew(){
-    //   if(this.isNew){
-    //     this.due_date_model = new Date().toISOString().split('T')[0];      
-    //   }else{
-    //     this.due_date_model = new Date(this.editTemp.due_date*1000).toISOString().split('T')[0];
-    //   };
-    // },
   },
-  // computed:{
-  //   editTemp(){
-  //     return Object.assign({},this.tempCoupon);
-  //   }
-  // },
-
-
-  methods: {},
-  created(){
-      // console.log(this.tempCoupon);
-  }
+  methods: {
+    updateCoupon() {
+      if (this.isNew) {
+        this.$emit("is-loading", true);
+        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`;
+        this.$http.post(url, { data: this.editTemp }).then((response) => {
+          this.$emit("is-loading", false);
+          this.$emit("get-coupons");
+          this.$emit("close");
+          this.$bus.$emit("message:push", response.data.message);
+        });
+      } else {
+        if (JSON.stringify(this.editTemp) === JSON.stringify(this.tempCoupon)) {
+          return;
+        }
+        this.$emit("is-loading", true);
+        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${this.editTemp.id}`;
+        this.$http.put(url, { data: this.editTemp }).then((response) => {
+          this.$emit("is-loading", false);
+          this.$emit("get-coupons");
+          this.$emit("close");
+          this.$bus.$emit("message:push", response.data.message);
+        });
+      }
+    },
+  },
+  created() {},
 };
 </script>

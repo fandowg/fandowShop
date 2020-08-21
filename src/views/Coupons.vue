@@ -9,7 +9,7 @@
       @is-loading="changeLoading"
       :is-new="isNew"   
       :temp-coupon="tempCoupon"
-      :due_date="due_date"
+     
     />
 
     <div class="top">
@@ -22,6 +22,7 @@
       <div class="one">到期日</div>
       <div class="one">是否啟用</div>
       <div class="one">編輯</div>
+      <div class="one">刪除</div>
     </div>
     <div class="cont">
       <div class="one-line" v-for="item in coupons" :key="item.id">
@@ -34,6 +35,9 @@
         </div>
         <div class="one">
           <button @click="openModal(false,item)">編輯</button>
+        </div>
+        <div class="one">
+          <button @click="deleteCoupon(item.id)">刪除</button>
         </div>
       </div>
     </div>
@@ -50,31 +54,44 @@ export default {
       isLoading: false,
       coupons: {},
       tempCoupon: {},
-      pagination: "",
-      due_date: "2020-01-01",
+      pagination: "",     
       isNew: false,
     };
   },
   methods: {
     getCoupons(page = 1) {
+      this.isLoading=true;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`;
       this.$http.get(url).then((response) => {
+        this.isLoading=false;
         this.coupons = response.data.coupons;
         this.pagination = response.data.pagination;
       });
+    },
+    deleteCoupon(id){
+       this.isLoading=true;
+      const url=`${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${id}`;
+      this.$http.delete(url).then(response=>{
+        this.isLoading=false;
+        this.getCoupons();
+        if(response.data.success){
+           this.$bus.$emit('message:push',response.data.message); 
+        }else{
+         this.$bus.$emit('message:push',response.data.message,'fail'); 
+        }        
+      });      
     },
     openModal(isNew, item) {
       this.$modal.show("editCoupons");
 
       if (isNew) {
-        this.tempCoupon = {};
-        this.due_date = new Date().toISOString().split('T')[0]; 
+        this.tempCoupon = {
+          due_date:0,
+        };       
         this.isNew=isNew;    
       } else {
-        this.tempCoupon = item;
-         this.due_date = new Date(item.due_date*1000).toISOString().split('T')[0];
-         this.isNew=isNew;   
-         console.log(this.due_date);
+        this.tempCoupon = item;  
+         this.isNew=isNew;          
       }
     },
     closeModal() {
@@ -89,7 +106,7 @@ export default {
     Page,
   },
   created() {
-    this.getCoupons(1);
+    this.getCoupons();
   },
 };
 </script>
