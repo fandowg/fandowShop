@@ -69,6 +69,7 @@ export default {
     return {
       due_date_model: "",
       editTemp: {},  
+      isNewNow:this.isNew,
     };
   },
   watch: {
