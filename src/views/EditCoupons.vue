@@ -69,23 +69,48 @@ export default {
     return {
       due_date_model: "",
       editTemp: {},  
-      isNewNow:this.isNew,
+    
     };
   },
   watch: {
+ 
     due_date_model() {
       //Math.floor(new Date(日期)) 把日期轉成timestamp，input date取得的時間格式為xxxx-xx-xx，要先轉成正式的格式才能轉成timestamp
       this.editTemp.due_date = Math.floor(new Date(this.due_date_model)) / 1000;
       console.log(this.editTemp.due_date);
       console.log(new Date(this.due_date_model));
     },
-    tempCoupon() {
+    // tempCoupon() {
+    //   console.log(878);
+    //   let today = new Date().toISOString().split("T")[0];
+    //   if (this.isNew) {
+    //     this.editTemp = Object.assign({}, this.tempCoupon);
+    //     this.due_date_model = today;
+    //   } else {
+    //     this.editTemp = Object.assign({}, this.tempCoupon);
+    //     // if (!this.tempCoupon.due_date) {
+    //     //   this.due_date_model = today;
+    //     //   return;
+    //     // }
+    //     this.due_date_model = new Date(this.editTemp.due_date * 1000)
+    //       .toISOString()
+    //       .split("T")[0];
+    //   }
+    // },
+  },
+  methods: {
+    sendStatus(){
+      console.log(123);
       let today = new Date().toISOString().split("T")[0];
+      console.log(this.isNew);
       if (this.isNew) {
+         
         this.editTemp = Object.assign({}, this.tempCoupon);
+       
         this.due_date_model = today;
       } else {
         this.editTemp = Object.assign({}, this.tempCoupon);
+        
         // if (!this.tempCoupon.due_date) {
         //   this.due_date_model = today;
         //   return;
@@ -95,8 +120,6 @@ export default {
           .split("T")[0];
       }
     },
-  },
-  methods: {
     updateCoupon() {
       if (this.isNew) {
         this.$emit("is-loading", true);

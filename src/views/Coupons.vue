@@ -9,6 +9,7 @@
       @is-loading="changeLoading"
       :is-new="isNew"   
       :temp-coupon="tempCoupon"
+      ref="editCoupons"
      
     />
 
@@ -88,11 +89,16 @@ export default {
         this.tempCoupon = {
           due_date:0,
         };       
-        this.isNew=isNew;    
+        this.isNew=isNew;   
+        console.log(this.isNew);
+       
       } else {
         this.tempCoupon = item;  
-         this.isNew=isNew;          
-      }
+         this.isNew=isNew;  
+             
+      };
+       this.$refs.editCoupons.sendStatus(); 
+      
     },
     closeModal() {
       this.$modal.hide("editCoupons");
