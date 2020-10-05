@@ -18,25 +18,83 @@ a {
     text-decoration: none;
 }
 
-img{
+img {
     max-width: 100%;
     height: auto;
 }
+
 .vm--modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-
-
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    // position: relative;
+    box-shadow: none;
 }
 
-.text-danger{
+// .vm-transition--modal{
+//   opacity: 0;
+// }
+
+//初始化 vue js modal
+
+.vm-transition--overlay-enter-active,
+.vm-transition--overlay-leave-active {
+  transition: none;
+}
+.vm-transition--overlay-enter,
+.vm-transition--overlay-leave-active {
+  opacity: 0;
+}
+.vm-transition--modal-enter-active,
+.vm-transition--modal-leave-active {
+  transition: all 100ms;
+}
+.vm-transition--modal-enter,
+.vm-transition--modal-leave-active {
+  opacity: 0;
+  transform: none;
+}
+.vm-transition--default-enter-active,
+.vm-transition--default-leave-active {
+  transition: all 2ms;
+}
+.vm-transition--default-enter,
+.vm-transition--default-leave-active {
+  opacity: 0;
+}
+
+// .vm-transition--overlay-enter{
+//   opacity: 0;
+//   transform: none;
+// }
+// .vm-transition--overlay-enter-active{
+//   opacity: 1;
+// }
+// .vm-transition--overlay-enter-to{
+//   opacity: 1;
+// }
+
+// .vm-transition--modal-enter{
+//   opacity: 0;
+//   transform: none;
+// }
+
+
+// .vm-transition--modal-enter-active{
+//   opacity: 1;
+// }
+
+// .vm-transition--modal-v-enter-to{
+//   opacity: 1;
+// }
+
+.text-danger {
     color: #c00;
 }
+
 .sighForm {
     h1 {
-        font-size:2rem;
+        font-size: 2rem;
         text-align: center;
 
     }
@@ -58,7 +116,7 @@ img{
 
     }
 
-    
+
 
 }
 
@@ -70,10 +128,12 @@ img{
             justify-content: space-between;
 
         }
-        .cont{
+
+        .cont {
             padding: 1rem;
             display: flex;
-            a{
+
+            a {
                 margin-right: 1rem;
             }
         }
@@ -83,26 +143,30 @@ img{
 
 .products {
     padding: 1rem;
+
     // width: 80%;
-    .top{
+    .top {
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
+
     .head {
         display: flex;
         justify-content: space-between;
+
         .one {
             padding: 1rem;
             width: 100%;
         }
-        
+
     }
 
     .cont {
         .one-line {
             display: flex;
             justify-content: space-between;
+
             .one {
                 padding: 1rem;
                 width: 100%;
@@ -114,26 +178,30 @@ img{
 
 .coupons {
     padding: 1rem;
+
     // width: 80%;
-    .top{
+    .top {
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
+
     .head {
         display: flex;
         justify-content: space-between;
+
         .one {
             padding: 1rem;
             width: 100%;
         }
-        
+
     }
 
     .cont {
         .one-line {
             display: flex;
             justify-content: space-between;
+
             .one {
                 padding: 1rem;
                 width: 100%;
@@ -149,38 +217,40 @@ img{
     top: 15px;
 
 }
-.edit{
+
+.edit {
     width: 100%;
     padding: 2rem;
     position: relative;
-    
-    h2{
 
-    }
-    .edit-row{
+    h2 {}
+
+    .edit-row {
         display: flex;
         margin-left: -1%;
         margin-right: -1%;
         margin-bottom: 1rem;
-        .one{
+
+        .one {
             margin-right: 1%;
             margin-left: 1%;
             width: 100%;
-            
-            label{
-                
-            }
-            input{
+
+            label {}
+
+            input {
                 height: 2rem;
-                width: 100% ;
+                width: 100%;
                 display: block;
             }
-            textarea{
+
+            textarea {
                 display: block;
                 width: 100%;
             }
-            input[type=checkbox]{
-                width:1rem;
+
+            input[type=checkbox] {
+                width: 1rem;
                 height: auto;
                 display: inline-block;
             }
@@ -189,53 +259,60 @@ img{
     }
 }
 
-.pagination{
+.pagination {
     display: flex;
-   
-        li{
-            margin:0 0.5rem;
-            a{
-                color:#ccc;
 
-            }
-            &.active{
-                a{
-                    color: #333;
-                }
-                
-            }
-           
-            &.prev,&.next{
-                a{
-                    color: #333;
-                }
-            }
-            &.disabled{
-                a{
-                    color: #ccc;
-                    pointer-events: none;
-                    cursor: auto;
-                }
-            }
-           
+    li {
+        margin: 0 0.5rem;
+
+        a {
+            color: #ccc;
+
         }
-    
+
+        &.active {
+            a {
+                color: #333;
+            }
+
+        }
+
+        &.prev,
+        &.next {
+            a {
+                color: #333;
+            }
+        }
+
+        &.disabled {
+            a {
+                color: #ccc;
+                pointer-events: none;
+                cursor: auto;
+            }
+        }
+
+    }
+
 }
 
-.alert{
+.alert {
     z-index: 1000;
     position: absolute;
-    right:1rem;
-    top:1rem;
+    right: 1rem;
+    top: 1rem;
     display: flex;
-    .one{
-        border:#ccc 1px solid;
+
+    .one {
+        border: #ccc 1px solid;
         padding: 1rem;
         background-color: #fff;
-        &.success{
+
+        &.success {
             color: #666;
         }
-        &.fail{
+
+        &.fail {
             color: #c00;
         }
     }

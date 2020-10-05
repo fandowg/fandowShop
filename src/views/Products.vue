@@ -1,17 +1,8 @@
 <template>
    <div class="products">
-    <!-- <loading :active.sync="isLoading">
-      <template slot="before">讀取中</template>
-      <template slot="default">
-        <i class="fas fa-spinner"></i>
-      </template>
-    </loading> -->
-     <loading :active.sync="isLoading" color="#006699" loader="bars" background-color="#fff">
-       <template slot="before" >讀取中 </template>
-      
-    </loading>
+
     
-    <EditProduct @close="closeModal" @get-products="getProducts" @is-loading="changeLoading" :is-new="isNew" :temp-product="tempProduct" />
+    <EditProduct @close="closeModal" @get-products="getProducts" :is-new="isNew" :temp-product="tempProduct" />
    
       <div class="top">
         <h1>產品列表</h1>
@@ -45,7 +36,7 @@
           </div>
         </div>
       </div>
-      <Page :pagination="pagination" @get-products="getProducts" />
+      <Page :pagination="pagination" @get-pages="getProducts" />
     
     <button @click="$bus.$emit('message:push','哈哈','fail')">哇哈哈</button>
   </div>
@@ -59,30 +50,29 @@ export default {
       products: [],
       tempProduct: {},
       pagination:'',
-      isNew: true,
-      isLoading: false,
+      isNew: true,   
     };
   },
   methods: {
     getProducts(page = 1) {
-      this.isLoading = true;
+       this.$bus.$emit('changeLoading',true); 
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
       this.$http.get(url).then(response => {
         
         this.products = response.data.products;
         this.pagination = response.data.pagination;
-        this.isLoading = false;
+        this.$bus.$emit('changeLoading',false); 
         console.log(this.pagination);
       });
     },
     deleteProduct(id){
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${id}`;
-       this.isLoading = true;
+        this.$bus.$emit('changeLoading',true); 
        this.$http.delete(url).then(response => {
          this.$bus.$emit('message:push',response.data.message);  
          console.log(response.data);
          this.getProducts();     
-        this.isLoading = false;
+        this.$bus.$emit('changeLoading',false); 
       });
     },
     openModal(isNew, item) {
@@ -102,9 +92,7 @@ export default {
     closeModal() {
       this.$modal.hide("editProduct");
     },
-    changeLoading(v){
-      this.isLoading=v;
-    },
+  
   },
   components: {
     EditProduct,

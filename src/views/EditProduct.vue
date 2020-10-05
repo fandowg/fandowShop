@@ -7,7 +7,7 @@
         <div class="edit-row">
           <div class="one">
             <label for>輸入圖片網址</label>
-            <input type="text" v-model="tempProduct.imageUrl" />
+            <input type="text" v-model="editTemp.imageUrl" />
           </div>
         </div>
 
@@ -18,14 +18,14 @@
             <input type="file" ref="upImage" @change="upLoadImage" />
           </div>
           <div class="one">
-            <img :src="tempProduct.imageUrl" alt />
+            <img :src="editTemp.imageUrl" alt />
           </div>
         </div>
         <!-- <div class="edit-row">
           <div class="one">
             <ValidationProvider name="email" rules="required|email" v-slot="{failed, errors }">
               <label for>產品名稱</label>
-              <input type="text" id="title" placeholder="請輸入產品名稱" v-model="tempProduct.title" />
+              <input type="text" id="title" placeholder="請輸入產品名稱" v-model="editTemp.title" />
            
               <span class="text-danger" v-if="failed">{{errors[0]}}</span>
             </ValidationProvider>
@@ -35,7 +35,7 @@
           <div class="one">
             <ValidationProvider name="email" rules="required" v-slot="{failed, errors }">
               <label for="title">產品名稱</label>
-              <input type="text" id="title" placeholder="請輸入產品名稱" v-model="tempProduct.title" />
+              <input type="text" id="title" placeholder="請輸入產品名稱" v-model="editTemp.title" />
            
               <span class="text-danger" v-if="failed">{{errors[0]}}</span>
             </ValidationProvider>
@@ -45,14 +45,14 @@
           <div class="one">
             <ValidationProvider name="分類" rules="required" v-slot="{failed, errors }">
               <label for="category">分類</label>
-              <input type="text" id="category" placeholder="請輸入分類" v-model="tempProduct.category" />
+              <input type="text" id="category" placeholder="請輸入分類" v-model="editTemp.category" />
               <span class="text-danger" v-if="failed">{{errors[0]}}</span>
             </ValidationProvider>
           </div>
           <div class="one">
             <ValidationProvider name="單位" rules="required" v-slot="{failed, errors }">
               <label for="unit">單位</label>
-              <input type="text" id="unit" placeholder="請輸入單位" v-model="tempProduct.unit" />
+              <input type="text" id="unit" placeholder="請輸入單位" v-model="editTemp.unit" />
               <span class="text-danger" v-if="failed">{{errors[0]}}</span>
             </ValidationProvider>
           </div>
@@ -65,7 +65,7 @@
                 type="number"
                 id="origin_price"
                 placeholder="請輸入原價"
-                v-model="tempProduct.origin_price"
+                v-model="editTemp.origin_price"
               />
               <span class="text-danger" v-if="failed">{{errors[0]}}</span>
             </ValidationProvider>
@@ -73,7 +73,7 @@
           <div class="one">
             <ValidationProvider name="售價" rules="required" v-slot="{failed, errors }">
               <label for="price">售價</label>
-              <input type="number" id="price" placeholder="請輸入售價" v-model="tempProduct.price" />
+              <input type="number" id="price" placeholder="請輸入售價" v-model="editTemp.price" />
               <span class="text-danger" v-if="failed">{{errors[0]}}</span>
             </ValidationProvider>
           </div>
@@ -87,7 +87,7 @@
                 cols="30"
                 rows="10"
                 placeholder="請輸入產品描述"
-                v-model="tempProduct.description"
+                v-model="editTemp.description"
               ></textarea>
               <span class="text-danger" v-if="failed">{{errors[0]}}</span>
             </ValidationProvider>
@@ -99,7 +99,7 @@
               cols="30"
               rows="10"
               placeholder="請輸入說明內容"
-              v-model="tempProduct.content"
+              v-model="editTemp.content"
             ></textarea>
           </div>
         </div>
@@ -108,7 +108,7 @@
             <input
               type="checkbox"
               id="is_enabled"
-              v-model="tempProduct.is_enabled"
+              v-model="editTemp.is_enabled"
               :true-value="1"
               :false-value="0"
             />
@@ -131,31 +131,36 @@ export default {
       loadStatus: {
         upLoadImage: false,
       },
-      // title:'',
-      // tempProduct:'',
+      editTemp:{},
+   
     };
   },
   props: ["isNew", "tempProduct"],
+  watch:{
+    tempProduct(){
+      this.editTemp=Object.assign({}, this.tempProduct);
+    }
+  },
   methods: {
     updateProduct() {
       if (this.isNew) {
-        this.$emit("is-loading", true);
+        this.$bus.$emit('changeLoading',true); 
         const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product`;
-        this.$http.post(url, { data: this.tempProduct }).then((response) => {
+        this.$http.post(url, { data: this.editTemp }).then((response) => {
           this.$bus.$emit('message:push',response.data.message);  
           this.$emit("get-products");
           this.$emit("close");
-          this.$emit("is-loading", false);
+          this.$bus.$emit('changeLoading',false); 
         });
       } else {
-        this.$emit("isLoading", true);
-        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${this.tempProduct.id}`;
-        this.$http.put(url, { data: this.tempProduct }).then((response) => {
+        this.$bus.$emit('changeLoading',true); 
+        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${this.editTemp.id}`;
+        this.$http.put(url, { data: this.editTemp }).then((response) => {
           this.$bus.$emit('message:push',response.data.message);  
           // console.log(response.data);
           this.$emit("get-products");
           this.$emit("close");
-          this.$emit("is-loading", false);
+          this.$bus.$emit('changeLoading',false); 
         });
       }
     },
@@ -173,10 +178,10 @@ export default {
           },
         })
         .then((response) => {
-          console.log(this.tempProduct);
+          console.log(this.editTemp);
           this.loadStatus.upLoadImage = false;
           if(response.data.success){
-            this.$set(this.tempProduct, "imageUrl", response.data.imageUrl);
+            this.$set(this.editTemp, "imageUrl", response.data.imageUrl);
             // this.tempProduct.imageUrl=response.data.imageUrl;
           }else{
             this.$bus.$emit('message:push',response.data.message,'fail');

@@ -63,8 +63,9 @@
 </template>
 
 <script>
+//需要傳送三個東西  isNew  tempCoupon  today的 due_date_model ,執行端應該要在外層，內層純粹接受isNew  tempCoupon  today的 due_date_model的資料
 export default {
-  props: ["isNew", "tempCoupon"],
+  props: ["isNew", "tempCoupon","today"],
   data() {
     return {
       due_date_model: "",
@@ -78,39 +79,21 @@ export default {
       //Math.floor(new Date(日期)) 把日期轉成timestamp，input date取得的時間格式為xxxx-xx-xx，要先轉成正式的格式才能轉成timestamp
       this.editTemp.due_date = Math.floor(new Date(this.due_date_model)) / 1000;
       console.log(this.editTemp.due_date);
-      console.log(new Date(this.due_date_model));
+      // console.log(new Date(this.due_date_model));
+      //測試git
+      //測試git2
+      //測試git3
     },
-    // tempCoupon() {
-    //   console.log(878);
-    //   let today = new Date().toISOString().split("T")[0];
-    //   if (this.isNew) {
-    //     this.editTemp = Object.assign({}, this.tempCoupon);
-    //     this.due_date_model = today;
-    //   } else {
-    //     this.editTemp = Object.assign({}, this.tempCoupon);
-    //     // if (!this.tempCoupon.due_date) {
-    //     //   this.due_date_model = today;
-    //     //   return;
-    //     // }
-    //     this.due_date_model = new Date(this.editTemp.due_date * 1000)
-    //       .toISOString()
-    //       .split("T")[0];
-    //   }
-    // },
-  },
-  methods: {
-    sendStatus(){
-      console.log(123);
-      let today = new Date().toISOString().split("T")[0];
-      console.log(this.isNew);
+    tempCoupon() {
+   
+      // let today = new Date().toISOString().split("T")[0];
       if (this.isNew) {
-         
         this.editTemp = Object.assign({}, this.tempCoupon);
-       
-        this.due_date_model = today;
+        this.due_date_model = this.today;
+        //若編輯時項目的到期日是今天，due_date_model不會watch，所以這邊強制再寫入一次
+        this.editTemp.due_date = Math.floor(new Date(this.today)) / 1000;
       } else {
         this.editTemp = Object.assign({}, this.tempCoupon);
-        
         // if (!this.tempCoupon.due_date) {
         //   this.due_date_model = today;
         //   return;
@@ -120,12 +103,35 @@ export default {
           .split("T")[0];
       }
     },
+  },
+  methods: {
+    // sendStatus(){
+    //   console.log(123);
+    //   let today = new Date().toISOString().split("T")[0];
+    //   console.log(this.isNew);
+    //   if (this.isNew) {
+         
+    //     this.editTemp = Object.assign({}, this.tempCoupon);
+       
+    //     this.due_date_model = today;
+    //   } else {
+    //     this.editTemp = Object.assign({}, this.tempCoupon);
+        
+    //     // if (!this.tempCoupon.due_date) {
+    //     //   this.due_date_model = today;
+    //     //   return;
+    //     // }
+    //     this.due_date_model = new Date(this.editTemp.due_date * 1000)
+    //       .toISOString()
+    //       .split("T")[0];
+    //   }
+    // },
     updateCoupon() {
       if (this.isNew) {
-        this.$emit("is-loading", true);
+       this.$bus.$emit('changeLoading',true); 
         const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`;
         this.$http.post(url, { data: this.editTemp }).then((response) => {
-          this.$emit("is-loading", false);
+         this.$bus.$emit('changeLoading',false); 
           this.$emit("get-coupons");
           this.$emit("close");
           this.$bus.$emit("message:push", response.data.message);
@@ -134,10 +140,10 @@ export default {
         if (JSON.stringify(this.editTemp) === JSON.stringify(this.tempCoupon)) {
           return;
         }
-        this.$emit("is-loading", true);
+       this.$bus.$emit('changeLoading',true); 
         const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${this.editTemp.id}`;
         this.$http.put(url, { data: this.editTemp }).then((response) => {
-          this.$emit("is-loading", false);
+         this.$bus.$emit('changeLoading',false); 
           this.$emit("get-coupons");
           this.$emit("close");
           this.$bus.$emit("message:push", response.data.message);

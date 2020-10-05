@@ -16,6 +16,7 @@ import App from './App.vue'
 import router from './router'
 import Alert from './components/Alert.vue'
 import './bus'
+import date from './filters/date'
 // import './bus'
 // import currencyFilter from './filters/currency'
 // import date from './filters/date'
@@ -54,9 +55,9 @@ localize('zh_TW',TW);
 
 Vue.component('Loading', Loading)
 // Vue.filter('currency',currencyFilter)
-// Vue.filter('date',date)
-Vue.component('Alert', Alert)
 
+Vue.component('Alert', Alert)
+Vue.filter('date',date)
 Vue.config.productionTip = false
 
 new Vue({

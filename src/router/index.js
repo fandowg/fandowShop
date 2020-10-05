@@ -37,6 +37,14 @@ const routes = [
           requiresAuth:true,
         }
       },
+      {
+        path: 'orderlist',
+        name: 'OrderList',
+        component: () => import('../views/OrderList.vue'),
+        meta:{
+          requiresAuth:true,
+        }
+      },
     ]
   },
  

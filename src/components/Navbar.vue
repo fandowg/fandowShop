@@ -7,6 +7,7 @@
     <div class="cont">
       <router-link to="/admin/products">產品頁面</router-link>
       <router-link to="/admin/coupons">優惠券頁面</router-link>
+      <router-link to="/admin/orderlist">訂單列表</router-link>
     </div>
   </nav>
 </template>
