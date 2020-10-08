@@ -71,16 +71,16 @@
             </ValidationProvider>
           </div>
           <div class="one">
-            <ValidationProvider name="售價" rules="required" v-slot="{failed, errors }">
+       
               <label for="price">售價</label>
               <input type="number" id="price" placeholder="請輸入售價" v-model="editTemp.price" />
-              <span class="text-danger" v-if="failed">{{errors[0]}}</span>
-            </ValidationProvider>
+             
+           
           </div>
         </div>
         <div class="edit-row">
           <div class="one">
-            <ValidationProvider name="產品描述" rules="required" v-slot="{failed, errors }">
+          
               <label for="description">產品描述</label>
               <textarea
                 id="description"
@@ -89,8 +89,8 @@
                 placeholder="請輸入產品描述"
                 v-model="editTemp.description"
               ></textarea>
-              <span class="text-danger" v-if="failed">{{errors[0]}}</span>
-            </ValidationProvider>
+            
+          
           </div>
           <div class="one">
             <label for="content">說明內容</label>
@@ -102,6 +102,9 @@
               v-model="editTemp.content"
             ></textarea>
           </div>
+          <!-- <div class="one">
+            <input type="text" v-model="editTemp.video">
+          </div> -->
         </div>
         <div class="edit-row">
           <div class="one">

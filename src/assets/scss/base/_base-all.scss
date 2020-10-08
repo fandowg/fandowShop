@@ -1,0 +1,104 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box; // 1
+}
+
+html{
+  font-size: $font-size-base;
+}
+
+body {
+  font-family: Arial, Helvetica, 微軟正黑體, sans-serif;
+  color: $gray-800;  
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;  
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+  @include transition;
+
+  &:hover,
+  &:focus &:active {
+    color: #333;
+    // opacity: 1;
+  }
+}
+.for-mobile-lg{
+  display: none !important;
+  @include lg{
+    display: block !important;
+  }
+
+}
+
+.for-desk-lg{
+
+  @include lg{
+    display: none !important;
+  }
+  
+}
+
+ul,
+ol {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+ol {
+  padding-left: 20px;
+}
+
+h1,h2,h3,h4,h5,h6{
+  margin-top: 0;
+  margin-bottom:$spacer;
+  font-weight: normal;
+}
+
+h1{
+  font-size: $h1-font-size;
+}
+
+h2{
+  font-size: $h2-font-size;
+}
+
+h3{
+  font-size: $h3-font-size;
+}
+
+h4{
+  font-size: $h4-font-size;
+}
+
+h5{
+  font-size: $h5-font-size;
+}
+
+h6{
+  font-size: $h6-font-size;
+}
+
+p{
+  margin-top: 0;
+  margin-bottom: $font-size-base;
+  font-size: $p-font-size;
+}
+
+@media(max-width:990px) {
+}
+
+@media(max-width:768px)and(min-width:375px){
+
+}

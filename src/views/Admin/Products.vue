@@ -10,6 +10,7 @@
       </div>
 
       <div class="head">
+        <div class="one">圖片</div>
         <div class="one">分類</div>
         <div class="one">產品名稱</div>
         <div class="one">原價</div>
@@ -20,8 +21,11 @@
       </div>
       <div class="cont">
         <div class="one-line" v-for="item in products" :key="item.id">
+          <div class="one"><img :src="item.imageUrl" alt=""> </div>
           <div class="one">{{item.category}}</div>
-          <div class="one">{{item.title}}</div>
+          <div class="one">{{item.title}}
+            <!-- {{item.video}} -->
+            </div>
           <div class="one">{{item.origin_price}}</div>
           <div class="one">{{item.price}}</div>
           <div class="one">
@@ -38,12 +42,12 @@
       </div>
       <Page :pagination="pagination" @get-pages="getProducts" />
     
-    <button @click="$bus.$emit('message:push','哈哈','fail')">哇哈哈</button>
+  
   </div>
 </template>
 <script>
-import EditProduct from "../views/EditProduct.vue";
-import Page from "../components/Pagination.vue";
+import EditProduct from "./EditProduct.vue";
+import Page from "@/components/Pagination.vue";
 export default {
   data() {
     return {

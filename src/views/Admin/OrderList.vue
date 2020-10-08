@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import Page from "../components/Pagination.vue";
+import Page from "@/components/Pagination.vue";
 export default {
     data(){
         return{

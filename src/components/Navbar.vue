@@ -1,7 +1,7 @@
 <template>
   <nav>
     <div class="top">
-      <router-link to="/admin" class="logo">很硬的後台</router-link>
+      <router-link to="/" class="logo">回主頁</router-link>
       <button @click="logOut" class="logOut">登出</button>
     </div>
     <div class="cont">

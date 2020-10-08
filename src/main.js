@@ -72,9 +72,9 @@ router.beforeEach((to, from, next) => {
       if (response.data.success) {
         next();
       } else {
-        this.$bus.$emit('message:push',response.data.message);  
+        Vue.prototype.$bus.$emit('message:push',response.data.message);  
         next({
-          path: '/',
+          path: '/login',
         });
 
       }

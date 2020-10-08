@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <img src="@/assets/logo.svg" alt="">
     <Alert></Alert>
     <loading :active.sync="isLoading" color="#006699" loader="bars" background-color="#fff">
       <template slot="before">讀取中</template>
@@ -9,7 +10,7 @@
 </template>
 
 <style lang="scss">
-@import "./assets/scss/all";
+@import "@/assets/scss/all";
 
 </style>
 

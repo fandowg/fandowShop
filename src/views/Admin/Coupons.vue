@@ -46,8 +46,8 @@
 </template>
 
 <script>
-import EditCoupons from "../views/EditCoupons.vue";
-import Page from "../components/Pagination.vue";
+import EditCoupons from "./EditCoupons";
+import Page from "@/components/Pagination.vue";
 // import Confirm from "../components/confirm.vue";
 export default {
   data() {

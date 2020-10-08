@@ -1,30 +1,17 @@
 <template>
-  <div>
-
-    <button @click="openModal">登入</button>
- <Login @close="closeModal"/>
-    
+  <div class="container-xl">
+    <router-link to="/login">登入後台</router-link>
+    <router-link to="/admin">進入後台</router-link>
+    <router-link to="/shopping-list">買東西</router-link>
+    <main>
+      
+    </main>
   </div>
 </template>
 
 <script>
-import Login from "../components/Login.vue";
-
 export default {
-  name: "Home",
   
-  methods: {
-    openModal () {
-      this.$modal.show('modalLogin')
-    },
-    closeModal(){
-      this.$modal.hide('modalLogin')
-    }
-    
-  },
-  components:{
-    Login
-  }
-  
+
 };
 </script>

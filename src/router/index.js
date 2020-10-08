@@ -13,18 +13,28 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../views/Home.vue')
+    component: () => import('@/views/Home.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/Admin/Login.vue')
+  },
+  {
+    path: '/shopping-list',
+    name: 'ShoppingList',
+    component: () => import('@/views/ShoppingList.vue')
   },
   {
     path: '/admin',
     name: 'Admin',
-    component: () => import('../views/Dashboard.vue'),
+    component: () => import('@/views/Admin/Dashboard.vue'),
     redirect:'/admin/products',
     children: [
       {
         path: 'products',
         name: 'Products',
-        component: () => import('../views/Products.vue'),
+        component: () => import('@/views/Admin/Products.vue'),
         meta:{
           requiresAuth:true,
         }
@@ -32,7 +42,7 @@ const routes = [
       {
         path: 'coupons',
         name: 'Coupons',
-        component: () => import('../views/Coupons.vue'),
+        component: () => import('@/views/Admin/Coupons.vue'),
         meta:{
           requiresAuth:true,
         }
@@ -40,7 +50,7 @@ const routes = [
       {
         path: 'orderlist',
         name: 'OrderList',
-        component: () => import('../views/OrderList.vue'),
+        component: () => import('@/views/Admin/OrderList.vue'),
         meta:{
           requiresAuth:true,
         }

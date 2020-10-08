@@ -1,0 +1,122 @@
+//grid 單純只有grid 不加樣式
+.one-wrapper {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  // justify-content: space-between;
+  margin-left: -$gutter;
+  margin-right: -$gutter;
+
+  &.no-gutters {
+    margin-left: 0;
+    margin-right: 0;
+
+    &>.one,
+    &>[class*="one-"] {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+}
+
+%one {
+  width: calc(100% - #{$gutter*2});
+  margin-left: $gutter;
+  margin-right: $gutter;
+  // position: relative;
+}
+
+.one,
+.one-4,
+.one-xl,
+.one-lg,
+.one-lg-5,
+.one-lg-7,
+.one-md,
+.one-md-4,
+.one-md-5,
+.one-md-7,
+.one-md-8,
+.one-sm-6 {
+  @extend %one;
+}
+
+//不加容器名代表不變動格數
+.one {
+  flex: 1 1 0;
+  max-width: 100%;
+
+}
+
+.one-4 {
+  flex: 0 0 calc(#{percentage(4/12)} - #{$gutter*2});
+  max-width: calc(#{percentage(4/12)} - #{$gutter*2});
+}
+
+
+@include sm-min {
+  .one-sm-6 {
+    flex: 0 0 calc(#{percentage(6/12)} - #{$gutter*2});
+    max-width: calc(#{percentage(6/12)} - #{$gutter*2});
+  }
+}
+
+@include md-min {
+
+  .one-md {
+    flex: 1 1 0;
+    max-width: 100%;
+
+  }
+
+  .one-md-4 {
+    flex: 0 0 calc(#{percentage(4/12)} - #{$gutter*2});
+    max-width: calc(#{percentage(4/12)} - #{$gutter*2});
+  }
+
+  .one-md-5 {
+    flex: 0 0 calc(#{percentage(5/12)} - #{$gutter*2});
+    max-width: calc(#{percentage(5/12)} - #{$gutter*2});
+  }
+
+  .one-md-7 {
+    flex: 0 0 calc(#{percentage(7/12)} - #{$gutter*2});
+    max-width: calc(#{percentage(7/12)} - #{$gutter*2});
+  }
+
+  .one-md-8 {
+    flex: 0 0 calc(#{percentage(8/12)} - #{$gutter*2});
+    max-width: calc(#{percentage(8/12)} - #{$gutter*2});
+  }
+
+}
+
+@include lg-min {
+  .one-lg {
+    flex: 1 1 0;
+    max-width: 100%;
+
+  }
+
+  .one-lg-5 {
+    flex: 0 0 calc(#{percentage(5/12)} - #{$gutter*2});
+    max-width: calc(#{percentage(5/12)} - #{$gutter*2});
+
+  }
+
+  .one-lg-7 {
+    flex: 0 0 calc(#{percentage(7/12)} - #{$gutter*2});
+    max-width: calc(#{percentage(7/12)} - #{$gutter*2});
+
+  }
+}
+
+
+
+@include xl-min {
+  .one-xl {
+    flex: 1 1 0;
+    max-width: 100%;
+  }
+}
