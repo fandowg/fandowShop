@@ -1,0 +1,81 @@
+// @mixin min ($breakpoint) {  
+//   $min: 0;
+//   @if map-has-key($grid-breakpoints,$breakpoint){
+//     $min: map-get($grid-breakpoints, $breakpoint);
+//   } @else{
+//     $min:$breakpoint#{px};
+//   }
+//   @media(min-width:$min) {
+//     @content;
+//   }
+  
+// }
+
+// @mixin max ($breakpoint) {
+//   $max: 0;
+//   @if map-has-key($grid-breakpoints,$breakpoint){
+//     $max: map-get($grid-breakpoints, $breakpoint);
+//   } @else{
+//     $max:$breakpoint#{px};
+//   }
+//   @media(max-width:$max) {
+//     @content;
+//   }
+// }
+@mixin min ($breakpoint) {
+  $has-key: map-has-key($grid-breakpoints,$breakpoint);
+  $get-value: map-get($grid-breakpoints, $breakpoint);  
+  $min:if($has-key,$get-value,$breakpoint#{px}); 
+  @media(min-width:$min) {
+    @content;
+  }  
+}
+
+@mixin max ($breakpoint) {
+  $has-key: map-has-key($grid-breakpoints,$breakpoint);    
+  $get-value: map-get($grid-breakpoints, $breakpoint);  
+  $max:if($has-key,$get-value,$breakpoint#{px}); 
+  @media(max-width:$max) {
+    @content;
+  }  
+}
+
+@mixin border {
+  border: $gray-400 1px solid;
+}
+
+@mixin border-bottom {
+  border-bottom: $gray-400 1px solid;
+}
+
+@mixin skewX_l {
+  transform: skewX(-6deg);
+}
+@mixin skewX {
+  transform: skewX(-5deg);
+}
+
+
+@mixin transition() {
+  transition: all .35s;
+}
+
+@mixin linear-gradient {
+  background: linear-gradient(to bottom, #fff, #45a2ff 20%, #3399ff);
+}
+
+@mixin text-no {
+  font: 0/0 a;
+}
+
+// @mixin media-breakpoint ($breakpoint){
+//   @media(max-width:$breakpoint){
+//     @content;
+//   }
+// }
+
+// @each $key,$value in $grid-breakpoints{
+//   @mixin media-breakpoint-do($value){
+//     @include media-breakpoint($value)
+//   }  
+// }

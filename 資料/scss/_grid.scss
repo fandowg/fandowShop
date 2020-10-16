@@ -1,0 +1,95 @@
+.bag-row {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  margin-left: -$gutter;
+  margin-right: -$gutter;
+  &.no-gutters {
+    margin-left: 0;
+    margin-right: 0;
+    &>.bag,
+    &>[class*="bag-"] {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .bag {
+      max-width: 100%;
+      width: 100%;
+    }
+    @for $i from 1 through $columns {
+      .bag-#{$i} {
+        flex: 0 0 percentage($i/$columns);
+        max-width: percentage($i/$columns);
+        width: 100%;
+      }
+    }
+    @each $breakpoint in map-keys($grid-breakpoints) {
+      .bag-#{$breakpoint} {
+        width: 100%;
+      }
+      @for $i from 1 through $columns {
+        .bag-#{$breakpoint}-#{$i} {
+          width: 100%;
+        }
+      }
+      @include min($breakpoint) {
+        .bag-#{$breakpoint} {
+          max-width: 100%;
+        }
+        @for $i from 1 through $columns {
+          .bag-#{$breakpoint}-#{$i} {
+            flex: 0 0 percentage($i/$columns);
+            max-width: percentage($i/$columns);
+          }
+        }
+      }
+    }
+  }
+}
+%bag {
+  width: calc(100% - #{$gutter*2});
+  margin-left: $gutter;
+  margin-right: $gutter;
+}
+//不能在迴圈裡面用 %bag
+
+@for $i from 0 through $columns {
+  // $i:if($i==0,'',-$i);
+  @if $i==0 {
+    .bag {
+      @extend %bag;
+      flex: 1 1 0;
+      max-width: calc(100% - #{$gutter*2});
+    }
+  }
+  @else {
+    .bag-#{$i} {
+      @extend %bag;
+      flex: 0 0 calc(#{percentage($i/$columns)} - #{$gutter*2});
+      max-width: calc(#{percentage($i/$columns)} - #{$gutter*2});
+    }
+  }
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  .bag-#{$breakpoint} {
+    @extend %bag;
+  }
+  @for $i from 1 through $columns {
+    .bag-#{$breakpoint}-#{$i} {
+      @extend %bag;
+    }
+  }
+  @include min($breakpoint) {
+    .bag-#{$breakpoint} {
+      flex: 1 1 0;
+      max-width: calc(100% - #{$gutter*2});
+    }
+    @for $i from 1 through $columns {
+      .bag-#{$breakpoint}-#{$i} {
+        flex: 0 0 calc(#{percentage($i/$columns)} - #{$gutter*2});
+        max-width: calc(#{percentage($i/$columns)} - #{$gutter*2});
+      }
+    }
+  }
+}
