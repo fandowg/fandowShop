@@ -1,9 +1,12 @@
-.box{
-  width: 300px;
-  height: 300px;
-  padding: $spacer-box;
-@include border;
-@include xl{
-  padding: $spacer-box-m;
+@each $key, $value in $grid-breakpoints {
+  .container-#{$key}{
+    max-width:  $value;
+    padding:0 $spacer-wrapper;
+    margin: 0 auto;
+  }
 }
+
+.container-full{
+  padding:0 $spacer-wrapper;
+  width: 100%;
 }

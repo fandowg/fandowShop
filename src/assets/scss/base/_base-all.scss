@@ -1,49 +1,45 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box; // 1
-}
-
-html{
+html {
   font-size: $font-size-base;
 }
 
 body {
   font-family: Arial, Helvetica, 微軟正黑體, sans-serif;
-  color: $gray-800;  
+  color: $gray-800;
+  line-height:$line-height-base;
 }
 
 img {
   max-width: 100%;
   height: auto;
-  vertical-align: middle;  
+  vertical-align: middle;
 }
 
 a {
-  color: #333;
+  color: #666;
   text-decoration: none;
   @include transition;
 
   &:hover,
   &:focus &:active {
-    color: #333;
-    // opacity: 1;
+    color: #666;
+    text-decoration: none;
+
   }
 }
-.for-mobile-lg{
+.for-mobile-lg {
   display: none !important;
-  @include lg{
+  @include max(lg) {
     display: block !important;
   }
 
 }
 
-.for-desk-lg{
+.for-desk-lg {
 
-  @include lg{
+  @include max(lg) {
     display: none !important;
   }
-  
+
 }
 
 ul,
@@ -60,45 +56,46 @@ ol {
   padding-left: 20px;
 }
 
-h1,h2,h3,h4,h5,h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-top: 0;
-  margin-bottom:$spacer;
+  margin-bottom: $spacer;
   font-weight: normal;
 }
 
-h1{
+h1 {
   font-size: $h1-font-size;
 }
 
-h2{
+h2 {
   font-size: $h2-font-size;
 }
 
-h3{
+h3 {
   font-size: $h3-font-size;
 }
 
-h4{
+h4 {
   font-size: $h4-font-size;
 }
 
-h5{
+h5 {
   font-size: $h5-font-size;
 }
 
-h6{
+h6 {
   font-size: $h6-font-size;
 }
 
-p{
+p {
   margin-top: 0;
-  margin-bottom: $font-size-base;
+  margin-bottom: $spacer;
   font-size: $p-font-size;
-}
-
-@media(max-width:990px) {
-}
-
-@media(max-width:768px)and(min-width:375px){
-
+  @include max(lg) {
+    font-size: $font-size-base;
+  }
 }

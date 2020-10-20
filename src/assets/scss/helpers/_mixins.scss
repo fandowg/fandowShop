@@ -1,25 +1,74 @@
-// @mixin border($color,$border-width){
-//   border:$color $border-width solid;
+// @mixin min ($breakpoint) {  
+//   $min: 0;
+//   @if map-has-key($grid-breakpoints,$breakpoint){
+//     $min: map-get($grid-breakpoints, $breakpoint);
+//   } @else{
+//     $min:$breakpoint#{px};
+//   }
+//   @media(min-width:$min) {
+//     @content;
+//   }
+  
 // }
-@mixin border{
-  border:$gray-400 1px solid;
+
+// @mixin max ($breakpoint) {
+//   $max: 0;
+//   @if map-has-key($grid-breakpoints,$breakpoint){
+//     $max: map-get($grid-breakpoints, $breakpoint);
+//   } @else{
+//     $max:$breakpoint#{px};
+//   }
+//   @media(max-width:$max) {
+//     @content;
+//   }
+// }
+@mixin min ($breakpoint) {
+  $has-key: map-has-key($grid-breakpoints,$breakpoint);
+  $get-value: map-get($grid-breakpoints, $breakpoint);  
+  $min:if($has-key,$get-value,$breakpoint#{px}); 
+  @media(min-width:$min) {
+    @content;
+  }  
 }
 
-@mixin border-bottom{
-  border-bottom:$gray-400 1px solid;
+@mixin max ($breakpoint) {
+  $has-key: map-has-key($grid-breakpoints,$breakpoint);    
+  $get-value: map-get($grid-breakpoints, $breakpoint);  
+  $max:if($has-key,$get-value,$breakpoint#{px}); 
+  @media(max-width:$max) {
+    @content;
+  }  
+}
+
+@mixin border {
+  border: $gray-400 1px solid;
+}
+
+@mixin box-shadow{
+  box-shadow: 0 0 2px #ccc;
+}
+
+@mixin border-bottom {
+  border-bottom: $gray-400 1px solid;
+}
+
+@mixin skewX_l {
+  transform: skewX(-6deg);
+}
+@mixin skewX {
+  transform: skewX(-5deg);
 }
 
 
-
-@mixin transition(){
+@mixin transition() {
   transition: all .35s;
 }
 
-@mixin linear-gradient{
-  background: linear-gradient(to bottom,#fff ,#45a2ff 20%,#3399ff);
+@mixin linear-gradient {
+  background: linear-gradient(to bottom, #fff, #45a2ff 20%, #3399ff);
 }
 
-@mixin text-no{
+@mixin text-no {
   font: 0/0 a;
 }
 
@@ -34,75 +83,3 @@
 //     @include media-breakpoint($value)
 //   }  
 // }
-
-@mixin xl {
-  @media(max-width:map-get($grid-breakpoints,xl)){
-    @content;
-  }
-}
-@mixin lg {
-  @media(max-width:map-get($grid-breakpoints,lg)){
-    @content;
-  }
-}
-@mixin md {
-  @media(max-width:map-get($grid-breakpoints,md)){
-    @content;
-  }
-}
-@mixin sm {
-  @media(max-width:map-get($grid-breakpoints,sm)){
-    @content;
-  }
-}
-
-@mixin xl-min {
-  @media(min-width:map-get($grid-breakpoints,xl)){
-    @content;
-  }
-}
-@mixin lg-min {
-  @media(min-width:map-get($grid-breakpoints,lg)){
-    @content;
-  }
-}
-@mixin md-min {
-  @media(min-width:map-get($grid-breakpoints,md)){
-    @content;
-  }
-}
-@mixin sm-min {
-  @media(min-width:map-get($grid-breakpoints,sm)){
-    @content;
-  }
-}
-
-@mixin button-variant($color){
-  background-color: $color;
-  color:$white;
-  &:hover,
-  &.hover {
-
-  }
-  &:focus,
-  &.focus {
-    outline: 0;
-    // box-shadow: $btn-focus-box-shadow;
-  }
-  // Disabled comes first so active can properly restyle
-  &.disabled,
-  &:disabled {
-    opacity:$btn-disabled-opacity ;
-    // @include box-shadow(none);
-  }
-  &:not(:disabled):not(.disabled) {
-    cursor: if($enable-pointer-cursor-for-buttons, pointer, null);
-    &:active,
-    &.active {
-      // background-color:#000 ;
-      &:focus {        
-      }
-    }
-  }
-
-}
