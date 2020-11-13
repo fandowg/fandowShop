@@ -6,6 +6,10 @@
 @import "containers";
 @import "buttons";
 
+@include grid(66,md);
+@include grid(66,0);
+@include grid(34,0);
+
 .nav{
   display: flex;
   align-items: center;

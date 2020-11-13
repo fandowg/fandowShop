@@ -1,3 +1,13 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box; 
+}
+
+:root {
+  
+}
+
 html {
   font-size: $font-size-base;
 }
