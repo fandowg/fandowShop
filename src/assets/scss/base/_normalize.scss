@@ -11,7 +11,6 @@
 html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
-  -webkit-tap-highlight-color: transparent;
 }
 
 /* Sections
@@ -38,10 +37,10 @@ main {
  * `article` contexts in Chrome, Firefox, and Safari.
  */
 
-// h1 {
-//   font-size: 2em;
-//   margin: 0.67em 0;
-// }
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
 
 /* Grouping content
    ========================================================================== */

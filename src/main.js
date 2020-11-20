@@ -10,6 +10,10 @@ import { ValidationObserver } from 'vee-validate';
 import { localize } from 'vee-validate';
 import TW from './assets/validate/zh_TW.json'
 import { required, email, digits } from 'vee-validate/dist/rules';
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import swiper, { Navigation, Pagination, Autoplay } from 'swiper'
+import 'swiper/swiper-bundle.css'
+
 
 
 import App from './App.vue'
@@ -37,8 +41,10 @@ Vue.use(VModal, {
     draggable: false,
   }
 })
-Vue.use(VueAxios, axios)
-axios.defaults.withCredentials = true
+Vue.use(VueAxios, axios);
+axios.defaults.withCredentials = true;
+Vue.use(VueAwesomeSwiper);
+swiper.use([Navigation, Pagination, Autoplay]);
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 localize('zh_TW',TW);

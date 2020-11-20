@@ -1,0 +1,6 @@
+.nav{
+  z-index: map-get($z-index, header);
+}
+.menu-list{
+  z-index: map-get($z-index, menu-list);
+}

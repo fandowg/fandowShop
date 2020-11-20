@@ -17,6 +17,7 @@
   }
 }
 %bag {
+  position: relative;
   width: calc(100% - var(--grid-gap));
   margin-left: $gutter;
   margin-right: $gutter;

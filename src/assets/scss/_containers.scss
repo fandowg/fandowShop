@@ -1,8 +1,18 @@
+@mixin container($width){
+  .container-#{$width}{
+    max-width: $width#{px};
+    padding:0 $spacer-wrapper;
+    margin-left:auto;
+    margin-right: auto;
+  }
+}
+
 @each $key, $value in $grid-breakpoints {
   .container-#{$key}{
     max-width:  $value;
     padding:0 $spacer-wrapper;
-    margin: 0 auto;
+    margin-left:auto;
+    margin-right: auto;
   }
 }
 
