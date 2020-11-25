@@ -1,4 +1,4 @@
-@mixin button-variant($color,$hover-color:lighten($color, 7.5%)) {
+@mixin button-variant($color,$hover-color:lighten($color, 20%)) {
   background-color: $color;
   border-color: $color;
   color: color-yiq($color);
@@ -190,15 +190,16 @@ fieldset:disabled a.btn {
 
 //客製化
 
-.btn-sm {
-  font-size: $btn-font-size-sm;
-  padding: 0.6rem 0.8rem;
-}
+.btn-wrapper{
+  text-align: center;
+  padding-top: $spacer-sm;
 
+}
 
 .btn-full {
   width: 100%;
-  border-radius: 0;
+  display: block;
+  // border-radius: 0;
 }
 .btn-outline-info {
   @include border;

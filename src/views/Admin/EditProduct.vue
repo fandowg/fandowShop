@@ -117,6 +117,16 @@
             />
             <label for="is_enabled">是否啟用</label>
           </div>
+          <div class="one">
+            <input
+              type="checkbox"
+              id="hotProducts"
+              v-model="editTemp.hotProducts"
+              :true-value="1"
+              :false-value="0"
+            />
+            <label for="hotProducts">是否熱銷</label>
+          </div>
         </div>
         <!-- <button @click="updateProduct">送出</button> -->
         <button @click="handleSubmit(updateProduct)">送出</button>

@@ -14,240 +14,7 @@
 
 @include container(1800);
 
-.nav {
-  display: flex;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  // height: 50px;
-  // @include box-shadow;
-  // overflow-x: hidden;
-  // height: 50px;
-  justify-content: space-between;
-  padding: 0 $spacer;
-  &.scroll{
-    background-color: rgba(#fff,0.6);
-  }
-  @include min(md) {
-    padding: $spacer-s $spacer*2;
-  }
-  @include max(sm) {
-    // background-color: rgba($white,0.8);
-
-  }
-  .side-content {
-    display: flex;
-    align-items: center;
-  }
-  .logo {
-    width: 100px;
-
-    padding: $spacer-s;
-    @include min(md) {
-      margin-right: $spacer;
-    }
-
-  }
-  .side-menu {
-    display: flex;
-    margin-bottom: 0;
-
-    li {
-      a {
-        padding: 0.5rem $spacer-s;
-        @include max(md) {
-          padding: 0.5rem 0.3rem;
-        }
-      }
-      @include max(md) {
-        &+li {
-          // padding-left: 0.6rem;
-        }
-      }
-    }
-  }
-
-}
-
-.mobile-menu-toggle {
-  border: 0;
-
-  background: none;
-  @include min(md) {
-    display: none;
-  }
-}
-
-.menu-close {
-  position: absolute;
-  right: $spacer;
-  top: $spacer;
-  border: 0;
-
-  background: none;
-  @include min(md) {
-    display: none;
-  }
-}
-.menu-list {
-  // width: 20%;
-  display: flex;
-  margin-right: auto;
-  margin-bottom: 0;
-  @include max(md) {
-    transform: translateX(-120%);
-    padding-top: 3rem;
-    position: fixed;
-    right: 0;
-    display: block;
-    left: 0;
-    top: 0;
-    background-color: $light-bg;
-    height: 100%;
-    @include transition;
-    &.active {
-      transform: translateX(0);
-    }
-  }
-  // flex-wrap: wrap;
-  &__item {
-    @include max(md) {
-      text-align: center;
-    }
-  }
-  &__link {
-    display: block;
-    padding: 0.5rem $spacer-s;
-    &+&__link {
-      // padding-left: $spacer;
-    }
-  }
-}
-.dropdown-wrapper {
-  position: relative;
-  .dropdown-btn {}
-  .dropdown-box {
-    padding: $spacer-s 0;
-    background-color: $white;
-    min-width: 150px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    transform: translate3d(0, 38px, 0);
-    display: none;
-    &.active {
-      display: block;
-    }
-    &__item {
-      display: block;
-      white-space: nowrap;
-      padding: $spacer-s $spacer*1.5;
-
-    }
-  }
-
-}
-.top-banner {
-  margin-bottom: $spacer-bottom;
-  &__item {
-    height: 700px;
-    background: no-repeat 20% 50%;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    
-    @include max(sm) {
-      height: 40vh;
-      align-items: flex-end;
-      background-position: center;
-      justify-content: center;
-    }
-
-  }
-  &__inner {
-    margin-left: 10vw;
-    @include max(sm) {
-      padding-bottom: $spacer-bottom;
-      text-align: center;
-      margin-left: 0;
-    }
-    h2 {
-      font-size: $h1-font-size;
-      @include max(sm) {
-        color: $white;
-        font-size: $h3-font-size;
-        @include text-shadow;
-      }
-    }
-    p {
-      font-size: $h3-font-size;
-      @include max(sm) {
-        color: $white;
-        font-size: $h4-font-size;
-        @include text-shadow;
-      }
-    }
-
-  }
-}
-.swiper-button-next,
-.swiper-button-prev {
-  width: 50px;
-  @include max(sm) {
-    display: none;
-  }
-
-
-}
-.swiper-button-next:after,
-.swiper-button-prev:after {
-  display: none;
-}
-
-.swiper-pagination-bullet {
-  width: 10px;
-  height: 10px;
-  display: inline-block;
-  border-radius: 100%;
-  background: $black;
-  opacity: 0.2;
-}
-.swiper-pagination-bullet-active {
-  background: $secondary;
-  opacity: 1;
-}
-
-//區塊
-.section {
-  margin-bottom: $spacer-bottom;
-  padding-top: $spacer*2;
-  padding-bottom: $spacer*2;
-  h2 {
-    font-size: $h2-font-size;
-    text-align: center;
-    margin-bottom: $spacer*3;
-  }
-  &__block{
-
-  }
-  &__item{
-    h3{
-      font-size: $h4-font-size ;
-      line-height: 1.5;
-    }
-    &__img{
-      margin-bottom: $spacer-s;
-
-    }
-    &__content{
-
-    }
-    
-  }
-}
-
+//覆蓋套件的css
 .vm--modal {
   // display: flex;
   // justify-content: center;
@@ -317,6 +84,336 @@
 // .vm-transition--modal-v-enter-to{
 //   opacity: 1;
 // }
+
+.to-top-btn{
+  display: none;
+  position: fixed;
+  right: $spacer-wrapper;
+  bottom:$spacer-wrapper;
+  &.show{
+    display: block;
+  }
+
+}
+
+.footer{
+  background-color: #000;
+  color: #fff;
+  padding: $spacer-bg $spacer-wrapper;
+  
+  @include min(md){
+    padding: $spacer-bg $spacer-bg-2;
+    display: flex;
+   justify-content: space-between;     
+  }
+  &__link{
+    color: #fff;
+    &:hover{
+      color:$gray-300;
+    }
+  }
+  &__word{
+    display: inline-block;
+    @include min(md){
+    padding-left: $spacer-wrapper;
+    }
+    @include max(md){
+      padding-top: $spacer-sm;
+
+    }
+    
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  // height: 50px;
+  // @include box-shadow;
+  // overflow-x: hidden;
+  // height: 50px;
+  justify-content: space-between;
+  padding: 0 $spacer-wrapper;
+  @include transition;
+  &.bg-white {
+    background-color: rgba(#fff, 1);
+    @include border-bottom;
+  }
+  @include min(md) {
+    padding: $spacer-sm $spacer-bg-1;
+  }
+  @include max(sm) {
+    // background-color: rgba($white,0.8);
+
+  }
+  .side-content {
+    display: flex;
+    align-items: center;
+  }
+  .logo {
+    width: 100px;
+
+    padding: $spacer-sm;
+    @include min(md) {
+      margin-right: $spacer-wrapper;
+    }
+
+  }
+  .side-menu {
+    display: flex;
+    margin-bottom: 0;
+
+    li {
+      a {
+        padding:$spacer-sm-1 $spacer-sm;
+        @include max(md) {
+          padding: $spacer-sm-1 $spacer-sm-2;
+        }
+      }
+      @include max(md) {
+        &+li {
+          // padding-left: 0.6rem;
+        }
+      }
+    }
+  }
+
+}
+.mobile-menu-toggle {
+  border: 0;
+  background: none;
+  padding: 0;
+  @include min(md) {
+    display: none;
+  }
+}
+.menu-close {
+  position: absolute;
+  right: $spacer-wrapper;
+  top: $spacer-wrapper;
+  border: 0;
+  background: none;
+  @include min(md) {
+    display: none;
+  }
+}
+.menu{  
+  margin-right: auto; 
+  @include max(md) {
+    transform: translateX(-120%);
+    padding-top: $spacer*3;
+    position: fixed;
+    right: 0;
+   
+    left: 0;
+    top: 0;
+    background-color: $light-bg;
+    height: 100%;
+    @include transition;
+    &.active {
+      transform: translateX(0);
+    }
+  }
+  &__list{
+    display: flex;
+    margin-bottom: 0;
+    @include max(md) {
+      display: block;
+    }
+  }
+  // flex-wrap: wrap;
+  &__item {
+    @include max(md) {
+      text-align: center;
+    }
+  }
+  &__link {
+    display: block;
+    padding: $spacer-sm-1 $spacer-sm;
+    &+&__link {
+      // padding-left: $spacer;
+    }
+  }
+}
+.dropdown-wrapper {
+  position: relative;
+  .dropdown-btn {}
+  .dropdown-box {
+    @include border;
+    padding: $spacer-sm 0;
+    background-color: $white;
+    min-width: 150px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate3d(0, 38px, 0);
+    display: none;
+    &.active {
+      display: block;
+    }
+    &__item {
+      display: block;
+      white-space: nowrap;
+      padding: $spacer-sm $spacer-bg;
+
+    }
+    &.navbar-dropdown{
+      @include max(md){
+        position: static;
+        transform: translate3d(0, 0, 0);
+        background-color: transparent;
+        border: 0;
+      }
+    }
+  }
+}
+.top-banner {
+  margin-bottom: $spacer-bottom;
+  &__item {
+    height: 700px;
+    background: no-repeat 20% 50%;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+
+    @include max(sm) {
+      height: 40vh;
+      align-items: flex-end;
+      background-position: center;
+      justify-content: center;
+    }
+
+  }
+  &__inner {
+    margin-left: 10vw;
+    @include max(sm) {
+      padding-bottom: $spacer-bottom;
+      text-align: center;
+      margin-left: 0;
+    }
+    h2 {
+      font-size: $h1-font-size;
+      @include max(sm) {
+        color: $white;
+        font-size: $h3-font-size;
+        @include text-shadow;
+      }
+    }
+    p {
+      font-size: $h3-font-size;
+      @include max(sm) {
+        color: $white;
+        font-size: $h4-font-size;
+        @include text-shadow;
+      }
+    }
+
+  }
+}
+.swiper-button-next,
+.swiper-button-prev {
+  width: 50px;
+  @include max(sm) {
+    display: none;
+  }
+
+
+}
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  display: none;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 100%;
+  background: $black;
+  opacity: 0.2;
+}
+.swiper-pagination-bullet-active {
+  background: $secondary;
+  opacity: 1;
+}
+
+//小東西
+.sub-title{
+  margin-bottom: $spacer-sm-2;
+  color: $secondary;
+  font-weight: $font-weight-bold;
+  display: block;
+
+}
+
+//區塊
+.section {
+  margin-bottom: $spacer-bottom;
+  padding-top: $spacer-bg-1;
+  padding-bottom: $spacer-bg-1;
+  h2 {
+    font-size: $h2-font-size;
+    text-align: center;
+    margin-bottom:$spacer-bg-1;
+  }
+  &__block {}
+  &__item {
+    h3 {
+      font-size: $h4-font-size;
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+    &__img {
+      margin-bottom: $spacer-sm;
+    }
+    &__content {}
+
+  }
+}
+
+.product{
+  &__item{
+    margin-bottom: $spacer-bottom;
+  }
+  &__img{
+
+  }
+  &__content{
+    padding:0 $spacer-wrapper;
+
+  }
+  &__title{
+    font-size: $h5-font-size;
+    line-height: 1.5;
+  }
+  &__bottom{
+    // *{
+    //   padding-left: $spacer-sm-2;
+    //   padding-right: $spacer-sm-2 ;
+    // }
+    font-weight: $font-weight-bold;
+    font-size: $h5-font-size;
+    @include min(md){
+      display: flex;
+      justify-content:space-between;
+    }
+  }
+  &__price{
+color: $gray-400;
+text-decoration:line-through;
+  }
+  &__origin_price{
+color: $secondary;
+  }
+  &__addToCart{
+
+  }
+}
+
 
 .text-danger {
   color: #c00;

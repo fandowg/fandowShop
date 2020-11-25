@@ -7,6 +7,8 @@
     </loading>
      <Navbar />
     <router-view/>
+    <Footer/>
+    <a href="" @click.prevent="toTop" class="to-top-btn" :class="{'show':scrollPosition > 100}"><img src="@/assets/images/totop.svg" alt=""></a>
   </div>
 </template>
 
@@ -17,10 +19,13 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+import Footer from "@/components/Footer.vue";
 export default {
   data(){
     return{
       isLoading: false,
+      scrollPosition:0,
+      // toTop:false,
     }
     
   },
@@ -29,17 +34,28 @@ export default {
       this.isLoading = v;
      
     },
+    toTop(){
+      document.documentElement.scrollTop = 0;
+    }
   },
   created(){
     this.$bus.$on('changeLoading',(v)=>{
       this. changeLoading(v);
-    })
+    });
+    
+  },
+  mounted() {
+     window.addEventListener('scroll',()=>{
+    this.scrollPosition = window.pageYOffset;
+ 
+    });
   },
   beforeDestroy(){
     this.$bus.$off('changeLoading');
   },
    components: {
     Navbar,
+    Footer
   },
 };
 </script>

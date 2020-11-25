@@ -59,11 +59,15 @@ $yiq-contrasted-threshold: 180 !default;
 $yiq-text-dark: $gray-900 !default;
 $yiq-text-light: $white !default;
 
-$spacer: 0.9375rem !default;
-$spacer-s:0.625rem;
-$spacer-bottom:$spacer *2 !default;
-// $spacer-bottom-s:$spacer * 0.9375;
-$spacer-wrapper:$spacer !default;
+$spacer: 1rem !default;
+$spacer-sm:$spacer*0.625;
+$spacer-sm-1:$spacer*0.5;
+$spacer-sm-2:$spacer*0.3;
+$spacer-bg: $spacer *1.5 ;
+$spacer-bg-1: $spacer *1.875 ;
+$spacer-bg-2:$spacer *2.8125 ;
+$spacer-bottom:$spacer-bg-1 ;
+$spacer-wrapper:$spacer*0.9375 ;
 $spacer-box:2rem 2rem;
 $spacer-box-s:1rem 1rem;
 $spacer-box-m:1rem 1rem;
@@ -81,10 +85,10 @@ $font-size-sm:                $font-size-base * .875 !default;
 $small-font-size:             80% !default;
 
 $h1-font-size:$font-size-base * 3.5 !default;
-$h2-font-size:$font-size-base * 3 !default;
+$h2-font-size:$font-size-base * 2.5 !default;
 $h3-font-size:$font-size-base * 2 !default;
 $h4-font-size:$font-size-base * 1.5 !default;
-$h5-font-size:$font-size-base * 1.125 !default;
+$h5-font-size:$font-size-base * 1.3125 !default;
 $h6-font-size:$font-size-base !default;
 
 $p-font-size:$h5-font-size;
@@ -454,8 +458,8 @@ $btn-font-size:$h5-font-size !default;
 // $btn-border-radius: .25rem !default;
 $btn-border-radius: 0!default;
 
-$btn-padding-y-sm: 0.25rem !default;
-$btn-padding-x-sm: 0.7rem !default;
+$btn-padding-y-sm: 0.1rem !default;
+$btn-padding-x-sm: 0.4rem !default;
 $btn-font-size-sm: $font-size-base !default;
 // $btn-border-radius-sm: .2rem !default;
 $btn-border-radius-sm: 0 !default;
