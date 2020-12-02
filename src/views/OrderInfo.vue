@@ -2,6 +2,14 @@
   <div class="container-xl page-wrapper">
     <div class="buying-page">
       <h1>購物車清單</h1>
+      
+    <div class="stap">
+      <ul>
+        <li>1.填寫資料</li>
+        <li>2.完成付款</li>
+        <li>3.訂單完成</li>
+      </ul>
+    </div>
       <div class="cart">
         <div class="cart__head bag-row no-gutters">
           <div class="cart__item">產品</div>
@@ -17,10 +25,10 @@
               />
             </div>
             <div class="bag-6 bag-row no-gutters cart__group">
-              <div class="cart__item cart__title bag-md-8">
+              <div class="cart__item cart__title bag-md-9">
                 750ml eddy+ 多水吸管水瓶 骷髏黑
               </div>
-              <div class="cart__item cart__num bag-md-4">
+              <div class="cart__item cart__num bag-md-3">
                 <button class="btn btn-outline-primary btn-sm">-</button>
                 <span class="cart__num__content">2</span>
                 <button class="btn btn-outline-primary btn-sm">+</button>
@@ -28,8 +36,8 @@
             </div>
 
             <div class="bag-3 bag-row no-gutters cart__group">
-              <div class="cart__item bag-md-9 cart__price">NT$560</div>
-              <div class="cart__item bag-md-3 cart__delete">
+              <div class="cart__item bag-md-6 cart__price">NT$560</div>
+              <div class="cart__item bag-md-6 cart__delete">
                 <button class="btn">
                   <i class="fas fa-trash"></i>
                 </button>
@@ -69,18 +77,10 @@
       </div>
       <div class="buying-btn">
         <a class="btn btn-outline-primary">繼續購物</a>
-        <router-link to="/order-info" class="btn btn-primary">前往結帳</router-link>
-       
+        <a class="btn btn-primary">前往結帳</a>
       </div>
     </div>
 
-    <!-- <div class="stap">
-      <ul>
-        <li>1.確認商品</li>
-        <li>2.填寫資料</li>
-        <li>3.完成付款</li>
-      </ul>
-    </div> -->
     <!-- <form >
       <h2>訂購資料</h2>
 

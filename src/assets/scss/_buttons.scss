@@ -81,7 +81,7 @@
   border: $btn-border-width solid transparent; 
   @include transition;
   @include max(md) {
-    font-size: $font-size-base !important;
+    // font-size: $font-size-base !important;
   }
   //客製化樣式
   // @include skewX;

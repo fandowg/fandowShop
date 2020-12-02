@@ -8,10 +8,10 @@
 @import "forms";
 @import "z-index";
 
-@include grid(66, md);
-@include grid(69, 0);
-@include grid(14.5, 0);
-@include grid(9, 0);
+// @include grid(66, md);
+// @include grid(69, 0);
+
+// @include grid(9, 0);
 
 @include container(1800);
 
@@ -534,9 +534,7 @@
   }
 }
 .nav-menu {
-
   overflow-x: scroll;
-
   scrollbar-width: none;
   @include max(md) {
     margin-bottom: $spacer;
@@ -600,10 +598,13 @@
   .form-control {
     margin-right: $spacer;
     @include max(md) {
-      flex: 1 1 auto;
+      // flex: 1 1 auto;
     }
     height: 41px;
-    width: auto;
+    // width: auto;
+  }
+  .btn{
+    flex-shrink: 0;
   }
 }
 .detail {
@@ -647,35 +648,41 @@
       .form-control {
         width: 120px;
       }
-
     }
-
   }
   .product__origin_price {
-
     margin-bottom: $spacer-bottom;
   }
 }
-
 .buying-page {
   margin-top: $spacer-bg-2;
+  min-height: 70vh;
   h1 {
-    font-size: $h2-font-size;
+    font-size: $h3-font-size;
     margin-bottom: $spacer-bottom;
   }
 }
 
 .cart {
   text-align: center;
+  margin-bottom: $spacer-bottom;
   &__head {
     @include border-top;
     padding: $spacer;
     font-weight: $font-weight-bolder;
     // text-align: center;
     .cart__item {
-      &:first-child {
+      &:nth-child(1) {
         padding-left: $spacer-bg-1;
+        width: 58%;
         text-align: left;
+      }
+      &:nth-child(2) {
+        width: 16.5%;       
+      }
+      &:nth-child(3) {     
+        width: 19%;
+        text-align: right;
       }
     }
     @include max(md){
@@ -696,9 +703,19 @@
   &__img {
     img{
       width: 100px;
-    }
-    
+    }    
     text-align: left;
+  }
+  &__title{
+    text-align: left;
+  }
+  &__num{
+    @include max(md){
+    text-align: left;
+    }
+    &__content{
+      padding:0 $spacer-sm;
+    }
   }
   &__row {
     position: relative;
@@ -708,6 +725,7 @@
     @include border-top;
     @include max(md){
       align-items: stretch;
+      padding:$spacer 0;
     }
     .cart__item {
 
@@ -740,11 +758,7 @@
       align-items: stretch;
     }
   }
-  &__total {
-    padding: $spacer;
-    text-align: right;
-
-  }
+  
   &__delete{
     text-align: right;  
     @include max(md){
@@ -753,10 +767,57 @@
      
   }
   &__price{
+    text-align: right;
     @include max(md){
     order: 1;
     }
   }
+  &__total {
+    // padding: $spacer;
+    text-align: right; 
+    &__row{
+      margin-bottom: $spacer;
+      display: flex;
+      justify-content: space-between;
+      &__title{
+        margin-right: $spacer;
+        // flex: 1 1 120px;
+      }
+      &__content{
+        // flex: 1 1 120px;
+
+      }
+    }  
+
+  }
+  &__bottom{
+    padding-top: $spacer;  
+    // padding-bottom: $spacer;
+    @include border-bottom;  
+    @include min(md){
+      display: flex;
+      // align-items: center;
+      justify-content: space-between;
+      // widsth: 86.5%;
+      padding-right: 7.3%;
+    }
+  }
+}
+.buying-btn{
+  display: flex;
+  justify-content: flex-end;
+  @include min(md){
+    padding-right: 7.3%;
+  }
+  .btn{
+   + .btn{
+     margin-left: $spacer;
+   } 
+  }
+
+}
+.coupon{
+  margin-bottom: $spacer;
 }
 
 .text-danger {
