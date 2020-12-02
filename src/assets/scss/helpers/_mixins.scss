@@ -41,7 +41,15 @@
 }
 
 @mixin border {
-  border: $gray-400 1px solid;
+  border: $border-color 1px solid;
+}
+
+@mixin border-bottom {
+  border-bottom: $border-color 1px solid;
+}
+
+@mixin border-top {
+  border-top: $border-color 1px solid;
 }
 
 @mixin box-shadow{
@@ -51,11 +59,6 @@
 @mixin text-shadow {
   text-shadow: 0 0 5px #000;
 }
-
-@mixin border-bottom {
-  border-bottom: $gray-400 1px solid;
-}
-
 
 @mixin skewX_l {
   transform: skewX(-6deg);

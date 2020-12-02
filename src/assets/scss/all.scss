@@ -9,10 +9,51 @@
 @import "z-index";
 
 @include grid(66, md);
-@include grid(66, 0);
-@include grid(34, 0);
+@include grid(69, 0);
+@include grid(14.5, 0);
+@include grid(9, 0);
 
 @include container(1800);
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  padding: $spacer 0 0 2.5rem;
+  @include max(md) {
+    padding-left: $spacer;
+  }
+  margin-bottom: $spacer-bottom;
+  font-size: $font-size-base;
+  list-style: none;
+  background-color: $white;
+  border-radius: 0;
+}
+
+.breadcrumb__item {
+  display: flex;
+  a {
+    &:hover,
+    &:active {
+      color: $secondary;
+    }
+  }
+
+  // The separator between breadcrumbs (by default, a forward-slash: "/")
+  +.breadcrumb__item {
+    padding-left: $spacer-sm;
+
+    &::before {
+      display: inline-block; // Suppress underlining of the separator in modern browsers
+      padding-right: $spacer-sm;
+      color: $body-color;
+      content: quote("/");
+    }
+  }
+  &.active {
+    color: $secondary;
+  }
+}
+
 
 //覆蓋套件的css
 .vm--modal {
@@ -85,47 +126,47 @@
 //   opacity: 1;
 // }
 
-.to-top-btn{
+.to-top-btn {
   display: none;
   position: fixed;
-  right: $spacer-wrapper;
-  bottom:$spacer-wrapper;
-  &.show{
+  right: $spacer;
+  bottom: $spacer;
+  &.show {
     display: block;
   }
 
 }
 
-.footer{
+.footer {
   background-color: #000;
   color: #fff;
-  padding: $spacer-bg $spacer-wrapper;
-  
-  @include min(md){
+  padding: $spacer-bg $spacer;
+
+  @include min(md) {
     padding: $spacer-bg $spacer-bg-2;
     display: flex;
-   justify-content: space-between;     
+    justify-content: space-between;
   }
-  &__link{
+  &__link {
     color: #fff;
-    &:hover{
-      color:$gray-300;
+    &:hover {
+      color: $gray-300;
     }
   }
-  &__word{
+  &__word {
     display: inline-block;
-    @include min(md){
-    padding-left: $spacer-wrapper;
+    @include min(md) {
+      padding-left: $spacer;
     }
-    @include max(md){
+    @include max(md) {
       padding-top: $spacer-sm;
 
     }
-    
+
   }
 }
 
-.nav {
+.navbar {
   display: flex;
   align-items: center;
   position: fixed;
@@ -137,10 +178,11 @@
   // overflow-x: hidden;
   // height: 50px;
   justify-content: space-between;
-  padding: 0 $spacer-wrapper;
+  padding: 0 $spacer;
   @include transition;
   &.bg-white {
-    background-color: rgba(#fff, 1);
+    // background-color: rgba(#fff, 1);
+    background-color: $gray-100;
     @include border-bottom;
   }
   @include min(md) {
@@ -159,7 +201,7 @@
 
     padding: $spacer-sm;
     @include min(md) {
-      margin-right: $spacer-wrapper;
+      margin-right: $spacer;
     }
 
   }
@@ -169,7 +211,7 @@
 
     li {
       a {
-        padding:$spacer-sm-1 $spacer-sm;
+        padding: $spacer-sm-1 $spacer-sm;
         @include max(md) {
           padding: $spacer-sm-1 $spacer-sm-2;
         }
@@ -193,22 +235,22 @@
 }
 .menu-close {
   position: absolute;
-  right: $spacer-wrapper;
-  top: $spacer-wrapper;
+  right: $spacer;
+  top: $spacer;
   border: 0;
   background: none;
   @include min(md) {
     display: none;
   }
 }
-.menu{  
-  margin-right: auto; 
+.menu {
+  margin-right: auto;
   @include max(md) {
     transform: translateX(-120%);
     padding-top: $spacer*3;
     position: fixed;
     right: 0;
-   
+
     left: 0;
     top: 0;
     background-color: $light-bg;
@@ -218,7 +260,7 @@
       transform: translateX(0);
     }
   }
-  &__list{
+  &__list {
     display: flex;
     margin-bottom: 0;
     @include max(md) {
@@ -261,8 +303,8 @@
       padding: $spacer-sm $spacer-bg;
 
     }
-    &.navbar-dropdown{
-      @include max(md){
+    &.navbar-dropdown {
+      @include max(md) {
         position: static;
         transform: translate3d(0, 0, 0);
         background-color: transparent;
@@ -342,7 +384,7 @@
 }
 
 //小東西
-.sub-title{
+.sub-title {
   margin-bottom: $spacer-sm-2;
   color: $secondary;
   font-weight: $font-weight-bold;
@@ -358,7 +400,7 @@
   h2 {
     font-size: $h2-font-size;
     text-align: center;
-    margin-bottom:$spacer-bg-1;
+    margin-bottom: $spacer-bg-1;
   }
   &__block {}
   &__item {
@@ -374,46 +416,348 @@
 
   }
 }
-
-.product{
-  &__item{
+.product {
+  &__item {
+    padding: $spacer;
     margin-bottom: $spacer-bottom;
+    position: relative;
+    // border: transparent 1px solid;
+    @include transition;
+    @include max(md) {
+      padding: 0;
+    }
+    cursor: pointer;
+    &:hover,
+    &:active {
+      // @include border;
+      .product__img {
+        @include transition;
+        transform: scale(1.05);
+      }
+    }
   }
-  &__img{
-
+  &__img {
+    position: relative;
   }
-  &__content{
-    padding:0 $spacer-wrapper;
-
+  &__content {
+    position: relative;
   }
-  &__title{
-    font-size: $h5-font-size;
+  &__title {
+    font-size: $h6-font-size;
     line-height: 1.5;
   }
-  &__bottom{
+  &__bottom {
     // *{
     //   padding-left: $spacer-sm-2;
     //   padding-right: $spacer-sm-2 ;
     // }
+
+
+    display: flex;
+    // justify-content: space-between;
+
+  }
+  &__price {
+    color: $gray-400;
+    text-decoration: line-through;
+    padding-right: $spacer;
+    display: inline-block;
     font-weight: $font-weight-bold;
-    font-size: $h5-font-size;
-    @include min(md){
-      display: flex;
-      justify-content:space-between;
+    font-size: $h6-font-size;
+    @include max(md) {
+      font-size: 14px;
     }
   }
-  &__price{
-color: $gray-400;
-text-decoration:line-through;
+  &__origin_price {
+    color: $secondary;
+    font-weight: $font-weight-bold;
+    display: inline-block;
+    font-size: $h5-font-size;
+    @include max(md) {
+      font-size: $h6-font-size;
+    }
   }
-  &__origin_price{
-color: $secondary;
-  }
-  &__addToCart{
-
+  &__addToCart {
+    margin-left: $spacer;
+    font-size: $font-size-sm;
+    @include max(md) {
+      position: absolute;
+      right: 0;
+      margin-left: 0;
+      top: -40px;
+    }
   }
 }
 
+.page-wrapper {
+  padding-top: 65px;
+  @include max(md) {
+    padding-top: 45px;
+  }
+  padding-bottom: $spacer-bottom;
+}
+.side-box {
+  display: flex;
+  align-items: center;
+}
+
+.menu-block {
+  margin-bottom: $spacer-bottom;
+  margin-top: $spacer-bg-2;
+  // @include border-bottom;
+  @include min(md) {
+    display: flex;
+    justify-content: space-between;
+  }
+
+}
+.search {
+  position: relative;
+  margin-left: $spacer;
+  // @include border;
+  input {
+    min-width: 200px;
+    padding-right: 30px;
+
+  }
+  label {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 30px;
+    margin-bottom: 0;
+  }
+}
+.nav-menu {
+
+  overflow-x: scroll;
+
+  scrollbar-width: none;
+  @include max(md) {
+    margin-bottom: $spacer;
+  }
+
+  &::-webkit-scrollbar {
+    display: none
+  }
+  &__box {
+    display: flex;
+
+    margin-bottom: 0;
+    font-size: $h6-font-size;
+  }
+
+  &__item {
+    &+.nav-menu__item {
+      margin-left: $spacer-bg;
+    }
+    @include max(md) {
+      flex: none;
+    }
+  }
+  &__link {
+    display: block;
+    font-weight: $font-weight-bolder;
+    // padding: 0.5rem $spacer;
+
+    // border:$input-border-color 1px solid;
+    // color: $primary;
+    cursor: pointer;
+    @include transition;
+    &:hover {
+      color: $secondary;
+
+      // background-color: $primary;
+    }
+    &.active {
+      color: $secondary;
+
+      position: relative;
+      &:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        left: 0;
+        bottom: -2px;
+        @include max(md) {
+          bottom: 0;
+        }
+        height: 2px;
+        background-color: $secondary;
+      }
+      // background-color: $primary;
+    }
+  }
+}
+.input-group {
+  display: flex;
+  align-items: stretch;
+  .form-control {
+    margin-right: $spacer;
+    @include max(md) {
+      flex: 1 1 auto;
+    }
+    height: 41px;
+    width: auto;
+  }
+}
+.detail {
+  &__top {
+    align-items: center;
+
+  }
+  &__img {}
+  &__info {
+    margin-bottom: $spacer-bottom;
+
+  }
+  &__title {
+    font-size: $h3-font-size;
+    margin-bottom: $spacer-bottom;
+  }
+  &__title__sm {
+    font-size: $h6-font-size;
+  }
+  &__category {
+    color: $secondary;
+    font-weight: $font-weight-bolder;
+  }
+  &__content {
+    padding: $spacer-bottom 0;
+    @include border-top;
+  }
+  &__text {
+    ul {
+      padding-left: 20px;
+      list-style: disc;
+      li {
+        padding-bottom: $spacer-sm-2;
+
+      }
+    }
+  }
+  &__qty {
+    // width: 120px;
+    @include min(md) {
+      .form-control {
+        width: 120px;
+      }
+
+    }
+
+  }
+  .product__origin_price {
+
+    margin-bottom: $spacer-bottom;
+  }
+}
+
+.buying-page {
+  margin-top: $spacer-bg-2;
+  h1 {
+    font-size: $h2-font-size;
+    margin-bottom: $spacer-bottom;
+  }
+}
+
+.cart {
+  text-align: center;
+  &__head {
+    @include border-top;
+    padding: $spacer;
+    font-weight: $font-weight-bolder;
+    // text-align: center;
+    .cart__item {
+      &:first-child {
+        padding-left: $spacer-bg-1;
+        text-align: left;
+      }
+    }
+    @include max(md){
+      display: none;
+    }
+  }
+  &__item {
+    &:first-child {
+      // text-align: left;
+    }
+    &:last-child {
+      // text-align: right;
+    }
+  }
+  &__list {
+    @include border-bottom;
+  }
+  &__img {
+    img{
+      width: 100px;
+    }
+    
+    text-align: left;
+  }
+  &__row {
+    position: relative;
+    align-items: center;
+    padding: $spacer;
+    
+    @include border-top;
+    @include max(md){
+      align-items: stretch;
+    }
+    .cart__item {
+
+      &:nth-child(4) {
+        // text-align: right;
+      }
+      @include max(md){
+        // &:nth-child(1) {
+        //   order:1;
+  
+        // }
+        // &:nth-child(2) {
+        //   order:2;
+        // }
+        // &:nth-child(3) {
+        //   order:4;
+        // }
+        // &:nth-child(4) {
+        //   order:5;
+        // }
+        // &:nth-child(5) {
+        //   order:3;
+        // }
+      }
+    }  
+  }
+  &__group{
+    align-items: center;
+    @include max(md){
+      align-items: stretch;
+    }
+  }
+  &__total {
+    padding: $spacer;
+    text-align: right;
+
+  }
+  &__delete{
+    text-align: right;  
+    @include max(md){
+    order: 0; 
+    }
+     
+  }
+  &__price{
+    @include max(md){
+    order: 1;
+    }
+  }
+}
 
 .text-danger {
   color: #c00;

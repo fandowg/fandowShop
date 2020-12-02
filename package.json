@@ -13,6 +13,8 @@
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
     "swiper": "^6.3.5",
+    "tiptap": "^1.30.0",
+    "tiptap-extensions": "^1.33.2",
     "vee-validate": "^3.3.8",
     "vue": "^2.6.11",
     "vue-awesome-swiper": "^4.1.1",

@@ -1,13 +1,60 @@
 <template>
-  <div class="container-lg">
-    <div class="stap">
+  <div class="container-xl page-wrapper">
+    <div class="buying-page">
+      <h1>購物車清單</h1>
+      <div class="cart">
+        <div class="cart__head bag-row no-gutters">
+          <div class="cart__item bag-69">產品</div>
+          <div class="cart__item bag-14.5">數量</div>
+          <div class="cart__item bag-9">價格</div>
+        </div>
+        <div class="cart__list">
+          <div class="cart__row bag-row no-gutters">
+            <div class="cart__item bag-3  cart__img">
+              <img
+                
+                src="https://storage.googleapis.com/vue-course-api.appspot.com/fandow%2F1602051639813.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=gr8NrK5qG2VgsJI3Oe%2BfwiiCsI92hlxGyow%2BS8rFk7NhoGdxIByroXBjw%2FwJIXF2DL2l%2BR5uAyBqbPLCRS%2FOUjYE6beaXb5JVHNt5KWFhcVDMfeSJ19YlOB0Y6lB5b%2B7MFDJNiSOUDGV7xTFk1EJyKUwnnk%2FiBXNgxkfaIAj5vfWZplVL%2FZ0dn1iDnPzOwS54LA9wrtwnzJvv6ZaZVOqKzM9Bik1gSmelLZ9ddVlMur9YTHmoUxjwaDgzo91EKn1%2FIgroQF0XfOMNOnsdhLPljx%2BYwR8NDXWt8nbzpBYIkgmVxaTnvWsS1HTZgPueQg9xwESZLRohJDT09tMjpXjJw%3D%3D"
+                alt=""
+              />
+            </div>
+            <div class="bag-7 bag-row no-gutters cart__group">
+              <div class="cart__item bag-md-9 ">
+                750ml eddy+ 多水吸管水瓶 骷髏黑
+              </div>
+              <div class="cart__item bag-md-3 ">
+                <button class="btn btn-outline-primary btn-sm">-</button>
+                2
+                <button class="btn btn-outline-primary btn-sm">-</button>
+              </div>
+            </div>
+
+             <div class="bag-2 bag-row no-gutters cart__group">
+            <div class="cart__item  bag-md-6 cart__price">NT$560</div>
+            <div class="cart__item  bag-md-6 cart__delete">
+              <button class="btn">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+             </div>
+
+          </div>
+        </div>
+        <div class="bag-row no-gutters">
+          <div class="bag-md-9"></div>
+          <div class="cart__total bag-md-2">總額：NT$560</div>
+          <div class="bag-md-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="stap">
       <ul>
         <li>1.確認商品</li>
         <li>2.填寫資料</li>
         <li>3.完成付款</li>
       </ul>
-    </div>
-    <form action="">
+    </div> -->
+    <!-- <form >
       <h2>訂購資料</h2>
 
       <div class="form-group">
@@ -18,10 +65,9 @@
         <label for="name"></label>
         <input type="text" id="name" placeholder="請輸入email" />
       </div>
-    </form>
-    
+    </form> -->
 
-<form>
+    <!-- <form>
   <div class="form-row">
     <div class="col-md-4 mb-3">
       <label for="validationServer01">First name</label>
@@ -85,9 +131,7 @@
     </div>
   </div>
   <button class="btn btn-primary" type="submit">Submit form</button>
-</form>
-
-
+</form> -->
   </div>
 </template>
 

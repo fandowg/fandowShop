@@ -1,6 +1,6 @@
-.nav{
-  z-index: map-get($z-index, header);
+.navbar{
+  z-index: map-get($z-index, navbar);
 }
 .menu{
-  z-index: map-get($z-index, menu-list);
+  z-index: map-get($z-index, menu);
 }

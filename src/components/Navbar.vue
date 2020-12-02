@@ -1,6 +1,6 @@
 <template>
-  <header>
-    <nav class="nav" :class="{'bg-white':scrollPosition > 50 || checkHome}">
+  
+    <nav class="navbar" :class="{'bg-white':scrollPosition > 50 || checkHome}">
       <button class="mobile-menu-toggle" @click.prevent="menuShow = !menuShow">
         <img src="@/assets/images/icon_bars.svg" alt="" />
       </button>
@@ -21,7 +21,7 @@
           </div>
         </li>
         <li class="menu__item"><a class="menu__link" href="">了解水瓶</a></li>
-        <li class="menu__item"><router-link class="menu__link" to="/order">前往購物</router-link></li>
+        <li class="menu__item"><router-link class="menu__link" to="/check-cart">前往購物</router-link></li>
         </ul>
       </div>
 
@@ -37,7 +37,7 @@
         </li>
       </ul>
     </nav>
-  </header>
+  
 </template>
 <script>
 export default {

@@ -21,6 +21,11 @@ const routes = [
     component: () => import('@/views/ProductList')
   },
   {
+    path: '/product-list/:category/:id',
+    name: 'ProductItem',
+    component: () => import('@/views/ProductItem')
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/Admin/Login.vue')
@@ -31,9 +36,9 @@ const routes = [
     component: () => import('@/views/ShoppingList.vue')
   },
   {
-    path: '/order',
-    name: 'Order',
-    component: () => import('@/views/Order.vue')
+    path: '/check-cart',
+    name: 'CheckCart',
+    component: () => import('@/views/CheckCart.vue')
   },
   {
     path: '/admin',

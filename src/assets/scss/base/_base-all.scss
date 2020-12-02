@@ -80,8 +80,8 @@ h6 {
 }
 
 p {
-  font-size: $p-font-size;
-  @include max(lg) {
-    font-size: $font-size-base;
-  }
+  // font-size: $p-font-size;
+  // @include max(lg) {
+  //   font-size: $font-size-base;
+  // }
 }
