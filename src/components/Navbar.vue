@@ -12,7 +12,7 @@
         </button>
         <ul class="menu__list">
         <li class="menu__item dropdown-wrapper ">
-          <a href="" class="menu__link dropdown-btn" @click.prevent="toggleDropdown">購買水瓶 <i class="fas fa-chevron-down"></i></a>
+          <a href="" class="menu__link dropdown-btn" @click.prevent="toggleDropdown($event)">購買水瓶 <i class="fas fa-chevron-down"></i></a>
           <div class="dropdown-box navbar-dropdown" :class="{ active: dropdownShow }" ref="closeDropdown" >
             <a class="dropdown-box__item" href="">吸管水瓶</a>
             <a class="dropdown-box__item" href="">運動水瓶</a>
@@ -30,10 +30,10 @@
           <router-link to="/admin"><i class="fas fa-user"></i></router-link>
         </li>
         <li class="dropdown-wrapper">
-          <a href="" class="dropdown-btn"
+          <a href="" @click.prevent="toggleCart($event)" class="dropdown-btn"
             ><i class="fas fa-shopping-cart"></i
           ></a>
-          <div class="dropdown-box">購物車內容</div>
+          <div class="dropdown-box" :class="{ active: cartShow}"  ref="closeCart">購物車內容</div>
         </li>
       </ul>
     </nav>
@@ -44,20 +44,12 @@ export default {
   data() {
     return {
       menuShow: false,
-      dropdownShow:false,
+      dropdownShow:false,      
+      cartShow:false,
       changeNavBg:false,
       scrollPosition:0,
     };
-  },
-  watch: {
-    dropdownShow(){
-       if(this.dropdownShow===true){
-        document.addEventListener('click',this.closeBlank);
-      }else {     
-         document.removeEventListener('click',this.closeBlank);
-      }
-    }
-  },
+  }, 
   computed:{
      checkHome(){
       return this.$route.name!=='Home';
@@ -65,16 +57,33 @@ export default {
   },
 
   methods: {
-    toggleDropdown(e){   
+    toggleDropdown(e){  
       e.stopPropagation();         
-      this.dropdownShow=!this.dropdownShow;     
+      this.dropdownShow=!this.dropdownShow;  
+      if(this.dropdownShow===true){
+        document.addEventListener('click',this.closeBlankDropdown);
+      }   
     },
-    closeBlank(e){
+    toggleCart(e){  
+      e.stopPropagation();         
+      this.cartShow=!this.cartShow;  
+      if(this.cartShow===true){
+        document.addEventListener('click',this.closeBlankCart);
+      }   
+    },
+    closeBlankDropdown(e){
       console.log(this.$refs.closeDropdown);      
       if (!this.$refs.closeDropdown.contains(e.target)){
         this.dropdownShow=false;
+         document.removeEventListener('click',this.closeBlankDropdown);
       }
-
+    },
+    closeBlankCart(e){
+      console.log(this.$refs.closeCart);      
+      if (!this.$refs.closeCart.contains(e.target)){
+        this.cartShow=false;
+         document.removeEventListener('click',this.closeBlankCart);
+      }
     },
    
     //  updateScroll () {
