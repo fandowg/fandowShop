@@ -1,4 +1,5 @@
 <template>
+<div class="container-xl page-wrapper">
 <div class="login">
 
     <form @submit.prevent="signIn" class="sighForm">
@@ -9,6 +10,7 @@
       <button type="submit" class="signBtn">登入</button>
      
     </form>
+</div>
 </div>
   
 </template>

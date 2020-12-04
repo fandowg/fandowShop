@@ -174,25 +174,19 @@
   top: 0;
   left: 0;
   right: 0;
-  // height: 50px;
-  // @include box-shadow;
-  // overflow-x: hidden;
-  // height: 50px;
+
   justify-content: space-between;
   padding: 0 $spacer;
   @include transition;
   &.bg-white {
-    // background-color: rgba(#fff, 1);
+
     background-color: $gray-100;
     @include border-bottom;
   }
   @include min(md) {
     padding: $spacer-sm $spacer-bg-1;
   }
-  @include max(sm) {
-    // background-color: rgba($white,0.8);
-
-  }
+  @include max(sm) {}
   .side-content {
     display: flex;
     align-items: center;
@@ -213,6 +207,7 @@
     li {
       a {
         padding: $spacer-sm-1 $spacer-sm;
+        display: block;
         @include max(md) {
           padding: $spacer-sm-1 $spacer-sm-2;
         }
@@ -282,10 +277,11 @@
     }
   }
 }
-.dropdown-wrapper {
+
+.dropdown {
   position: relative;
-  .dropdown-btn {}
-  .dropdown-box {
+  &__btn {}
+  &__box {
     @include border;
     padding: $spacer-sm 0;
     background-color: $white;
@@ -295,15 +291,11 @@
     top: 0;
     transform: translate3d(0, 38px, 0);
     display: none;
+
     &.active {
       display: block;
     }
-    &__item {
-      display: block;
-      white-space: nowrap;
-      padding: $spacer-sm $spacer-bg;
 
-    }
     &.navbar-dropdown {
       @include max(md) {
         position: static;
@@ -312,8 +304,73 @@
         border: 0;
       }
     }
+    &--right {
+      right: 0;
+      left: auto;
+    }
+    &.no-padding {
+      padding: 0;
+    }
+  }
+  &__item {
+    display: block;
+    white-space: nowrap;
+    padding: $spacer-sm $spacer-bg;
+
   }
 }
+
+//客製化購物車的dropdown
+
+.dropdown__box {
+  .cart {
+    width: 340px;
+    @include max(360) {
+      width: 320px;
+      max-width: 85vw;
+    }
+    margin-bottom: 0;
+  }
+  .cart__head {
+    border-top: 0;
+    @include border-bottom;
+    @include max(md) {
+      display: flex;
+    }
+    .cart__item {
+      &:nth-child(1) {
+        padding-left: 0
+      }
+    }
+  }
+  .cart__row {
+    align-items: center;
+    text-align: center;
+    border-top: 0;
+    & + .cart__row{
+      @include border-top;
+    }  
+      padding: $spacer 0;    
+  }
+  .cart__list {
+    border: 0;
+    padding:0 $spacer;
+  }
+  .cart__num {
+    text-align: center;
+  }
+  .cart__price {
+    order: 1;
+  }
+  .cart__delete {
+    order: 2;
+  }
+  .btn-wrapper{
+    padding: 0 $spacer $spacer;
+  }
+
+}
+
 .top-banner {
   margin-bottom: $spacer-bottom;
   &__item {
@@ -604,7 +661,7 @@
     height: 41px;
     // width: auto;
   }
-  .btn{
+  .btn {
     flex-shrink: 0;
   }
 }
@@ -682,14 +739,14 @@
         text-align: left;
       }
       &:nth-child(2) {
-        width: 19.4%;       
+        width: 19.4%;
       }
-      &:nth-child(3) {     
+      &:nth-child(3) {
         width: 18.7%;
         text-align: right;
       }
     }
-    @include max(md){
+    @include max(md) {
       display: none;
     }
   }
@@ -705,76 +762,79 @@
     @include border-bottom;
   }
   &__img {
-    img{
+    img {
       width: 100px;
-    }    
-    text-align: left;
-  }
-  &__title{
-    text-align: left;
-  }
-  &__num{
-    @include max(md){
-    text-align: left;
     }
-    &__content{
-      padding:0 $spacer-sm;
+    text-align: left;
+  }
+  &__title {
+    text-align: left;
+  }
+  &__num {
+    @include max(md) {
+      text-align: left;
+    }
+    &__content {
+      padding: 0 $spacer-sm;
     }
   }
   &__row {
     position: relative;
     align-items: center;
     padding: $spacer;
-    
+
     @include border-top;
-    @include max(md){
+    @include max(md) {
       align-items: stretch;
-      padding:$spacer 0;
+      padding: $spacer 0;
     }
-    
+
   }
-  &__group{
+  &__group {
     align-items: center;
-    @include max(md){
+    @include max(md) {
       align-items: stretch;
     }
   }
-  
-  &__delete{
-    text-align: right;  
-    @include max(md){
-    order: 0; 
-    }     
-  }
-  &__price{
+
+  &__delete {
     text-align: right;
-    @include max(md){
-    order: 1;
+    .btn {
+      padding: 0;
+    }
+    @include max(md) {
+      order: 0;
+    }
+  }
+  &__price {
+    text-align: right;
+    @include max(md) {
+      order: 1;
     }
   }
   &__total {
     // padding: $spacer;
-    text-align: right; 
-    &__row{
+    text-align: right;
+    &__row {
       margin-bottom: $spacer;
       display: flex;
       justify-content: space-between;
-      &__title{
+      &__title {
         margin-right: $spacer;
         // flex: 1 1 120px;
       }
-      &__content{
+      &__content {
         // flex: 1 1 120px;
 
       }
-    }  
+    }
 
   }
-  &__bottom{
-    padding-top: $spacer;  
+  &__bottom {
+    padding-top: $spacer;
     // padding-bottom: $spacer;
-    @include border-bottom;  
-    @include min(md){
+    @include border-bottom;
+    @include min(md) {
       display: flex;
       // align-items: center;
       justify-content: space-between;
@@ -782,60 +842,60 @@
       padding-right: 7.3%;
     }
   }
-  &.no-delete{
-    .cart__head{
+  &.no-delete {
+    .cart__head {
       .cart__item {
         &:nth-child(1) {
           padding-left: $spacer-bg-1;
-          width:55.8%;
+          width: 55.8%;
           text-align: left;
         }
         &:nth-child(2) {
-          width: 19.4%;       
+          width: 19.4%;
         }
-        &:nth-child(3) {     
+        &:nth-child(3) {
           width: 24.8%;
           text-align: right;
         }
       }
-    } 
-    .cart__bottom{
-      @include min(md){
-        justify-content: flex-end;      
-        padding-right:$spacer;
+    }
+    .cart__bottom {
+      @include min(md) {
+        justify-content: flex-end;
+        padding-right: $spacer;
       }
     }
-    .cart__price{
+    .cart__price {
       justify-content: flex-end;
       display: flex;
       align-items: center;
-    }   
-    .cart__num__content{
+    }
+    .cart__num__content {
       padding: 0;
     }
   }
-  
+
 }
-.buying-btn{
+.buying-btn {
   display: flex;
   justify-content: flex-end;
   margin-bottom: $spacer-bottom;
-  @include min(md){
+  @include min(md) {
     padding-right: 7.3%;
   }
-  &.no-delete{
-    @include min(md){
-      padding-right:$spacer;
+  &.no-delete {
+    @include min(md) {
+      padding-right: $spacer;
     }
   }
-  .btn{
-   + .btn{
-     margin-left: $spacer;
-   } 
+  .btn {
+    +.btn {
+      margin-left: $spacer;
+    }
   }
 }
 
-.step{
+.step {
   display: flex;
   justify-content: center;
   color: $gray-500;
@@ -843,73 +903,69 @@
   margin-bottom: $spacer-bottom;
   @include border;
   padding: $spacer-sm;
-  &__list{
+  &__list {
     display: flex;
     margin-bottom: 0;
   }
-  &__item{
+  &__item {
     margin-left: $spacer-sm;
     margin-right: $spacer-sm;
     // @include border;
     // padding: $spacer-sm-2 $spacer-sm-1;
-    &__num{
-     
+    &__num {
+
       font-weight: $font-weight-bolder;
       // font-size:$h4-font-size;
     }
-    &.active{
+    &.active {
       color: $primary;
-      .step__item__num{
-      color: $secondary;
+      .step__item__num {
+        color: $secondary;
       }
     }
   }
 }
 
-.order{
+.order {}
 
-}
-
-.order-detail{
+.order-detail {
   @include border-top;
   margin-bottom: $spacer-bottom;
-  &__row{
+  &__row {
     @include border-bottom;
     display: flex;
     padding: $spacer;
-    @include max(md){
+    @include max(md) {
       padding: $spacer 0;
     }
 
   }
-  &__title{
+  &__title {
     flex-shrink: 0;
     flex-basis: 120px;
 
   }
-  &__content{
-
-  }
+  &__content {}
 }
 
-.alert-box{
+.alert-box {
   margin-bottom: $spacer-bottom;
   padding-bottom: 0;
-  h1{
-    i{
+  h1 {
+    i {
       padding-right: $spacer-sm-2;
       color: $secondary;
 
     }
 
   }
-  p{
+  p {
     margin-bottom: 0;
-    
+
   }
 }
 
-.coupon{
+.coupon {
   margin-bottom: $spacer;
 }
 

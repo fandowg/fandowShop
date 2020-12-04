@@ -37,6 +37,7 @@
             </div>
           </div>
           
+          
         </div>
         <div class="cart__bottom">
           <div class="coupon">
@@ -69,7 +70,7 @@
       </div>
       <div class="buying-btn">
         <a class="btn btn-outline-primary">繼續購物</a>
-        <router-link to="/order-info" class="btn btn-primary">前往結帳</router-link>
+        <router-link to="/order-info" class="btn btn-primary">確認送出</router-link>
        
       </div>
     </div>

@@ -1,12 +1,14 @@
 <template>
   <div class="dashboard">
 
-  <Navbar/>
+  <NavbarAdmin/>
+  <div class="container-xl page-wrapper">
 <router-view/>
+  </div>
   </div>
 </template>
 <script>
-import Navbar from "@/components/Admin/NavbarAdmin.vue"
+import NavbarAdmin from "@/components/Admin/NavbarAdmin.vue"
 export default {
   data() {
     return {
@@ -14,7 +16,7 @@ export default {
     };
   },
   components:{
-    Navbar,
+    NavbarAdmin,
   }
 };
 </script>
