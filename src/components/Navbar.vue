@@ -5,11 +5,11 @@
     </button>
     <a href="" class="logo"><img src="@/assets/images/logo.svg" alt="" /></a>
 
-    <div class="menu" :class="{ active: menuShow }">
+    <div class="menu menu--left off-canvas" :class="{ active: menuShow }">
       <button class="menu-close" @click.prevent="menuShow = false">
         <img src="@/assets/images/icon_close.svg" alt="" />
       </button>
-      <ul class="menu__list">
+      <ul class="menu__list ">
         <li class="menu__item dropdown" ref="closeDropdown">
           <a
             href=""
@@ -35,66 +35,71 @@
         </li>
       </ul>
     </div>
+  
+      <ul class="menu__list menu__list--mobile-top">
+        <li class="menu__item">
+          <router-link class="menu__link" to="/admin"
+            ><i class="fas fa-user"></i
+          ></router-link>
+        </li>
+        <li class="dropdown menu__item" ref="closeCart">
+          <a
+            href=""
+            @click.prevent="toggleCart($event)"
+            class="menu__link dropdown__btn"
+            ><i class="fas fa-shopping-cart"></i
+          ></a>
+          <div
+            class="dropdown__box dropdown__box--right no-padding"
+            :class="{ active: cartShow }"
+          >
+            <div class="cart">
+              <div class="cart__head bag-row no-gutters">
+                <div class="cart__item bag-6">產品</div>
+                <div class="cart__item bag">數量</div>
+                <div class="cart__item bag-3">價格</div>
+                <div class="cart__item bag"></div>
+              </div>
+              <div class="cart__list">
+                <div class="cart__row bag-row no-gutters">
+                  <div class="cart__item bag-6 cart__title">
+                    750ml eddy+ 多水吸管水瓶 骷髏黑
+                  </div>
+                  <div class="cart__item bag cart__num">
+                    <span class="cart__num__content">12</span>
+                  </div>
 
-    <ul class="side-menu">
-      <li>
-        <router-link to="/admin"><i class="fas fa-user"></i></router-link>
-      </li>
-      <li class="dropdown" ref="closeCart">
-        <a href="" @click.prevent="toggleCart($event)" class="dropdown__btn"
-          ><i class="fas fa-shopping-cart"></i
-        ></a>
-        <div
-          class="dropdown__box dropdown__box--right no-padding"
-          :class="{ active: cartShow }"
-        >
-          <div class="cart">
-            <div class="cart__head bag-row no-gutters">
-              <div class="cart__item bag-6">產品</div>
-              <div class="cart__item bag">數量</div>
-              <div class="cart__item bag-3">價格</div>
-              <div class="cart__item bag"></div>            
-            </div>
-            <div class="cart__list">
-              <div class="cart__row bag-row no-gutters">
-                <div class="cart__item bag-6 cart__title">
-                  750ml eddy+ 多水吸管水瓶 骷髏黑
+                  <div class="cart__item bag-3 cart__price">NT$5560</div>
+                  <div class="cart__item bag cart__delete">
+                    <button class="btn">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
                 </div>
-                <div class="cart__item bag cart__num">
-                  <span class="cart__num__content">12</span>
-                </div>
+                <div class="cart__row bag-row no-gutters">
+                  <div class="cart__item bag-6 cart__title">
+                    750ml eddy+ 多水吸管水瓶 骷髏黑
+                  </div>
+                  <div class="cart__item bag cart__num">
+                    <span class="cart__num__content">12</span>
+                  </div>
 
-                <div class="cart__item bag-3 cart__price">NT$5560</div>
-                <div class="cart__item bag cart__delete">
-                  <button class="btn">
-                    <i class="fas fa-trash"></i>
-                  </button>
+                  <div class="cart__item bag-3 cart__price">NT$5560</div>
+                  <div class="cart__item bag cart__delete">
+                    <button class="btn">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div class="cart__row bag-row no-gutters">
-                <div class="cart__item bag-6 cart__title">
-                  750ml eddy+ 多水吸管水瓶 骷髏黑
-                </div>
-                <div class="cart__item bag cart__num">
-                  <span class="cart__num__content">12</span>
-                </div>
-
-                <div class="cart__item bag-3 cart__price">NT$5560</div>
-                <div class="cart__item bag cart__delete">
-                  <button class="btn">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </div>
             </div>
-           
+            <div class="btn-wrapper">
+              <a href="" class="btn btn-primary btn-full">前往結帳</a>
+            </div>
           </div>
-          <div class="btn-wrapper">
-            <a href="" class="btn btn-primary btn-full">前往結帳</a>
-          </div>
-        </div>
-      </li>
-    </ul>
+        </li>
+      </ul>
+  
   </nav>
 </template>
 <script>
@@ -108,9 +113,9 @@ export default {
       scrollPosition: 0,
     };
   },
-  watch:{
-    '$route':function(){
-      this.menuShow=false;
+  watch: {
+    $route: function () {
+      this.menuShow = false;
     },
   },
   computed: {

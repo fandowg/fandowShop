@@ -1,6 +1,6 @@
 <template>
-  <div class="container-800 page-wrapper">
-    <div class="buying-page">
+  <div class=" page-wrapper ">
+    <div class="buying-page container-800">
       <h1>購物車清單</h1>
       <div class="cart">
         <div class="cart__head bag-row no-gutters">

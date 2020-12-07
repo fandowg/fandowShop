@@ -1,6 +1,6 @@
 <template>
-  <div class="container-800 page-wrapper">
-    <div class="buying-page">
+  <div class=" page-wrapper">
+    <div class="buying-page container-800">
      
       
     <div class="step">

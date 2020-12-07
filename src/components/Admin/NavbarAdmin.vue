@@ -5,12 +5,11 @@
     </button>
     <a href="" class="logo"><img src="@/assets/images/logo.svg" alt="" /></a>
 
-    <div class="menu" :class="{ active: menuShow }">
+    <div class="menu menu--left off-canvas" :class="{ active: menuShow }">
       <button class="menu-close" @click.prevent="menuShow = false">
         <img src="@/assets/images/icon_close.svg" alt="" />
       </button>
-      <ul class="menu__list">
-       
+      <ul class="menu__list">       
        
         <li class="menu__item">
           <router-link class="menu__link" to="/admin/products"
@@ -29,16 +28,20 @@
         </li>
       </ul>
     </div>
-
-    <ul class="side-menu">
-      <router-link class="menu__link" to="/product-list"
+  
+      <ul class="menu__list">
+         <li class="menu__item">
+         <router-link class="menu__link" to="/product-list"
             >進入商城</router-link
-          >    
-      <li>
-        <button class="btn"  @click="logOut">登出</button >
-      </li>
+          ></li>   
+          <li class="menu__item">
+         <button class="menu__link"  @click="logOut">登出 <i class="fas fa-sign-out-alt"></i></button ></li>   
+
+      </ul>   
+      
+    
         
-    </ul>
+    
   </nav>
 
 </template>

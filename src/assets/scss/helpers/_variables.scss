@@ -176,7 +176,9 @@ $line-height-sm: 1.5 !default;
 
 $link-color:$black !default;
 $link-decoration: none !default;
-$link-hover-color:lighten($link-color, 7.5%) !default;
+// $link-hover-color:lighten($link-color, 7.5%) !default;
+$link-hover-color:$secondary;
+
 // $link-hover-decoration: underline !default;
 $link-hover-decoration:none;
 $emphasized-link-hover-darken-percentage: 15% !default;
