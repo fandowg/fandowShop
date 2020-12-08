@@ -1,12 +1,12 @@
 <template>
   <nav class="navbar" :class="{ 'bg-white': scrollPosition > 50 || checkHome }">
-    <button class="mobile-menu-toggle" @click.prevent="menuShow = !menuShow">
+    <button class="desk-hide-md button-none" @click.prevent="menuShow = !menuShow">
       <img src="@/assets/images/icon_bars.svg" alt="" />
     </button>
     <a href="" class="logo"><img src="@/assets/images/logo.svg" alt="" /></a>
 
     <div class="menu menu--left off-canvas" :class="{ active: menuShow }">
-      <button class="menu-close" @click.prevent="menuShow = false">
+      <button class="close-position desk-hide-md button-none" @click.prevent="menuShow = false">
         <img src="@/assets/images/icon_close.svg" alt="" />
       </button>
       <ul class="menu__list ">
@@ -66,12 +66,12 @@
                     750ml eddy+ 多水吸管水瓶 骷髏黑
                   </div>
                   <div class="cart__item bag cart__num">
-                    <span class="cart__num__content">12</span>
+                    <span class="cart__num__content no-padding">12個</span>
                   </div>
 
                   <div class="cart__item bag-3 cart__price">NT$5560</div>
                   <div class="cart__item bag cart__delete">
-                    <button class="btn">
+                    <button class="button-none">
                       <i class="fas fa-trash"></i>
                     </button>
                   </div>
@@ -81,19 +81,19 @@
                     750ml eddy+ 多水吸管水瓶 骷髏黑
                   </div>
                   <div class="cart__item bag cart__num">
-                    <span class="cart__num__content">12</span>
+                    <span class="cart__num__content no-padding">12個</span>
                   </div>
 
                   <div class="cart__item bag-3 cart__price">NT$5560</div>
                   <div class="cart__item bag cart__delete">
-                    <button class="btn">
+                    <button class="button-none">
                       <i class="fas fa-trash"></i>
                     </button>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="btn-wrapper">
+            <div class="btn-wrapper-side delete-spacer">
               <a href="" class="btn btn-primary btn-full">前往結帳</a>
             </div>
           </div>

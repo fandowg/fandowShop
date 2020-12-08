@@ -11,10 +11,10 @@
       </ul>
     </div>
     <div class="alert-box">
-      <h1><i class="far fa-check-circle"></i>感謝你的購買</h1>
+      <h1 class="buying-page__title"><i class="far fa-check-circle"></i>感謝你的購買</h1>
       <p>親愛的顧客您好，您已付款成功，商品將於2日內送達，若喜歡我們的商品，歡迎關注我們的最新消息喔。</p>
     </div>
-    <h2>商品明細</h2> 
+    <h2 class="buying-page__title--sm">商品明細</h2> 
       <div class="cart no-delete">
         <div class="cart__head bag-row no-gutters">
           <div class="cart__item">產品</div>
@@ -35,7 +35,7 @@
               </div>
               <div class="cart__item cart__num bag-md-4">
                
-                <span class="cart__num__content">2 個</span>
+                <span class="cart__num__content no-padding">2 個</span>
                
               </div>
             </div>
@@ -63,7 +63,7 @@
           </div>
         </div>
       </div>
-      <h2>訂購人資訊</h2> 
+      <h2 class="buying-page__title--sm">訂購人資訊</h2> 
 
       <div class="order-detail">
         <div class="order-detail__row">
@@ -118,7 +118,7 @@
 
   
 
-      <div class="buying-btn no-delete">
+      <div class="btn-wrapper-side">
         <!-- <a class="btn btn-outline-primary">放棄訂單</a> -->
         <a class="btn btn-primary">繼續逛逛</a>
       </div>

@@ -1,7 +1,7 @@
 <template>
   <div class=" page-wrapper ">
     <div class="buying-page container-800">
-      <h1>購物車清單</h1>
+      <h1 class="buying-page__title">購物車清單</h1>
       <div class="cart">
         <div class="cart__head bag-row no-gutters">
           <div class="cart__item">產品</div>
@@ -30,7 +30,7 @@
             <div class="bag bag-row no-gutters cart__group">
               <div class="cart__item bag-md-9 cart__price">NT$5560</div>
               <div class="cart__item bag-md-3 cart__delete">
-                <button class="btn">
+                <button class="button-none">
                   <i class="fas fa-trash"></i>
                 </button>
               </div>
@@ -68,7 +68,7 @@
           </div>
         </div>
       </div>
-      <div class="buying-btn">
+      <div class="btn-wrapper-side delete-spacer">
         <a class="btn btn-outline-primary">繼續購物</a>
         <router-link to="/order-info" class="btn btn-primary">確認送出</router-link>
        

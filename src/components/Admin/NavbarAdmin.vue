@@ -1,24 +1,24 @@
 <template>
  <nav class="navbar bg-white">
-    <button class="mobile-menu-toggle" @click.prevent="menuShow = !menuShow">
+    <button class="desk-hide-md button-none" @click.prevent="menuShow = !menuShow">
       <img src="@/assets/images/icon_bars.svg" alt="" />
     </button>
     <a href="" class="logo"><img src="@/assets/images/logo.svg" alt="" /></a>
 
     <div class="menu menu--left off-canvas" :class="{ active: menuShow }">
-      <button class="menu-close" @click.prevent="menuShow = false">
+      <button class="close-position desk-hide-md button-none" @click.prevent="menuShow = false">
         <img src="@/assets/images/icon_close.svg" alt="" />
       </button>
       <ul class="menu__list">       
        
         <li class="menu__item">
           <router-link class="menu__link" to="/admin/products"
-            >產品頁面</router-link
+            >產品管理</router-link
           >
         </li>
          <li class="menu__item">
           <router-link class="menu__link" to="/admin/coupons"
-            >優惠券頁面</router-link
+            >優惠券管理</router-link
           >
         </li>
          <li class="menu__item">

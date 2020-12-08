@@ -53,7 +53,7 @@
         </div>
       </div>
     </section> -->
-    <section class="section introduction container-xl" >
+    <section class="section introduction container-xl">
       <h2>CAMELBAK，不只是水瓶</h2>
       <div class="section__block bag-row">
         <div class="section__item bag-xl-3 bag-md-6">
@@ -111,7 +111,7 @@
       </div>
     </section>
 
-    <section class="section container-xl bag-row" >
+    <section class="section container-xl bag-row">
       <div class="bag-row bag-md-6">
         <div class="bag-md-6">
           <img src="@/assets/images/feature.jpg" alt="" />
@@ -143,9 +143,9 @@
         <div
           v-for="item in hotProducts"
           :key="item.id"
-          class="product__item bag-md-3"
+          class="product__item bag-lg-3 bag-md-6 bag-6"
         >
-          <router-link  to="/product-list">
+          <router-link to="/product-list">
             <div class="product__img">
               <img :src="item.imageUrl" :alt="item.title" />
             </div>
@@ -154,9 +154,11 @@
                 {{ item.title }}
               </h3>
               <div class="product__bottom">
-                <div class="product__price">NT${{ item.price }}</div>
-                <div class="product__origin_price">
-                  NT${{ item.origin_price }}
+                <div>
+                  <div class="product__origin_price">
+                    NT${{ item.origin_price }}
+                  </div>
+                  <div class="product__price">NT${{ item.price }}</div>
                 </div>
                 <button class="product__addToCart btn btn-sm btn-primary">
                   <i class="fas fa-cart-plus"></i>
@@ -166,11 +168,10 @@
           </router-link>
         </div>
       </div>
-      <div class="btn-wrapper">
+      <div class="btn-wrapper-center">
         <router-link to="/product-list" class="btn btn-primary">
-        看更多水瓶
+          看更多水瓶
         </router-link>
-
       </div>
     </section>
   </main>
@@ -237,7 +238,7 @@ export default {
     this.getProducts();
   },
   // mounted() {
-   
+
   // //不知為何mounted後的值少100多，除非有事件或者是資料讀完才正常
   //     console.log(this.getTop(this.$refs.test));
   //   window.addEventListener("scroll", () => {

@@ -1,23 +1,42 @@
 <template>
-
-        <ul class="pagination" v-if="pagination">
-            <li class="prev" :class="{'disabled':!pagination.has_pre}">
-                <a href="" @click.prevent="$emit('get-pages',pagination.current_page - 1)"><i class="fas fa-chevron-left"></i></a>
-            </li>
-            <li v-for="page in pagination.total_pages" :class="{'active':pagination.current_page===page}" :key="page">
-                <a href="" @click.prevent="$emit('get-pages',page)">{{page}}</a>
-            </li>
-            <li class="next" :class="{'disabled':!pagination.has_next}">
-                <a href="" @click.prevent="$emit('get-pages',pagination.current_page + 1)"><i class="fas fa-chevron-right"></i></a>
-            </li>
-        </ul>
-        
-  
+  <nav aria-label="Page navigation">
+    <ul class="pagination" v-if="pagination">
+      <li class="pagination__item">
+        <a
+          class="pagination__link"          
+          @click.prevent="$emit('get-pages', pagination.current_page - 1)"
+          >
+          <img v-if="pagination.has_pre" src="@/assets/images/prev_page.svg" alt="">
+          <img v-else src="@/assets/images/prev_page_disabled.svg" alt="">
+          </a>
+      </li>
+      <li
+        class="pagination__item"
+        v-for="page in pagination.total_pages"
+        :key="page"
+      >
+        <a
+          class="pagination__link"
+          :class="{ active: pagination.current_page === page, disabled:pagination.total_pages===1}"
+          href=""
+          @click.prevent="$emit('get-pages', page)"
+          >{{ page }}</a
+        >
+      </li>
+      <li class="pagination__item">
+        <a
+          class="pagination__link"
+         
+          @click.prevent="$emit('get-pages', pagination.current_page + 1)"
+          ><img v-if="pagination.has_next" src="@/assets/images/next_page.svg" alt="">
+          <img v-else src="@/assets/images/next_page_disabled.svg" alt=""></a>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <script>
 export default {
-    props:['pagination'],
-    
-}
+  props: ["pagination"],
+};
 </script>

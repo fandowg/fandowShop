@@ -1,5 +1,5 @@
 <template>
-  <div class="admin">
+  <div class="admin-page">
     <EditProduct
       @close="closeModal"
       @get-products="getProducts"
@@ -8,47 +8,68 @@
     />
 
     <div class="menu-block menu-block--inline">
-      <h1 class="admin__title">產品列表</h1>
+      <h1 class="admin-page__title">產品列表</h1>
       <button class="btn btn-primary" @click="openModal(true)">新增產品</button>
     </div>
 
-    <div class="admin__table">
+    <div class="admin">
       <div class="admin__head bag-row no-gutters">
-        <div class="admin__item bag-md bag-6">圖片</div>        
-        <div class="admin__item admin__item--title  bag-md-4 bag-6">產品名稱</div>
-        <div class="admin__item bag-md bag-6">分類</div>
-        <div class="admin__item bag-md bag-6">原價</div>
-        <div class="admin__item bag-md bag-6">售價</div>
-        <div class="admin__item bag-md bag-6">啟用</div>
-        <div class="admin__item bag-md bag-6">編輯</div>
-        <div class="admin__item bag-md bag-6">刪除</div>
+        <div class="admin__item bag-md text-center">圖片</div>
+        <div class="admin__item admin__title bag-md-4">
+          產品名稱
+        </div>
+        <div class="admin__item bag-md ">分類</div>
+        <div class="admin__item bag-md ">原價</div>
+        <div class="admin__item bag-md ">售價</div>
+        <div class="admin__item bag-md text-right-max-md">啟用</div>
+        <div class="admin__item bag-md text-right-min-md">編輯</div>
+        <div class="admin__item bag-md text-right">刪除</div>
       </div>
-      <div class="admin__content">
-      <div class="admin__row bag-row no-gutters" v-for="item in products" :key="item.id">
-        <div class="admin__item bag-md bag-2"><img :src="item.imageUrl" alt="" /></div>
-        
-        <div class="admin__item admin__item--title bag-md-4 bag-10">
-          {{ item.title }}
-          <!-- {{item.video}} -->
-        </div>
-        <div class="admin__item bag-md bag-3">{{ item.category }}</div>
-        <div class="admin__item bag-md bag-3 price"><span class="desk-hide-md ">原價</span>{{ item.origin_price }}</div>
-        <div class="admin__item bag-md bag-3 origin_price"><span class="desk-hide-md  ">特價</span>{{ item.price }}</div>
-        <div class="admin__item bag-md bag-3">
-          <span v-if="item.is_enabled === 1">啟用</span>
-          <span v-else>未啟用</span>
-        </div>
-        <div class="admin__item bag-md bag-6">
-          <button class="btn btn-primary btn-sm" @click="openModal(false, item)">編輯</button>
-        </div>
-        <div class="admin__item bag-md bag-6">
-          <button class="btn btn-outline-primary btn-sm" @click="deleteProduct(item.id)">刪除</button>
+      <div class="admin__list">
+        <div
+          class="admin__row bag-row no-gutters"
+          v-for="item in products"
+          :key="item.id"
+        >
+          <div class="admin__item bag-md bag-2 text-center">
+            <img :src="item.imageUrl" alt="" />
+          </div>
+
+          <div class="admin__item admin__title bag-md-4 bag-10">
+            {{ item.title }}
+            <!-- {{item.video}} -->
+          </div>
+          <div class="admin__item bag-md bag-3">{{ item.category }}</div>
+          <div class="admin__item bag-md bag-3 price">
+            <span class="desk-hide-md">原價</span>{{ item.origin_price }}
+          </div>
+          <div class="admin__item bag-md bag-3 origin_price">
+            <span class="desk-hide-md">特價</span>{{ item.price }}
+          </div>
+          <div class="admin__item bag-md bag-3 text-right-max-md">
+            <span v-if="item.is_enabled === 1">啟用</span>
+            <span v-else>未啟用</span>
+          </div>
+          <div class="admin__item bag-md bag-6 text-right-min-md">
+            <button
+              class="btn btn-primary btn-sm"
+              @click="openModal(false, item)"
+            >
+              編輯
+            </button>
+          </div>
+          <div class="admin__item bag-md bag-6 text-right">
+            <button
+              class="btn btn-outline-primary btn-sm"
+              @click="deleteProduct(item.id)"
+            >
+              刪除
+            </button>
+          </div>
         </div>
       </div>
-    </div>
     </div>
 
-    
     <Page :pagination="pagination" @get-pages="getProducts" />
   </div>
 </template>

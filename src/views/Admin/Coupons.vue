@@ -1,5 +1,5 @@
 <template>
-  <div class="coupons">
+  <div class="admin-page">
     
     <EditCoupons 
       @close="closeModal"
@@ -11,36 +11,37 @@
     <!-- <Confirm :text="text"></Confirm> -->
     <v-dialog />
     <!-- <modal>456456</modal> -->
-
-    <div class="top">
-      <h1>優惠券列表</h1>
-      <button class="newBtn" @click="openModal(true)">新增優惠券</button>
+     <div class="menu-block menu-block--inline">
+      <h1 class="admin-page__title">優惠券列表</h1>
+      <button class="btn btn-primary" @click="openModal(true)">新增優惠券</button>
     </div>
-    <div class="head">
-      <div class="one">名稱</div>
-      <div class="one">折扣百分比</div>
-      <div class="one">到期日</div>
-      <div class="one">是否啟用</div>
-      <div class="one">編輯</div>
-      <div class="one">刪除</div>
+   <div class="admin">
+     <div class="admin__head bag-row no-gutters">
+      <div class="admin__item admin__title bag-md-4">名稱</div>
+      <div class="admin__item bag-md">折扣百分比</div>
+      <div class="admin__item bag-md-2">到期日</div>
+      <div class="admin__item bag-md text-right-max-md">是否啟用</div>
+      <div class="admin__item bag-md text-right-min-md">編輯</div>
+      <div class="admin__item bag-md text-right">刪除</div>
     </div>
-    <div class="cont">
-      <div class="one-line" v-for="item in coupons" :key="item.id">
-        <div class="one">{{ item.title }}</div>
-        <div class="one">{{ item.percent }}</div>
-        <div class="one">{{ item.due_date | date }}</div>
-        <div class="one">
+    <div class="admin__list">
+      <div class="admin__row bag-row no-gutters" v-for="item in coupons" :key="item.id">
+        <div class="admin__item admin__title bag-md-4 bag-12">{{ item.title }}</div>
+        <div class="admin__item bag-md bag-4"><span class="desk-hide-md">折扣 </span>{{ item.percent }}%</div>
+        <div class="admin__item bag-md-2 bag-6"><span class="desk-hide-md">到期日</span> {{ item.due_date | date }}</div>
+        <div class="admin__item bag-md bag-2 text-right-max-md">
           <span v-if="item.is_enabled">啟用</span>
           <span v-else>未啟用</span>
         </div>
-        <div class="one">
-          <button @click="openModal(false, item)">編輯</button>
+        <div class="admin__item bag-md bag-6 text-right-min-md">
+          <button  class="btn btn-primary btn-sm" @click="openModal(false, item)">編輯</button>
         </div>
-        <div class="one">
-          <button @click="deleteCoupon(item.id)">刪除</button>
+        <div class="admin__item bag-md bag-6 text-right">
+          <button class="btn btn-outline-primary btn-sm" @click="deleteCoupon(item.id)">刪除</button>
         </div>
       </div>
     </div>
+   </div>
     <Page :pagination="pagination" @get-pages="getCoupons" />
   </div>
 </template>
