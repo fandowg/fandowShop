@@ -19,25 +19,15 @@
         <div class="edit">
           <div class="edit__item form-group">
             <label for>輸入圖片網址</label>
-            <input
-              type="text"
-              class="form-control"
-              v-model="editTemp.imageUrl"
-            />
+            <input type="text" class="form-control" v-model="editTemp.imageUrl" />
           </div>
           <div class="edit__row form-row">
             <div class="edit__item bag-md-9 form-group">
               <label for>或上傳圖片</label>
-              <i
-                class="fas fa-circle-notch fa-spin"
-                v-if="loadStatus.upLoadImage"
-              ></i>
+              <i class="fas fa-circle-notch fa-spin" v-if="loadStatus.upLoadImage"></i>
               <input type="file" ref="upImage" @change="upLoadImage" />
             </div>
-            <div
-              v-if="editTemp.imageUrl"
-              class="edit__item bag-md-3 bag-6 form-group"
-            >
+            <div v-if="editTemp.imageUrl" class="edit__item bag-md-3 bag-6 form-group">
               <img :src="editTemp.imageUrl" alt />
             </div>
           </div>
@@ -79,13 +69,24 @@
                 v-slot="{ failed, errors }"
               >
                 <label for="category">分類</label>
-                <input
+                <select
+                  name=""
+                  class="form-control"
+                  id="category"
+                  v-model="editTemp.category"
+                >
+                  <option disabled value="default">請選擇</option>
+                  <option v-for="item in category" :key="item" :value="item">
+                    {{ item | categoryChangeCn }}
+                  </option>
+                </select>
+                <!-- <input
                   type="text"
                   class="form-control"
                   id="category"
                   placeholder="請輸入分類"
                   v-model="editTemp.category"
-                />
+                /> -->
                 <span class="text-danger" v-if="failed">{{ errors[0] }}</span>
               </ValidationProvider>
             </div>
@@ -174,9 +175,7 @@
                   :true-value="1"
                   :false-value="0"
                 />
-                <label class="form-check-label" for="is_enabled"
-                  >是否啟用</label
-                >
+                <label class="form-check-label" for="is_enabled">是否啟用</label>
               </div>
             </div>
             <div class="edit__item bag-6 form-group">
@@ -189,24 +188,14 @@
                   :true-value="1"
                   :false-value="0"
                 />
-                <label class="form-check-label" for="hotProducts"
-                  >是否熱銷</label
-                >
+                <label class="form-check-label" for="hotProducts">是否熱銷</label>
               </div>
             </div>
           </div>
           <!-- <button @click="updateProduct">送出</button> -->
           <div class="btn-wrapper-side">
-            <button             
-              class="btn btn-outline-primary"
-              @click="$emit('close')"
-            >
-              取消
-            </button>
-            <button
-              class="btn btn-primary"
-              @click="handleSubmit(updateProduct)"
-            >
+            <button class="btn btn-outline-primary" @click="$emit('close')">取消</button>
+            <button class="btn btn-primary" @click="handleSubmit(updateProduct)">
               送出
             </button>
           </div>
@@ -217,9 +206,11 @@
 </template>
 
 <script>
+import category from "@/assets/category";
 export default {
   data() {
     return {
+      category,
       loadStatus: {
         upLoadImage: false,
       },
@@ -230,6 +221,7 @@ export default {
   watch: {
     tempProduct() {
       this.editTemp = Object.assign({}, this.tempProduct);
+    
     },
   },
   methods: {
@@ -281,5 +273,8 @@ export default {
     },
   },
   created() {},
+  mounted() {
+    console.log(category);
+  },
 };
 </script>

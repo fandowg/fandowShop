@@ -21,6 +21,7 @@ import router from './router'
 import Alert from './components/Alert.vue'
 import './bus'
 import date from './filters/date'
+import categoryChangeCn from './filters/categoryChangeCn'
 // import './bus'
 // import currencyFilter from './filters/currency'
 // import date from './filters/date'
@@ -64,6 +65,7 @@ Vue.component('Loading', Loading)
 
 Vue.component('Alert', Alert)
 Vue.filter('date',date)
+Vue.filter('categoryChangeCn',categoryChangeCn)
 Vue.config.productionTip = false
 
 new Vue({

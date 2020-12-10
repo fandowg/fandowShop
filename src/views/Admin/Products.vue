@@ -39,7 +39,7 @@
             {{ item.title }}
             <!-- {{item.video}} -->
           </div>
-          <div class="admin__item bag-md bag-3">{{ item.category }}</div>
+          <div class="admin__item bag-md bag-3">{{ item.category | categoryChangeCn}}</div>
           <div class="admin__item bag-md bag-3 price">
             <span class="desk-hide-md">原價</span>{{ item.origin_price }}
           </div>
@@ -88,10 +88,11 @@ export default {
   methods: {
     getProducts(page = 1) {
       this.$bus.$emit("changeLoading", true);
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
+      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
+       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products/all`;
       this.$http.get(url).then((response) => {
         this.products = response.data.products;
-        this.pagination = response.data.pagination;
+        // this.pagination = response.data.pagination;
         this.$bus.$emit("changeLoading", false);
         console.log(this.pagination);
       });
@@ -110,6 +111,7 @@ export default {
       if (isNew) {
         this.tempProduct = {
           is_enabled: 0,
+          category:'default'
           //  imageUrl:'',
         };
         this.isNew = isNew;
