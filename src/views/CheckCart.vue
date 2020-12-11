@@ -70,7 +70,7 @@
       </div>
       <div class="btn-wrapper-side delete-spacer">
         <a class="btn btn-outline-primary">繼續購物</a>
-        <router-link to="/order-info" class="btn btn-primary">確認送出</router-link>
+        <router-link to="/order/order-info" class="btn btn-primary">確認送出</router-link>
        
       </div>
     </div>
@@ -82,9 +82,15 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+
+    };
   },
-  methods: {},
-  created() {},
+  methods: {
+
+  },
+  created() {
+    
+  },
 };
 </script>

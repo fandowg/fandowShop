@@ -22,7 +22,7 @@ const routes = [
         redirect:'/product-list/all/',     
       },
       {
-      path: '/product-list/:category',
+      path: ':category',
       name: 'ProductListCategory',
       component: () => import('@/views/ProductList'),
     },
@@ -54,25 +54,39 @@ const routes = [
     component: () => import('@/views/CheckCart.vue')
   },
   {
-    path: '/order-info',
-    name: 'OrderInfo',
-    component: () => import('@/views/OrderInfo.vue')
+    path: '/order',
+    name: 'Order',
+    component: () => import('@/views/Order.vue'),
+    children:[
+      {
+        path: '',
+        redirect:'order-info',     
+      },
+      {
+        path: 'order-info',
+        name: 'OrderInfo',
+        component: () => import('@/views/OrderInfo.vue')
+      },
+      {
+        path: 'payment',
+        name: 'Payment',
+        component: () => import('@/views/Payment.vue')
+      },
+      {
+        path: 'order-done',
+        name: 'OrderDone',
+        component: () => import('@/views/OrderDone.vue')
+      },
+
+    ]
   },
-  {
-    path: '/payment',
-    name: 'Payment',
-    component: () => import('@/views/Payment.vue')
-  },
-  {
-    path: '/order-done',
-    name: 'OrderDone',
-    component: () => import('@/views/OrderDone.vue')
-  },
+
+ 
   {
     path: '/admin',
     name: 'Admin',
-    component: () => import('@/views/Admin/Dashboard.vue'),
     redirect: '/admin/products',
+    component: () => import('@/views/Admin/Dashboard.vue'),   
     children: [{
         path: 'products',
         name: 'Products',

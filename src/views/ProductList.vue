@@ -49,9 +49,9 @@
             v-model="sort"
             @change="changeSort"
           >
-          <option value="" disabled>價格排序</option>
-            <option value="priceUp" >價格高到低</option>
-            <option value="priceDown">價格低到高</option>           
+            <option value="" disabled>價格排序</option>
+            <option value="priceUp">價格高到低</option>
+            <option value="priceDown">價格低到高</option>
           </select>
 
           <div class="search">
@@ -88,7 +88,10 @@
                 <div class="product__price">NT${{ item.price }}</div>
               </div>
 
-              <button class="product__addToCart btn btn-sm btn-primary" @click="addToCart(item,1)">
+              <button
+                class="product__addToCart btn btn-sm btn-primary"
+                @click="addToCart(item, 1)"
+              >
                 <i class="fas fa-cart-plus"></i>
               </button>
             </div>
@@ -107,16 +110,18 @@
 </style>
 <script>
 import Page from "@/components/Pagination.vue";
+import {mapGetters} from 'vuex';
 export default {
   data() {
     return {
       products: [],
-      productsAll: [],
-      categories: [],
+      // productsAll: [],
+      // categories: [],
       currentCategory: "",
       pagination: {},
       search: "",
       sort: "",
+      cart: {},
     };
   },
   watch: {
@@ -147,6 +152,15 @@ export default {
         return filter;
       }
     },
+    // productsAll(){
+    //   return this.$store.state.productsAll;
+    // },
+    // categories(){
+    //   return this.$store.state.categories;
+    // },
+    cart(){
+       return this.$store.state.cart;
+    }
   },
   methods: {
     changeSort() {
@@ -165,7 +179,7 @@ export default {
           return newSort;
           this.filterProducts = newSort;
           break;
-        case "priceDown":        
+        case "priceDown":
           if (this.filterProducts.length) {
             newSort = this.filterProducts.sort((a, b) => {
               const aPrice = a.price ? a.price : a.origin_price;
@@ -189,27 +203,30 @@ export default {
       });
     },
     getProducts(page = 1) {
-      this.$bus.$emit("changeLoading", true);
+      this.$store.dispatch("updateLoading", true);
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`;
       this.$http.get(url).then((response) => {
         this.products = response.data.products;
         this.pagination = response.data.pagination;
-        this.$bus.$emit("changeLoading", false);
+        this.$store.dispatch("updateLoading", false);
+
         console.log(this.categories);
       });
     },
     getProductsAll() {
-      this.$bus.$emit("changeLoading", true);
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-      this.$http.get(url).then((response) => {
-        this.productsAll = response.data.products;
-        this.productsAll.forEach((item) => {
-          if (this.categories.indexOf(item.category) === -1)
-            this.categories.push(item.category);
-        });
-        this.$bus.$emit("changeLoading", false);
-        console.log(this.categories);
-      });
+      this.$store.dispatch('getProductsAll')
+      // this.$store.dispatch("updateLoading", true);
+      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
+      // this.$http.get(url).then((response) => {
+      //   this.productsAll = response.data.products;
+      //   this.productsAll.forEach((item) => {
+      //     if (this.categories.indexOf(item.category) === -1)
+      //       this.categories.push(item.category);
+      //   });
+      //   this.$store.dispatch("updateLoading", false);
+
+      //   console.log(this.categories);
+      // });
     },
     toProductItem(category, id) {
       this.$router.push({
@@ -220,9 +237,39 @@ export default {
         },
       });
     },
-    addToCart(){
+    addToCart(id, qty) {
+      this.$store.dispatch('addToCart',{id, qty});
+      // this.$store.dispatch("updateLoading", true);
+      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      // const cart = {
+      //   product_id: id,
+      //   qty,
+      // };
+      // this.$http.post(url, { data: cart }).then((response) => {
+      //   this.$store.dispatch("updateLoading", false);
+      //   this.getCart();
+      // });
+    },
+    getCart() {
+      this.$store.dispatch('getCart');
+      // this.$store.dispatch("updateLoading", true);
+      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      // this.$http.get(url).then((response) => {
+      //   this.cart = response.data.data;
+      //   this.$store.dispatch("updateLoading", false);
+      // });
+    },
 
+    deleteCart(id) {
+      this.$store.dispatch('deleteCart',id);
+      // this.$store.dispatch("updateLoading", true);
+      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
+      // this.$http.delete(url).then((response) => {     
+      //   this.$store.dispatch("updateLoading", false);
+      //   this.getCart();
+      // });      
     }
+
   },
   components: {
     Page,

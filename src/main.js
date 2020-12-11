@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import axios from 'axios'
+import Vuex from 'vuex'
 import VueAxios from 'vue-axios'
+import router from './router'
+import App from './App.vue'
 import 'bootstrap'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
@@ -13,11 +16,8 @@ import { required, email, digits } from 'vee-validate/dist/rules';
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import swiper, { Navigation, Pagination, Autoplay } from 'swiper'
 import 'swiper/swiper-bundle.css'
+import store from './store'
 
-
-
-import App from './App.vue'
-import router from './router'
 import Alert from './components/Alert.vue'
 import './bus'
 import date from './filters/date'
@@ -25,9 +25,9 @@ import categoryChangeCn from './filters/categoryChangeCn'
 // import './bus'
 // import currencyFilter from './filters/currency'
 // import date from './filters/date'
-extend('required',required);
-extend('email',email);
-extend('digits',digits);
+extend('required',required)
+extend('email',email)
+extend('digits',digits)
 // extend('email', {
 // ...email,
 // message: '叫你填資料'
@@ -42,13 +42,15 @@ Vue.use(VModal, {
     draggable: false,
   }
 })
-Vue.use(VueAxios, axios);
-axios.defaults.withCredentials = true;
-Vue.use(VueAwesomeSwiper);
-swiper.use([Navigation, Pagination, Autoplay]);
-Vue.component('ValidationProvider', ValidationProvider);
-Vue.component('ValidationObserver', ValidationObserver);
-localize('zh_TW',TW);
+Vue.use(Vuex)
+Vue.use(VueAxios, axios)
+axios.defaults.withCredentials = true
+Vue.use(VueAwesomeSwiper)
+swiper.use([Navigation, Pagination, Autoplay])
+Vue.component('ValidationProvider', ValidationProvider)
+Vue.component('ValidationObserver', ValidationObserver)
+
+localize('zh_TW',TW)
 // localize({
 //   zh_TW: {
 //     messages: {
@@ -70,6 +72,7 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
 

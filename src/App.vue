@@ -23,7 +23,7 @@ import Footer from "@/components/Footer.vue";
 export default {
   data(){
     return{
-      isLoading: false,
+      // isLoading: false,
       scrollPosition:0,
       isShow:true,
       // toTop:false,
@@ -45,11 +45,16 @@ export default {
       }
     }
   },
+  computed:{
+    isLoading(){
+      return this.$store.state.isLoading;
+    }
+  },
   methods:{
-     changeLoading(v) {
-      this.isLoading = v;
+    //  changeLoading(v) {
+    //   this.isLoading = v;
      
-    },
+    // },
     toTop(){
       document.documentElement.scrollTop = 0;
     }

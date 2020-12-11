@@ -1,15 +1,8 @@
 <template>
-  <div class=" page-wrapper">
-    <div class="buying-page container-800">
+
      
-      
-    <div class="step">
-      <ul class="step__list">
-        <li class="step__item "><span class="step__item__num"><i class="fas fa-angle-double-right"></i></span>填寫資料</li>
-        <li class="step__item "><span class="step__item__num"><i class="fas fa-angle-double-right"></i></span>完成付款</li>
-        <li class="step__item active"><span class="step__item__num"><i class="fas fa-angle-double-right"></i></span>訂單完成</li>
-      </ul>
-    </div>
+      <div>
+    
     <div class="alert-box">
       <h1 class="buying-page__title"><i class="far fa-check-circle"></i>感謝你的購買</h1>
       <p>親愛的顧客您好，您已付款成功，商品將於2日內送達，若喜歡我們的商品，歡迎關注我們的最新消息喔。</p>
@@ -125,7 +118,7 @@
     </div>
 
 
-  </div>
+ 
 </template>
 
 <script>
