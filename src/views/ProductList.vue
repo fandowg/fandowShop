@@ -90,7 +90,7 @@
 
               <button
                 class="product__addToCart btn btn-sm btn-primary"
-                @click="addToCart(item, 1)"
+                @click.stop="addToCart(item.id, 1)"
               >
                 <i class="fas fa-cart-plus"></i>
               </button>
@@ -110,7 +110,7 @@
 </style>
 <script>
 import Page from "@/components/Pagination.vue";
-import {mapGetters} from 'vuex';
+import {mapGetters,mapActions} from 'vuex';
 export default {
   data() {
     return {
@@ -121,7 +121,7 @@ export default {
       pagination: {},
       search: "",
       sort: "",
-      cart: {},
+      // cart: {},
     };
   },
   watch: {
@@ -152,6 +152,7 @@ export default {
         return filter;
       }
     },
+    ...mapGetters('productsModules',['categories','productsAll']),
     // productsAll(){
     //   return this.$store.state.productsAll;
     // },
@@ -213,21 +214,22 @@ export default {
         console.log(this.categories);
       });
     },
-    getProductsAll() {
-      this.$store.dispatch('getProductsAll')
-      // this.$store.dispatch("updateLoading", true);
-      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-      // this.$http.get(url).then((response) => {
-      //   this.productsAll = response.data.products;
-      //   this.productsAll.forEach((item) => {
-      //     if (this.categories.indexOf(item.category) === -1)
-      //       this.categories.push(item.category);
-      //   });
-      //   this.$store.dispatch("updateLoading", false);
+    // getProductsAll() {
+    //   this.$store.dispatch('productsModules/getProductsAll');
+    //   // this.$store.dispatch("updateLoading", true);
+    //   // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
+    //   // this.$http.get(url).then((response) => {
+    //   //   this.productsAll = response.data.products;
+    //   //   this.productsAll.forEach((item) => {
+    //   //     if (this.categories.indexOf(item.category) === -1)
+    //   //       this.categories.push(item.category);
+    //   //   });
+    //   //   this.$store.dispatch("updateLoading", false);
 
-      //   console.log(this.categories);
-      // });
-    },
+    //   //   console.log(this.categories);
+    //   // });
+    // },
+    ...mapActions('productsModules',['getProductsAll']),
     toProductItem(category, id) {
       this.$router.push({
         name: "ProductItem",
@@ -239,6 +241,7 @@ export default {
     },
     addToCart(id, qty) {
       this.$store.dispatch('addToCart',{id, qty});
+      // console.log(this.$store.state.productsModules.productsAll);      
       // this.$store.dispatch("updateLoading", true);
       // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       // const cart = {
@@ -274,7 +277,7 @@ export default {
   components: {
     Page,
   },
-  created() {
+  created() {    
     this.getCurrentCategory();
     this.getProducts();
     this.getProductsAll();

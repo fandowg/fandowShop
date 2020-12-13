@@ -48,20 +48,36 @@
             @click.prevent="toggleCart($event)"
             class="menu__link dropdown__btn"
             ><i class="fas fa-shopping-cart"></i
-          ></a>
+          ><span class="cart-qty-icon">{{cart.carts.length}}</span>
+          </a>
           <div
             class="dropdown__box dropdown__box--right no-padding"
             :class="{ active: cartShow }"
           >
             <div class="cart">
               <div class="cart__head bag-row no-gutters">
-                <div class="cart__item bag-6">產品</div>
-                <div class="cart__item bag">數量</div>
-                <div class="cart__item bag-3">價格</div>
+                <div class="cart__item bag-7">產品</div>
+                <div class="cart__item bag-2">數量</div>
+                <div class="cart__item bag-2">價格</div>
                 <div class="cart__item bag"></div>
               </div>
               <div class="cart__list">
-                <div class="cart__row bag-row no-gutters">
+                <div class="cart__row bag-row no-gutters" v-for="item in cart.carts" :key="item.id">
+                  <div class="cart__item bag-7 cart__title">
+                    {{item.product.title}}                  
+                  </div>
+                  <div class="cart__item bag-2 cart__num">
+                    <span class="cart__num__content no-padding">{{item.qty}} {{item.product.unit}}</span>
+                  </div>
+
+                  <div class="cart__item bag-2 cart__price">{{item.final_total}}元</div>
+                  <div class="cart__item bag cart__delete">
+                    <button class="button-none" @click="deleteCart(item.id)">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- <div class="cart__row bag-row no-gutters">
                   <div class="cart__item bag-6 cart__title">
                     750ml eddy+ 多水吸管水瓶 骷髏黑
                   </div>
@@ -75,26 +91,12 @@
                       <i class="fas fa-trash"></i>
                     </button>
                   </div>
-                </div>
-                <div class="cart__row bag-row no-gutters">
-                  <div class="cart__item bag-6 cart__title">
-                    750ml eddy+ 多水吸管水瓶 骷髏黑
-                  </div>
-                  <div class="cart__item bag cart__num">
-                    <span class="cart__num__content no-padding">12個</span>
-                  </div>
-
-                  <div class="cart__item bag-3 cart__price">NT$5560</div>
-                  <div class="cart__item bag cart__delete">
-                    <button class="button-none">
-                      <i class="fas fa-trash"></i>
-                    </button>
-                  </div>
-                </div>
+                </div> -->
               </div>
             </div>
             <div class="btn-wrapper-side delete-spacer">
-              <a href="" class="btn btn-primary btn-full">前往結帳</a>
+              <router-link class="btn btn-primary btn-full"  to="/check-cart" >前往結帳</router-link>
+              
             </div>
           </div>
         </li>
@@ -103,6 +105,7 @@
   </nav>
 </template>
 <script>
+import {mapGetters,mapActions} from 'vuex';
 export default {
   data() {
     return {
@@ -116,15 +119,18 @@ export default {
   watch: {
     $route: function () {
       this.menuShow = false;
+       this.dropdownShow = false;
+        this.cartShow = false;
     },
   },
   computed: {
     checkHome() {
       return this.$route.name !== "Home";
     },
+    ...mapGetters(['cart']),
   },
 
-  methods: {
+  methods: {    
     toggleDropdown(e) {
       // e.stopPropagation();
       this.dropdownShow = !this.dropdownShow;
@@ -153,8 +159,15 @@ export default {
         document.removeEventListener("click", this.closeBlankCart);
       }
     },
+    // deleteCart(id) {
+    //   this.$store.dispatch('deleteCart',id);      
+    // },
+    ...mapActions(['getCart','deleteCart']),
   },
-
+  created(){
+    this.getCart();
+    console.log(this.cart);
+  },
   mounted() {
     window.addEventListener("scroll", () => {
       this.scrollPosition = window.pageYOffset;

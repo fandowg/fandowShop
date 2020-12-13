@@ -2,14 +2,13 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+import productsModules from './products'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   strict:true,
   state:{
     isLoading: false,
-    productsAll:[],
-    categories:[],
     cart:{
       carts:[],
     },
@@ -18,26 +17,13 @@ export default new Vuex.Store({
     updateLoading(context,payload){
       context.commit('LOADING',payload);
     },
-    getProductsAll(context) {
-      context.commit('LOADING',true);
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-      axios.get(url).then((response) => {
-        // this.productsAll = response.data.products;
-        // this.productsAll.forEach((item) => {
-        //   if (this.categories.indexOf(item.category) === -1)
-        //     this.categories.push(item.category);
-        // });
-        console.log(response.data.products);
-        context.commit('PRODUCTSALL',response.data.products);
-        context.commit('CATEGORIES',response.data.products);
-        context.commit('LOADING',false);   
-      });
-    },
+ 
     getCart(context) {
-      context.commit('LOADING',true);
+      context.commit('LOADING',true);   
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       axios.get(url).then((response) => {
         context.commit('CART',response.data.data);
+        console.log(response.data.data);
         context.commit('LOADING',false);   
       });
     },
@@ -54,12 +40,22 @@ export default new Vuex.Store({
     addToCart(context,{id, qty}) {
       context.commit('LOADING',true);
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      let repeadItem = context.state.cart.carts.filter((item)=>{
+        return item.product_id===id
+      });
+      console.log(repeadItem);
+      // if(context.state.cart.carts){
+
+      // };
+      let newQty=context.state.cart.carts.qty+qty;     
       const cart = {
         product_id: id,
-        qty,
+        newQty,
       };
+      console.log(cart);
       axios.post(url, { data: cart }).then((response) => {
-        context.commit('LOADING',false);  
+        context.commit('LOADING',false);
+        console.log(response.data);  
         context.dispatch('getCart'); 
       });
     },
@@ -68,25 +64,18 @@ export default new Vuex.Store({
     LOADING(state,payload){
       state.isLoading=payload;
     },
-    PRODUCTSALL(state,payload){
-      state.productsAll=payload;
-    },
-    CATEGORIES(state,payload){
-      payload.forEach((item) => {
-        if (state.categories.indexOf(item.category) === -1)
-        state.categories.push(item.category);
-      });
-    },
+  
     CART(state,payload){
       state.cart=payload;
     }   
   },
   getters:{
-    categories(state){
-      return state.categories;
+    cart(state){
+      return state.cart;
     },
-    productsAll(){
-      return state.productsAll;
-    },
+ 
+  },
+  modules:{
+    productsModules,
   }
 });

@@ -54,7 +54,7 @@
   margin-bottom: $spacer-bottom;  
   &.delete-spacer {
     @include min(md) {
-      padding-right: 7.3%;
+      padding-right: 6%;
     }
   }
   .btn {
@@ -809,14 +809,14 @@
     .cart__item {
       &:nth-child(1) {
         padding-left: $spacer-bg-1;
-        width: 55.6%;
+        width: 61%;
         text-align: left;
       }
       &:nth-child(2) {
-        width: 19.4%;
+        width: 22.2%;
       }
       &:nth-child(3) {
-        width: 18.7%;
+        width:13%;
         text-align: right;
       }
     }
@@ -842,7 +842,7 @@
     text-align: left;
   }
   &__title {
-    text-align: justify;
+    // text-align: justify;
     padding-right: $spacer-sm;
   }
   &__num {
@@ -913,7 +913,7 @@
       // align-items: center;
       justify-content: space-between;
       // widsth: 86.5%;
-      padding-right: 7.3%;
+      padding-right: 6%;
     }
   }
   &.no-delete {

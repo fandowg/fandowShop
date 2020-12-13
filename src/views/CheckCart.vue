@@ -9,28 +9,28 @@
           <div class="cart__item">價格</div>
         </div>
         <div class="cart__list">
-          <div class="cart__row bag-row no-gutters">
-            <div class="cart__item bag-md-2 bag cart__img">
+          <div class="cart__row bag-row no-gutters" v-for="item in cart.carts" :key="item.id">
+            <div class="cart__item bag-md-2 bag-3 cart__img">
               <img
-                src="https://storage.googleapis.com/vue-course-api.appspot.com/fandow%2F1602051639813.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=gr8NrK5qG2VgsJI3Oe%2BfwiiCsI92hlxGyow%2BS8rFk7NhoGdxIByroXBjw%2FwJIXF2DL2l%2BR5uAyBqbPLCRS%2FOUjYE6beaXb5JVHNt5KWFhcVDMfeSJ19YlOB0Y6lB5b%2B7MFDJNiSOUDGV7xTFk1EJyKUwnnk%2FiBXNgxkfaIAj5vfWZplVL%2FZ0dn1iDnPzOwS54LA9wrtwnzJvv6ZaZVOqKzM9Bik1gSmelLZ9ddVlMur9YTHmoUxjwaDgzo91EKn1%2FIgroQF0XfOMNOnsdhLPljx%2BYwR8NDXWt8nbzpBYIkgmVxaTnvWsS1HTZgPueQg9xwESZLRohJDT09tMjpXjJw%3D%3D"
-                alt=""
+                :src="item.product.imageUrl"
+                :alt="item.product.title"
               />
             </div>
-            <div class="bag-6 bag-md-7 bag-row no-gutters cart__group">
+            <div class="bag-7 bag-md-8 bag-row no-gutters cart__group">
               <div class="cart__item cart__title bag-md-8">
-                750ml eddy+ 多水吸管水瓶 骷髏黑
+             {{item.product.title}}
               </div>
               <div class="cart__item cart__num bag-md-4">
-                <button class="btn btn-outline-primary btn-sm">-</button>
-                <span class="cart__num__content">2</span>
-                <button class="btn btn-outline-primary btn-sm">+</button>
+                <button class="btn btn-outline-primary btn-sm" @click="addToCart(item.id, 1)">-</button>
+                <span class="cart__num__content">{{item.qty}}</span>
+                <button class="btn btn-outline-primary btn-sm" @click="addToCart(item.id, -1)">+</button>
               </div>
             </div>
 
             <div class="bag bag-row no-gutters cart__group">
-              <div class="cart__item bag-md-9 cart__price">NT$5560</div>
+              <div class="cart__item bag-md-9 cart__price">{{item.final_total}}元</div>
               <div class="cart__item bag-md-3 cart__delete">
-                <button class="button-none">
+                <button class="button-none" @click="deleteCart(item.id)">
                   <i class="fas fa-trash"></i>
                 </button>
               </div>
@@ -80,14 +80,25 @@
 </template>
 
 <script>
+import {mapGetters,mapActions} from 'vuex';
 export default {
   data() {
     return {
 
     };
   },
+  computed:{
+    ...mapGetters(['cart']),
+  },
   methods: {
-
+     addToCart(id, qty) {
+      this.$store.dispatch('addToCart',{id, qty});     
+    },
+    //  deleteCart(id) {
+    //   this.$store.dispatch('deleteCart',id);
+        
+    // },
+     ...mapActions(['getCart','deleteCart']),
   },
   created() {
     
