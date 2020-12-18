@@ -8,122 +8,281 @@
         <div class="cart__item">價格</div>
       </div>
       <div class="cart__list">
-        <div class="cart__row bag-row no-gutters">
-          <div class="cart__item bag bag-md-2 cart__img">
-            <img
-              src="https://storage.googleapis.com/vue-course-api.appspot.com/fandow%2F1602051639813.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=gr8NrK5qG2VgsJI3Oe%2BfwiiCsI92hlxGyow%2BS8rFk7NhoGdxIByroXBjw%2FwJIXF2DL2l%2BR5uAyBqbPLCRS%2FOUjYE6beaXb5JVHNt5KWFhcVDMfeSJ19YlOB0Y6lB5b%2B7MFDJNiSOUDGV7xTFk1EJyKUwnnk%2FiBXNgxkfaIAj5vfWZplVL%2FZ0dn1iDnPzOwS54LA9wrtwnzJvv6ZaZVOqKzM9Bik1gSmelLZ9ddVlMur9YTHmoUxjwaDgzo91EKn1%2FIgroQF0XfOMNOnsdhLPljx%2BYwR8NDXWt8nbzpBYIkgmVxaTnvWsS1HTZgPueQg9xwESZLRohJDT09tMjpXjJw%3D%3D"
-              alt=""
-            />
+        <div
+          class="cart__row bag-row no-gutters"
+          v-for="item in cart.carts"
+          :key="item.id"
+        >
+          <div class="cart__item bag-3 bag-md-2 cart__img">
+            <img :src="item.product.imageUrl" alt="item.product.title" />
           </div>
-          <div class="bag-6 bag-md-7 bag-row no-gutters cart__group">
+          <div class="bag-7 bag-md-8 bag-row no-gutters cart__group">
             <div class="cart__item cart__title bag-md-8">
-              750ml eddy+ 多水吸管水瓶 骷髏黑
+              {{ item.product.title }}
             </div>
             <div class="cart__item cart__num bag-md-4">
-              <span class="cart__num__content no-padding">2 個</span>
+              <span class="cart__num__content no-padding"
+                >{{ item.qty }}{{ item.product.unit }}</span
+              >
             </div>
           </div>
-          <div class="bag cart__item cart__price">NT$560</div>
+          <div class="bag cart__item cart__price">
+            {{ item.final_total | currency }}
+          </div>
         </div>
       </div>
       <div class="cart__bottom">
         <div class="cart__total">
-          <div class="cart__total__row">
+          <div class="cart__total__row" v-if="cart.total !== cart.final_total">
             <span class="cart__total__row__title">總額：</span>
-            <span class="cart__total__row__content">NT$560</span>
+            <span class="cart__total__row__content">
+              {{ cart.total | currency }}</span
+            >
+          </div>
+          <div class="cart__total__row" v-if="cart.total !== cart.final_total">
+            <span class="cart__total__row__title">折扣：</span>
+            <span class="cart__total__row__content text-success">
+              {{ (cart.total - cart.final_total) | currency }}
+            </span>
           </div>
           <div class="cart__total__row">
-            <span class="cart__total__row__title">折扣:</span>
-            <span class="cart__total__row__content">12</span>
-          </div>
-          <div class="cart__total__row">
-            <span class="cart__total__row__title">應付 : </span>
-            <span class="cart__total__row__content">NT$560</span>
+            <span class="cart__total__row__title">應付：</span>
+            <span class="cart__total__row__content text-danger">
+              {{ cart.final_total | currency }}
+            </span>
           </div>
         </div>
       </div>
     </div>
     <h2 class="buying-page__title--sm">填寫資料</h2>
-    <div class="form order">
-      <div class="form-row">
-        <div class="bag-md-6 form-group">
-          <label for="name">姓名</label>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            placeholder="請輸入姓名"
-          />
-        </div>
-        <div class="bag-md-6 form-group">
-          <label for="phone">手機</label>
-          <input
-            type="number"
-            class="form-control"
-            id="phone"
-            placeholder="請輸入手機號碼"
-          />
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="email">email</label>
-        <input
-          type="email"
-          class="form-control"
-          id="email"
-          placeholder="請輸入mail"
-        />
-      </div>
-
-      <div class="form-group-wrapper">
-        <label for="address">收件人地址</label>
+    <ValidationObserver v-slot="{ handleSubmit, invalid }">
+      <div class="form order">
         <div class="form-row">
-          <div class="bag-md-3 bag-6 form-group">
-            <select class="form-control" name="" id="">
-              <option value="">請選擇縣市</option>
-            </select>
-          </div>
-          <div class="bag-md-3 bag-6 form-group">
-            <select class="form-control" name="" id="">
-              <option value="">請選擇鄉政市區</option>
-            </select>
+          <div class="bag-md-6 form-group">
+            <ValidationProvider
+              name="姓名"
+              rules="required"
+              v-slot="{ failed, passed, errors }"
+            >
+              <label for="name">姓名</label>
+              <input
+                type="text"
+                v-model="user.name"
+                class="form-control"
+                :class="{ 'is-invalid': failed, 'is-valid': passed }"
+                id="name"
+                placeholder="請輸入姓名"
+              />
+              <span class="text-danger" v-if="failed">{{ errors[0] }}</span>
+            </ValidationProvider>
           </div>
           <div class="bag-md-6 form-group">
-            <input
-              type="text"
-              class="form-control"
-              id="address"
-              placeholder="請輸入收件人地址"
-            />
+            <ValidationProvider
+              name="手機"
+              rules="required"
+              v-slot="{ failed, passed, errors }"
+            >
+              <label for="phone">手機</label>
+              <input
+                type="number"
+                v-model="user.tel"
+                class="form-control"
+                :class="{ 'is-invalid': failed, 'is-valid': passed }"
+                id="phone"
+                placeholder="請輸入手機號碼"
+              />
+              <span class="text-danger" v-if="failed">{{ errors[0] }}</span>
+            </ValidationProvider>
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="comment">備註</label>
-        <textarea
-          class="form-control"
-          name=""
-          id="comment"
-          rows="4"
-          placeholder=""
-        ></textarea>
-      </div>
-    </div>
 
-    <div class="btn-wrapper-side">
-      <a class="btn btn-outline-primary">回購物車</a>
-      <router-link to="/order/payment" class="btn btn-primary">建立訂單</router-link>
-    </div>
+        <div class="form-group">
+          <ValidationProvider
+            name="email"
+            rules="required|email"
+            v-slot="{ failed, passed, errors }"
+          >
+            <label for="email">email</label>
+            <input
+              type="email"
+              v-model="user.email"
+              class="form-control"
+              :class="{ 'is-invalid': failed, 'is-valid': passed }"
+              id="email"
+              placeholder="請輸入mail"
+            />
+            <span class="text-danger" v-if="failed">{{ errors[0] }}</span>
+          </ValidationProvider>
+        </div>
+
+        <div class="form-group-wrapper">
+          <label for="address">收件人地址</label>
+          <div class="form-row">
+            <div class="bag-md-3 bag-6 form-group">
+              <ValidationProvider
+                name="縣市"
+                rules="required"
+                v-slot="{ failed, passed, errors }"
+              >
+                <select
+                  class="form-control"
+                  :class="{ 'is-invalid': failed, 'is-valid': passed }"
+                  name=""
+                  id=""
+                  v-model="city"
+                >
+                  <option :value="null" selected disabled>請選擇縣市</option>
+                  <option
+                    :value="item.name"
+                    v-for="item in postal"
+                    :key="item.name"
+                  >
+                    {{ item.name }}
+                  </option>
+                </select>
+                <span class="text-danger" v-if="failed">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </div>
+            <div class="bag-md-3 bag-6 form-group">
+              <ValidationProvider
+                name="鄉政市區"
+                rules="required"
+                v-slot="{ failed, passed, errors }"
+              >
+                <select
+                  class="form-control"
+                  :class="{ 'is-invalid': failed, 'is-valid': passed }"
+                  name=""
+                  id=""
+                  v-model="area"
+                >
+                  <option :value="{}" selected disabled>請選擇鄉政市區</option>
+                  <option
+                    :value="item"
+                    v-for="item in areaArray"
+                    :key="item.name"
+                  >
+                    {{ item.name }}
+                  </option>
+                </select>
+                <span class="text-danger" v-if="failed">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </div>
+            <div class="bag-md-6 form-group">
+              <ValidationProvider
+                name="收件人地址"
+                rules="required"
+                v-slot="{ failed, passed, errors }"
+              >
+                <input
+                  type="text"
+                  v-model="addressText"
+                  class="form-control"
+                  :class="{ 'is-invalid': failed, 'is-valid': passed }"
+                  id="address"
+                  placeholder="請輸入收件人地址"
+                />
+                <span class="text-danger" v-if="failed">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <ValidationProvider
+            name="備註"
+            rules="required"
+            v-slot="{ failed, passed, errors }"
+          >
+            <label for="comment">備註</label>
+            <textarea
+              class="form-control"
+              :class="{ 'is-invalid': failed, 'is-valid': passed }"
+              name=""
+              v-model="message"
+              id="comment"
+              rows="4"
+              placeholder=""
+            ></textarea>
+            <span class="text-danger" v-if="failed">{{ errors[0] }}</span>
+          </ValidationProvider>
+        </div>
+      </div>
+
+      <div class="btn-wrapper-side">
+        <a class="btn btn-outline-primary">回購物車</a>
+        <button class="btn btn-primary" @click="handleSubmit(createOrder)">
+          建立訂單
+        </button>
+        <!-- <router-link to="/order/payment" class="btn btn-primary"
+        >建立訂單</router-link
+      > -->
+      </div>
+    </ValidationObserver>
+    <!-- {{address}} -->
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+import postal from "@/assets/postal.json";
 export default {
   data() {
-    return {};
+    return {
+      user: {
+        // name: "",
+        // email: "",
+        // tel: "",
+        // address: "",
+      },
+      postal,
+      city: null,
+      area: {},
+      areaArray: [],
+      addressText: "",
+      message: "",
+    };
   },
-  methods: {},
+  watch: {
+    city() {
+      let currentArea = postal.find((item) => {
+        return item.name === this.city;
+      });
+      this.areaArray = currentArea ? currentArea.children : [];
+      this.area = {};
+      console.log(this.areaArray);
+    },
+    address(val) {
+      this.user.address = val;
+    },
+  },
+  computed: {
+    address() {
+      return `${this.area.code} ${this.city} ${this.area.name} ${this.addressText} `;
+    },
+    ...mapGetters("cartModules", ["cart"]),
+  },
+  methods: {
+    createOrder() {
+      const form = {
+        user: this.user,
+        message: this.message,
+      };
+      // form.user.address=this.address;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
+      this.$http.post(url, { data: form }).then((response) => {
+        if (response.data.success) {
+          this.$router.push({
+            name: "Payment",
+            params: {
+              id: response.data.orderId,
+            },
+          });
+        }
+        this.getCart();
+      });
+    },
+    ...mapActions("cartModules", ["getCart"]),
+  },
   created() {},
 };
 </script>

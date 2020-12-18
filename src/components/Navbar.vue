@@ -1,15 +1,21 @@
 <template>
   <nav class="navbar" :class="{ 'bg-white': scrollPosition > 50 || checkHome }">
-    <button class="desk-hide-md button-none" @click.prevent="menuShow = !menuShow">
+    <button
+      class="desk-hide-md button-none"
+      @click.prevent="menuShow = !menuShow"
+    >
       <img src="@/assets/images/icon_bars.svg" alt="" />
     </button>
     <a href="" class="logo"><img src="@/assets/images/logo.svg" alt="" /></a>
 
     <div class="menu menu--left off-canvas" :class="{ active: menuShow }">
-      <button class="close-position desk-hide-md button-none" @click.prevent="menuShow = false">
+      <button
+        class="close-position desk-hide-md button-none"
+        @click.prevent="menuShow = false"
+      >
         <img src="@/assets/images/icon_close.svg" alt="" />
       </button>
-      <ul class="menu__list ">
+      <ul class="menu__list">
         <li class="menu__item dropdown" ref="closeDropdown">
           <a
             href=""
@@ -35,25 +41,28 @@
         </li>
       </ul>
     </div>
-  
-      <ul class="menu__list menu__list--mobile-top">
-        <li class="menu__item">
-          <router-link class="menu__link" to="/admin"
-            ><i class="fas fa-user"></i
-          ></router-link>
-        </li>
-        <li class="dropdown menu__item" ref="closeCart">
-          <a
-            href=""
-            @click.prevent="toggleCart($event)"
-            class="menu__link dropdown__btn"
-            ><i class="fas fa-shopping-cart"></i
-          ><span class="cart-qty-icon">{{cart.carts.length}}</span>
-          </a>
-          <div
-            class="dropdown__box dropdown__box--right no-padding"
-            :class="{ active: cartShow }"
-          >
+
+    <ul class="menu__list menu__list--mobile-top">
+      <li class="menu__item">
+        <router-link class="menu__link" to="/admin"
+          ><i class="fas fa-user"></i
+        ></router-link>
+      </li>
+      <li class="dropdown menu__item" ref="closeCart">
+        <a
+          href=""
+          @click.prevent="toggleCart($event)"
+          class="menu__link dropdown__btn"
+          ><i class="fas fa-shopping-cart"></i
+          ><span class="cart-qty-icon" v-if="cartLength > 0">{{
+            cartLength
+          }}</span>
+        </a>
+        <div
+          class="dropdown__box dropdown__box--right no-padding"
+          :class="{ active: cartShow }"
+        >
+          <div v-if="cartLength > 0">
             <div class="cart">
               <div class="cart__head bag-row no-gutters">
                 <div class="cart__item bag-7">產品</div>
@@ -62,50 +71,50 @@
                 <div class="cart__item bag"></div>
               </div>
               <div class="cart__list">
-                <div class="cart__row bag-row no-gutters" v-for="item in cart.carts" :key="item.id">
+                <div
+                  class="cart__row bag-row no-gutters"
+                  v-for="item in cart.carts"
+                  :key="item.id"
+                >
                   <div class="cart__item bag-7 cart__title">
-                    {{item.product.title}}                  
+                    {{ item.product.title }}
                   </div>
                   <div class="cart__item bag-2 cart__num">
-                    <span class="cart__num__content no-padding">{{item.qty}} {{item.product.unit}}</span>
+                    <span class="cart__num__content no-padding"
+                      >{{ item.qty }} {{ item.product.unit }}</span
+                    >
                   </div>
 
-                  <div class="cart__item bag-2 cart__price">{{item.final_total}}元</div>
+                  <div class="cart__item bag-2 cart__price">
+                    {{ item.final_total | currency }}
+                  </div>
                   <div class="cart__item bag cart__delete">
                     <button class="button-none" @click="deleteCart(item.id)">
                       <i class="fas fa-trash"></i>
                     </button>
                   </div>
                 </div>
-                <!-- <div class="cart__row bag-row no-gutters">
-                  <div class="cart__item bag-6 cart__title">
-                    750ml eddy+ 多水吸管水瓶 骷髏黑
-                  </div>
-                  <div class="cart__item bag cart__num">
-                    <span class="cart__num__content no-padding">12個</span>
-                  </div>
-
-                  <div class="cart__item bag-3 cart__price">NT$5560</div>
-                  <div class="cart__item bag cart__delete">
-                    <button class="button-none">
-                      <i class="fas fa-trash"></i>
-                    </button>
-                  </div>
-                </div> -->
               </div>
             </div>
             <div class="btn-wrapper-side delete-spacer">
-              <router-link class="btn btn-primary btn-full"  to="/check-cart" >前往結帳</router-link>
-              
+              <router-link class="btn btn-primary btn-full" to="/check-cart"
+                >前往結帳</router-link
+              >
             </div>
           </div>
-        </li>
-      </ul>
-  
+          <div v-else>
+          購物車是空的喔，趕快來選購吧
+          <router-link class="btn btn-primary " to="/product-list"
+                >前往購物</router-link
+              >
+          </div>
+        </div>
+      </li>
+    </ul>
   </nav>
 </template>
 <script>
-import {mapGetters,mapActions} from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -119,18 +128,21 @@ export default {
   watch: {
     $route: function () {
       this.menuShow = false;
-       this.dropdownShow = false;
-        this.cartShow = false;
+      this.dropdownShow = false;
+      this.cartShow = false;
     },
   },
   computed: {
     checkHome() {
       return this.$route.name !== "Home";
     },
-    ...mapGetters(['cart']),
+    cartLength() {
+      return this.cart.carts.length;
+    },
+    ...mapGetters("cartModules", ["cart"]),
   },
 
-  methods: {    
+  methods: {
     toggleDropdown(e) {
       // e.stopPropagation();
       this.dropdownShow = !this.dropdownShow;
@@ -160,11 +172,11 @@ export default {
       }
     },
     // deleteCart(id) {
-    //   this.$store.dispatch('deleteCart',id);      
+    //   this.$store.dispatch('deleteCart',id);
     // },
-    ...mapActions(['getCart','deleteCart']),
+    ...mapActions("cartModules", ["getCart", "deleteCart"]),
   },
-  created(){
+  created() {
     this.getCart();
     console.log(this.cart);
   },

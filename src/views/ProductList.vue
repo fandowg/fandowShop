@@ -42,13 +42,7 @@
           </ul>
         </div>
         <div class="side-box">
-          <select
-            class="form-control"
-            name=""
-            id=""
-            v-model="sort"
-            @change="changeSort"
-          >
+          <select class="form-control" name="" id="" v-model="sort" @change="changeSort">
             <option value="" disabled>價格排序</option>
             <option value="priceUp">價格高到低</option>
             <option value="priceDown">價格低到高</option>
@@ -68,7 +62,7 @@
       </div>
       <div class="product bag-row">
         <div
-          v-for="item in filterProducts"
+          v-for="item in productsByPage[currentPage]"
           :key="item.id"
           @click="toProductItem(item.category, item.id)"
           class="product__item bag-lg-3 bag-md-6 bag-6"
@@ -82,9 +76,7 @@
             </h3>
             <div class="product__bottom">
               <div>
-                <div class="product__origin_price">
-                  NT${{ item.origin_price }}
-                </div>
+                <div class="product__origin_price">NT${{ item.origin_price }}</div>
                 <div class="product__price">NT${{ item.price }}</div>
               </div>
 
@@ -99,77 +91,127 @@
         </div>
       </div>
       <Page
+        ref="page"
+        :products="productsBySort"
+        @products-by-page="getProductsByPage"
+        :current-page.sync="currentPage"
+      />
+      <!-- <Page
         :pagination="pagination"
         @get-pages="getProducts"
         v-if="currentCategory === 'all'"
-      />
+      /> -->
     </div>
   </main>
 </template>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
 <script>
 import Page from "@/components/Pagination.vue";
-import {mapGetters,mapActions} from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      products: [],
+      // products: [],
       // productsAll: [],
       // categories: [],
       currentCategory: "",
-      pagination: {},
+      productsBySort: [],
+      productsByPage: [],
+      // pagination: {},
+      currentPage: 0,
       search: "",
       sort: "",
       // cart: {},
     };
   },
   watch: {
-    $route: function () {
+    $route() {
       this.getCurrentCategory();
-      this.changeSort();
+      // this.changeSort();
     },
     search() {
+      this.currentPage = 0;
       this.changeSort();
     },
+    currentCategory() {
+      if (!this.sort) {
+        this.productsBySort = this.filterProducts;
+      } else {
+        this.changeSort();
+      }
+      this.currentPage = 0;
+      //
+
+      // this.$refs.page.createPage(this.filterProducts);
+    },
+    getPage() {
+      this.productsBySort = this.filterProducts;
+      this.$refs.page.createPage(this.filterProducts);
+    },
+    filterProducts(val) {
+      console.log(val);
+      if (!this.sort) {
+        this.productsBySort = this.filterProducts;
+      }
+      // this.productsBySort = val;
+      console.log(this.productsBySort);
+      this.$refs.page.createPage(this.productsBySort);
+    },
+    // sort() {
+
+    // },
+    // filterProducts() {
+    //   console.log(123);
+    //   this.$refs.page.createPage(this.filterProducts);
+    // },
   },
   computed: {
-    filterProducts() {
-      if (this.currentCategory === "all") {
-        if (this.search === "") {
-          return this.products;
+    filterProducts: {
+      get() {
+        // console.log(this.currentCategory);
+        if (this.currentCategory === "all") {
+          console.log(this.search);
+          if (this.search === "") {
+            return this.productsAll;
+          }
+          let filter = this.filterSearch(this.productsAll);
+          console.log(filter);
+          return filter;
+        } else {
+          let resault = this.productsAll.filter((item) => {
+            return item.category === this.currentCategory;
+          });
+          if (this.search === "") {
+            return resault;
+          }
+          let filter = this.filterSearch(resault);
+          return filter;
         }
-        let filter = this.filterSearch(this.products);
-        return filter;
-      } else {
-        let resault = this.productsAll.filter((item) => {
-          return item.category === this.currentCategory;
-        });
-        if (this.search === "") {
-          return resault;
-        }
-        let filter = this.filterSearch(resault);
-        return filter;
-      }
+      },
+      // set(val) {
+      //   console.log(val);
+      //   this.productsBySort = val;
+      // },
     },
-    ...mapGetters('productsModules',['categories','productsAll']),
-    // productsAll(){
-    //   return this.$store.state.productsAll;
+    ...mapGetters("productsModules", ["categories", "productsAll", "getPage"]),
+
+    // cart() {
+    //   return this.$store.state.cart;
     // },
-    // categories(){
-    //   return this.$store.state.categories;
-    // },
-    cart(){
-       return this.$store.state.cart;
-    }
   },
   methods: {
+    getProductsByPage(products) {
+      this.productsByPage = products;
+    },
     changeSort() {
+      // console.log(456);
+      this.currentPage = 0;
+      let newSort = [];
+      let filterProducts = [...this.filterProducts];
       switch (this.sort) {
         case "priceUp":
-          let newSort = [];
-          if (this.filterProducts.length) {
-            newSort = this.filterProducts.sort((a, b) => {
+          if (filterProducts.length) {
+            newSort = filterProducts.sort((a, b) => {
               const aPrice = a.price ? a.price : a.origin_price;
               const bPrice = b.price ? b.price : b.origin_price;
               // console.log(aPrice,bPrice);
@@ -177,12 +219,14 @@ export default {
             });
           }
           console.log(newSort);
-          return newSort;
-          this.filterProducts = newSort;
+          // return newSort;
+          this.productsBySort = newSort;
+          this.$refs.page.createPage(this.productsBySort);
+          // this.$refs.page.createPage(this.filterProducts);
           break;
         case "priceDown":
-          if (this.filterProducts.length) {
-            newSort = this.filterProducts.sort((a, b) => {
+          if (filterProducts.length) {
+            newSort = filterProducts.sort((a, b) => {
               const aPrice = a.price ? a.price : a.origin_price;
               const bPrice = b.price ? b.price : b.origin_price;
               // console.log(aPrice,bPrice);
@@ -190,8 +234,10 @@ export default {
             });
           }
           console.log(newSort);
-          return newSort;
-          this.filterProducts = newSort;
+          // return newSort;
+          this.productsBySort = newSort;
+          this.$refs.page.createPage(this.productsBySort);
+          // this.$refs.page.createPage(this.filterProducts);
           break;
       }
     },
@@ -203,33 +249,19 @@ export default {
         return item.title.indexOf(this.search) != -1;
       });
     },
-    getProducts(page = 1) {
-      this.$store.dispatch("updateLoading", true);
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`;
-      this.$http.get(url).then((response) => {
-        this.products = response.data.products;
-        this.pagination = response.data.pagination;
-        this.$store.dispatch("updateLoading", false);
+    // getProducts(page = 1) {
+    //   this.$store.dispatch("updateLoading", true);
+    //   const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`;
+    //   this.$http.get(url).then((response) => {
+    //     this.products = response.data.products;
+    //     this.pagination = response.data.pagination;
+    //     this.$store.dispatch("updateLoading", false);
 
-        console.log(this.categories);
-      });
-    },
-    // getProductsAll() {
-    //   this.$store.dispatch('productsModules/getProductsAll');
-    //   // this.$store.dispatch("updateLoading", true);
-    //   // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-    //   // this.$http.get(url).then((response) => {
-    //   //   this.productsAll = response.data.products;
-    //   //   this.productsAll.forEach((item) => {
-    //   //     if (this.categories.indexOf(item.category) === -1)
-    //   //       this.categories.push(item.category);
-    //   //   });
-    //   //   this.$store.dispatch("updateLoading", false);
-
-    //   //   console.log(this.categories);
-    //   // });
+    //     console.log(this.categories);
+    //   });
     // },
-    ...mapActions('productsModules',['getProductsAll']),
+
+    ...mapActions("productsModules", ["getProductsAll"]),
     toProductItem(category, id) {
       this.$router.push({
         name: "ProductItem",
@@ -240,53 +272,25 @@ export default {
       });
     },
     addToCart(id, qty) {
-      this.$store.dispatch('addToCart',{id, qty});
-      // console.log(this.$store.state.productsModules.productsAll);      
-      // this.$store.dispatch("updateLoading", true);
-      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // const cart = {
-      //   product_id: id,
-      //   qty,
-      // };
-      // this.$http.post(url, { data: cart }).then((response) => {
-      //   this.$store.dispatch("updateLoading", false);
-      //   this.getCart();
-      // });
+      this.$store.dispatch("cartModules/addToCart", { id, qty });
     },
-    getCart() {
-      this.$store.dispatch('getCart');
-      // this.$store.dispatch("updateLoading", true);
-      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // this.$http.get(url).then((response) => {
-      //   this.cart = response.data.data;
-      //   this.$store.dispatch("updateLoading", false);
-      // });
-    },
+    // getCart() {
+    //   this.$store.dispatch('getCart');
 
-    deleteCart(id) {
-      this.$store.dispatch('deleteCart',id);
-      // this.$store.dispatch("updateLoading", true);
-      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      // this.$http.delete(url).then((response) => {     
-      //   this.$store.dispatch("updateLoading", false);
-      //   this.getCart();
-      // });      
-    }
+    // },
 
+    // deleteCart(id) {
+    //   this.$store.dispatch('deleteCart', id);
+
+    // },
   },
   components: {
     Page,
   },
-  created() {    
+  created() {
     this.getCurrentCategory();
-    this.getProducts();
+    // this.getProducts();
     this.getProductsAll();
-    // this.sort = this.couponList[0].id
-    // if(this.$route.params.category==='all'){
-
-    // }else{
-
-    // }
   },
 };
 </script>

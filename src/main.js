@@ -8,8 +8,7 @@ import 'bootstrap'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import VModal from 'vue-js-modal'
-import { ValidationProvider, extend } from 'vee-validate';
-import { ValidationObserver } from 'vee-validate';
+import { ValidationProvider,ValidationObserver, extend } from 'vee-validate';
 import { localize } from 'vee-validate';
 import TW from './assets/validate/zh_TW.json'
 import { required, email, digits } from 'vee-validate/dist/rules';
@@ -21,10 +20,9 @@ import store from './store'
 import Alert from './components/Alert.vue'
 import './bus'
 import date from './filters/date'
+import currency from './filters/currency'
 import categoryChangeCn from './filters/categoryChangeCn'
-// import './bus'
-// import currencyFilter from './filters/currency'
-// import date from './filters/date'
+
 extend('required',required)
 extend('email',email)
 extend('digits',digits)
@@ -51,22 +49,15 @@ Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
 
 localize('zh_TW',TW)
-// localize({
-//   zh_TW: {
-//     messages: {
-//       required: 'gggg',
-//       min: 'this field must have no less than {length} characters',
-//       max: (_, { length }) => `this field must have no more than ${length} characters`
-//     }
-//   }
-// });
+
 
 
 Vue.component('Loading', Loading)
-// Vue.filter('currency',currencyFilter)
+
 
 Vue.component('Alert', Alert)
 Vue.filter('date',date)
+Vue.filter('currency',currency)
 Vue.filter('categoryChangeCn',categoryChangeCn)
 Vue.config.productionTip = false
 

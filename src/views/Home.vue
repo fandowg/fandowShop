@@ -179,6 +179,7 @@
 <style lang="scss" scoped>
 </style>
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -210,22 +211,14 @@ export default {
   },
   computed: {
     hotProducts() {
-      return this.products.filter(function (item, index) {
+      return this.productsAll.filter(function (item, index) {
         return item.hotProducts === 1;
       });
     },
+    ...mapGetters('productsModules', ['productsAll']),
   },
   methods: {
-    getProducts() {
-      this.$bus.$emit("changeLoading", true);
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-      this.$http.get(url).then((response) => {
-        this.products = response.data.products;
-        this.$bus.$emit("changeLoading", false);
-        //  console.log(this.getTop(this.$refs.test));
-        console.log(this.products);
-      });
-    },
+   ...mapActions('productsModules', ['getProductsAll']),
     // getTop(e) {
     //   var offset = e.offsetTop;
     //   if (e.offsetParent != null) {
@@ -235,7 +228,7 @@ export default {
     // },
   },
   created() {
-    this.getProducts();
+     this.getProductsAll();
   },
   // mounted() {
 

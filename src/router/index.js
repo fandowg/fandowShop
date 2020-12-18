@@ -43,11 +43,11 @@ const routes = [
     name: 'Login',
     component: () => import('@/views/Admin/Login.vue')
   },
-  {
-    path: '/shopping-list',
-    name: 'ShoppingList',
-    component: () => import('@/views/ShoppingList.vue')
-  },
+  // {
+  //   path: '/shopping-list',
+  //   name: 'ShoppingList',
+  //   component: () => import('@/views/ShoppingList.vue')
+  // },
   {
     path: '/check-cart',
     name: 'CheckCart',
@@ -68,14 +68,14 @@ const routes = [
         component: () => import('@/views/OrderInfo.vue')
       },
       {
-        path: 'payment',
+        path: 'payment/:id',
         name: 'Payment',
         component: () => import('@/views/Payment.vue')
       },
       {
-        path: 'order-done',
+        path: 'order-done/:id',
         name: 'OrderDone',
-        component: () => import('@/views/OrderDone.vue')
+        component: () => import('@/views/Payment.vue')
       },
 
     ]

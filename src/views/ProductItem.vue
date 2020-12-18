@@ -3,11 +3,20 @@
     <div class="page-wrapper">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb__item"><a href="#">首頁</a></li>
-          <li class="breadcrumb__item"><a href="#">購買水瓶</a></li>
-          <li class="breadcrumb__item"><a href="#">吸管水瓶</a></li>
+          <li class="breadcrumb__item">
+            <router-link to="/"><i class="fas fa-home"></i></router-link>
+          </li>
+          
+          <li class="breadcrumb__item">
+            <router-link to="/product-list">購買水瓶</router-link>
+          </li>
+          <li class="breadcrumb__item">
+            <router-link :to="{ name: 'ProductListCategory', params: {category} }"
+              >{{category | categoryChangeCn}}</router-link
+            >
+          </li>
           <li class="breadcrumb__item active" aria-current="page">
-            750ml eddy+ 多水吸管水瓶 骷髏黑
+            {{ product.title }}
           </li>
         </ol>
       </nav>
@@ -18,7 +27,7 @@
               <img :src="product.imageUrl" :alt="product.title" />
             </div>
             <div class="bag-md-6 detail__info">
-              <span class="detail__category">{{ product.category }}</span>
+              <span class="detail__category">{{ product.category | categoryChangeCn}}</span>
               <h1 class="detail__title">{{ product.title }}</h1>
               <h2 class="detail__title__sm">產品特色</h2>
               <p>{{ product.description }}</p>
@@ -28,12 +37,13 @@
               </span>
 
               <div class="input-group detail__qty">
-                <select name="" id="" class="form-control">
+                <select name="" id="" class="form-control" v-model="qty">
+               
                   <option v-for="num in 5" :value="num" :key="num">
                     {{ num }}
                   </option>
                 </select>
-                <button class="btn btn-primary">加到購物車</button>
+                <button class="btn btn-primary" @click="addToCart(product_id,qty)">加到購物車</button>
               </div>
             </div>
           </div>
@@ -47,8 +57,6 @@
       </div>
     </div>
   </main>
-
-
 </template>
 <style lang="scss" scoped>
 </style>
@@ -56,24 +64,41 @@
 export default {
   data() {
     return {
-      id: "",
+      // id: "",
       product: {},
+      qty:1,
     };
   },
-  computed: {},
+  watch: {
+    product_id() {
+      this.getProduct();
+    },
+  },
+  computed: {
+    product_id() {
+      return this.$route.params.id;
+    },
+    category() {
+      return this.$route.params.category;
+    },
+  },
   methods: {
     getProduct() {
       this.$bus.$emit("changeLoading", true);
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${this.id}`;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${this.product_id}`;
       this.$http.get(url).then((response) => {
         this.product = response.data.product;
         console.log(this.product);
         this.$bus.$emit("changeLoading", false);
       });
     },
+      addToCart(id, qty) {
+      this.$store.dispatch('cartModules/addToCart', { id, qty });
+ 
+    },
   },
   created() {
-    this.id = this.$route.params.id;
+    // this.id = this.$route.params.id;
     this.getProduct();
   },
 };

@@ -75,7 +75,7 @@
                   id="category"
                   v-model="editTemp.category"
                 >
-                  <option disabled value="default">請選擇</option>
+                  <option disabled value="null">請選擇</option>
                   <option v-for="item in category" :key="item" :value="item">
                     {{ item | categoryChangeCn }}
                   </option>
@@ -221,7 +221,7 @@ export default {
   watch: {
     tempProduct() {
       this.editTemp = Object.assign({}, this.tempProduct);
-    
+      this.editTemp.category=null;    
     },
   },
   methods: {

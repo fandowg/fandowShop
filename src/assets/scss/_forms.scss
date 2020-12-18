@@ -508,4 +508,10 @@ textarea.form-control {
   }
 }
 
-
+//客製化
+select.form-control.is-valid {
+  background:none;
+}
+select.form-control.is-invalid {
+  background:none;
+}

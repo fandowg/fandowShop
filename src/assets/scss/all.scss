@@ -43,6 +43,26 @@
   top: $spacer;
 }
 
+.text-success {
+  color:$success;
+}
+
+.text-success-message {
+  color:$success;
+  display: block;
+  padding-top: $spacer-sm-2;
+}
+
+.text-danger {
+  color:$danger;
+}
+
+.text-danger-message{
+  color:$danger;
+  display: block;
+  padding-top: $spacer-sm-2;
+}
+
 .btn-wrapper-center {
   text-align: center;
   padding-top: $spacer-sm;
@@ -306,7 +326,9 @@
     }
   }
 
-  &__item {}
+  &__item {
+    position: relative;
+  }
   &__link,
   button.menu__link {
     background: transparent;
@@ -386,6 +408,24 @@
 }
 
 //客製化購物車的dropdown
+
+.cart-qty-icon{
+  position: absolute;
+  width: 16px;
+  right: -3px;
+  top: -3px;
+  height: 16px;
+  text-align: center;
+  line-height: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  border-radius: 50%;
+  background-color: $danger;
+  color: #fff;
+  font-size: 12px;
+  
+}
 
 .dropdown__box {
   .cart {
@@ -921,14 +961,14 @@
       .cart__item {
         &:nth-child(1) {
           padding-left: $spacer-bg-1;
-          width: 55.8%;
+          width: 61%;
           text-align: left;
         }
         &:nth-child(2) {
-          width: 19.4%;
+          width: 22.2%;
         }
         &:nth-child(3) {
-          width: 24.8%;
+          width: 16.8%;
           text-align: right;
         }
       }
@@ -1029,9 +1069,6 @@
   margin-bottom: $spacer;
 }
 
-.text-danger {
-  color: #c00;
-}
 
 .only-box-top {
   padding-top: $spacer-bg-2;

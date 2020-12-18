@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import {EventBus} from '@/bus'
 export default {
   data() {
     return {
@@ -42,12 +43,13 @@ export default {
       },
   },
   created(){
-      this.$bus.$on('message:push',(message,status = 'success' )=>{
+      EventBus.$on('message:push',(message,status = 'success' )=>{
           this.updateMessage(message,status);
+          console.log('發送訊息')
       })
   },
   beforeDestroy(){
-      this.$bus.$off('message:push');
+       EventBus.$off('message:push');
   }
 };
 </script>

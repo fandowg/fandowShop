@@ -15,12 +15,10 @@
     <div class="admin">
       <div class="admin__head bag-row no-gutters">
         <div class="admin__item bag-md text-center">圖片</div>
-        <div class="admin__item admin__title bag-md-4">
-          產品名稱
-        </div>
-        <div class="admin__item bag-md ">分類</div>
-        <div class="admin__item bag-md ">原價</div>
-        <div class="admin__item bag-md ">售價</div>
+        <div class="admin__item admin__title bag-md-4">產品名稱</div>
+        <div class="admin__item bag-md">分類</div>
+        <div class="admin__item bag-md">原價</div>
+        <div class="admin__item bag-md">售價</div>
         <div class="admin__item bag-md text-right-max-md">啟用</div>
         <div class="admin__item bag-md text-right-min-md">編輯</div>
         <div class="admin__item bag-md text-right">刪除</div>
@@ -28,7 +26,7 @@
       <div class="admin__list">
         <div
           class="admin__row bag-row no-gutters"
-          v-for="item in products"
+          v-for="item in products[currentPage]"
           :key="item.id"
         >
           <div class="admin__item bag-md bag-2 text-center">
@@ -39,7 +37,9 @@
             {{ item.title }}
             <!-- {{item.video}} -->
           </div>
-          <div class="admin__item bag-md bag-3">{{ item.category | categoryChangeCn}}</div>
+          <div class="admin__item bag-md bag-3">
+            {{ item.category | categoryChangeCn }}
+          </div>
           <div class="admin__item bag-md bag-3 price">
             <span class="desk-hide-md">原價</span>{{ item.origin_price }}
           </div>
@@ -51,10 +51,7 @@
             <span v-else>未啟用</span>
           </div>
           <div class="admin__item bag-md bag-6 text-right-min-md">
-            <button
-              class="btn btn-primary btn-sm"
-              @click="openModal(false, item)"
-            >
+            <button class="btn btn-primary btn-sm" @click="openModal(false, item)">
               編輯
             </button>
           </div>
@@ -69,8 +66,8 @@
         </div>
       </div>
     </div>
-
-    <Page :pagination="pagination" @get-pages="getProducts" />
+    <Page ref="page" :products.sync="products" :current-page.sync="currentPage" />
+    <!-- <Page :pagination="pagination" @get-pages="getProducts" /> -->
   </div>
 </template>
 <script>
@@ -79,22 +76,26 @@ import Page from "@/components/Pagination.vue";
 export default {
   data() {
     return {
-      products: [],
+      products: {},
       tempProduct: {},
-      pagination: "",
+      // pagination: "",
       isNew: true,
+      currentPage: 0,
     };
   },
   methods: {
     getProducts(page = 1) {
       this.$bus.$emit("changeLoading", true);
       // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
-       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products/all`;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products/all`;
       this.$http.get(url).then((response) => {
         this.products = response.data.products;
+        // console.log({ ...this.products });
         // this.pagination = response.data.pagination;
+        this.$refs.page.createPage(response.data.products);
+        // this.createPage();
         this.$bus.$emit("changeLoading", false);
-        console.log(this.pagination);
+        // console.log(this.pagination);
       });
     },
     deleteProduct(id) {
@@ -111,7 +112,7 @@ export default {
       if (isNew) {
         this.tempProduct = {
           is_enabled: 0,
-          category:'default'
+          category: "default",
           //  imageUrl:'',
         };
         this.isNew = isNew;
