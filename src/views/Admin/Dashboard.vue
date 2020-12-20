@@ -1,9 +1,9 @@
 <template>
   <div >
     <NavbarAdmin />
-    <div class="container-xl page-wrapper">
+    <main class="container-xl page page--pt">
       <router-view />
-    </div>
+    </main>
   </div>
 </template>
 <script>

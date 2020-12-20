@@ -1,6 +1,6 @@
 <template>
-  <div class="page-wrapper">
-    <div class="buying-page container-800">
+
+    <main class="page page--pt container-lg">
       <div class="step">
         <ul class="step__list">
           <li class="step__item" :class="{ active: active === 'OrderInfo' }">
@@ -21,8 +21,8 @@
         </ul>
       </div>
       <router-view></router-view>
-    </div>
-  </div>
+    </main>
+
 </template>
 
 <script>

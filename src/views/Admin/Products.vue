@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-page">
+  <div>
     <EditProduct
       @close="closeModal"
       @get-products="getProducts"
@@ -8,7 +8,7 @@
     />
 
     <div class="menu-block menu-block--inline">
-      <h1 class="admin-page__title">產品列表</h1>
+      <h1 class="page__title">產品列表</h1>
       <button class="btn btn-primary" @click="openModal(true)">新增產品</button>
     </div>
 
@@ -66,7 +66,7 @@
         </div>
       </div>
     </div>
-    <Page ref="page" :products.sync="products" :current-page.sync="currentPage" />
+    <Page ref="page" :products="products" :current-page.sync="currentPage" @products-by-page="products=$event"/>
     <!-- <Page :pagination="pagination" @get-pages="getProducts" /> -->
   </div>
 </template>

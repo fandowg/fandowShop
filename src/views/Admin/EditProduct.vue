@@ -1,8 +1,7 @@
 <template>
   <modal
     name="editProduct"
-    :shiftY="0.3"
-    :adaptive="true"
+    :shiftY="0.3"   
     :maxWidth="800"
     width="95%"
     height="auto"
@@ -221,7 +220,9 @@ export default {
   watch: {
     tempProduct() {
       this.editTemp = Object.assign({}, this.tempProduct);
+      if (this.isNew) {
       this.editTemp.category=null;    
+      }
     },
   },
   methods: {

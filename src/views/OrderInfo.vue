@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="buying-page__title--sm">商品明細</h2>
+    <h2 class="page__title--sm">商品明細</h2>
     <div class="cart no-delete">
       <div class="cart__head bag-row no-gutters">
         <div class="cart__item">產品</div>
@@ -54,7 +54,7 @@
         </div>
       </div>
     </div>
-    <h2 class="buying-page__title--sm">填寫資料</h2>
+    <h2 class="page__title--sm">填寫資料</h2>
     <ValidationObserver v-slot="{ handleSubmit, invalid }">
       <div class="form order">
         <div class="form-row">

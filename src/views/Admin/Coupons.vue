@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-page">
+  <div >
     
     <EditCoupons 
       @close="closeModal"
@@ -12,7 +12,7 @@
     <v-dialog />
     <!-- <modal>456456</modal> -->
      <div class="menu-block menu-block--inline">
-      <h1 class="admin-page__title">優惠券列表</h1>
+      <h1 class="page__title">優惠券列表</h1>
       <button class="btn btn-primary" @click="openModal(true)">新增優惠券</button>
     </div>
    <div class="admin">

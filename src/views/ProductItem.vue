@@ -1,6 +1,6 @@
 <template>
-  <main>
-    <div class="page-wrapper">
+  <main class="page">
+
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb__item">
@@ -20,8 +20,8 @@
           </li>
         </ol>
       </nav>
-      <div class="container-xl">
-        <div class="detail">
+      <div class="detail container-xl">
+        
           <div class="detail__top bag-row">
             <div class="bag-md-6 detail__img">
               <img :src="product.imageUrl" :alt="product.title" />
@@ -54,8 +54,8 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
+     
+  
   </main>
 </template>
 <style lang="scss" scoped>

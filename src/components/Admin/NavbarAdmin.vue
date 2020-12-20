@@ -9,7 +9,7 @@
       <button class="close-position desk-hide-md button-none" @click.prevent="menuShow = false">
         <img src="@/assets/images/icon_close.svg" alt="" />
       </button>
-      <ul class="menu__list">       
+      <ul class="menu__list ">       
        
         <li class="menu__item">
           <router-link class="menu__link" to="/admin/products"
@@ -26,16 +26,17 @@
             >訂單列表</router-link
           >
         </li>
+        <li class="menu__item">
+         <router-link class="menu__link" to="/product-list"
+            >進入商城</router-link
+          ></li>  
       </ul>
     </div>
   
-      <ul class="menu__list">
-         <li class="menu__item">
-         <router-link class="menu__link" to="/product-list"
-            >進入商城</router-link
-          ></li>   
+      <ul class="menu__list menu__list--mobile-top">
+          
           <li class="menu__item">
-         <button class="menu__link"  @click="logOut">登出 <i class="fas fa-sign-out-alt"></i></button ></li>   
+         <button class="menu__link"  @click="logOut"><i class="fas fa-sign-out-alt"></i></button ></li>   
 
       </ul>   
       

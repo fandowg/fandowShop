@@ -1,7 +1,31 @@
 <template>
-  <main>
-    <div class="page-wrapper container-xl">
-      <!-- <h1>所有產品</h1> -->
+  <main class="page">
+    <div class="product-top">
+      <div class="container-xl">
+        <div class="bag-row">
+           <div class="bag-md-6">
+         <img src="@/assets/images/product_top_sm.jpg" alt="" />
+          </div>
+          <div class="bag-md-6">
+          <h2 class="product-top__title">領取折扣，一起加油</h2>
+          <p class="product-top__text">結帳輸入 <span class="product-top__text__sp">needwater</span><br> , 全品項8折優惠 </p>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+    <!-- <div
+      class="product-top"
+      :style="{ backgroundImage: 'url(' + bgImg.img_1 + ')' }"
+    >
+      <div class="product-top__inner">
+        <h2 class="product-top__title">領取折扣，一起加油</h2>
+        <p class="product-top__text">結帳輸入 needwater</p>
+        <img src="@/assets/images/product_top.jpg" alt="" />
+      </div>
+    </div> -->
+    <!-- <h1>所有產品</h1> -->
+    <div class="container-xl">
       <div class="menu-block">
         <div class="nav-menu">
           <ul class="nav-menu__box">
@@ -42,7 +66,13 @@
           </ul>
         </div>
         <div class="side-box">
-          <select class="form-control" name="" id="" v-model="sort" @change="changeSort">
+          <select
+            class="form-control"
+            name=""
+            id=""
+            v-model="sort"
+            @change="changeSort"
+          >
             <option value="" disabled>價格排序</option>
             <option value="priceUp">價格高到低</option>
             <option value="priceDown">價格低到高</option>
@@ -76,7 +106,9 @@
             </h3>
             <div class="product__bottom">
               <div>
-                <div class="product__origin_price">NT${{ item.origin_price }}</div>
+                <div class="product__origin_price">
+                  NT${{ item.origin_price }}
+                </div>
                 <div class="product__price">NT${{ item.price }}</div>
               </div>
 
@@ -114,6 +146,10 @@ export default {
       // products: [],
       // productsAll: [],
       // categories: [],
+      bgImg: {
+        img_1: require("@/assets/images/product_top.jpg"),
+        img_2: require("@/assets/images/top_2.jpg"),
+      },
       currentCategory: "",
       productsBySort: [],
       productsByPage: [],

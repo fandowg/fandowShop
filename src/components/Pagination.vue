@@ -75,7 +75,7 @@ export default {
       let newProducts = [];
       let pagArray = [];
       let obKey = Object.keys(products);
-      // console.log(obKey);
+      console.log(obKey);
       obKey.forEach((item, index) => {
         pagArray.push(products[item]);
         if (index !== 0 && (index + 1) % this.pageItems === 0) {

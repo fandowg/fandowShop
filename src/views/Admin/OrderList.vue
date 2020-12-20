@@ -1,8 +1,8 @@
 
 <template>
-  <div class="admin-page">
+  <div >
     <div class="menu-block menu-block--inline">
-      <h1 class="admin-page__title">訂單列表</h1>
+      <h1 class="page__title">訂單列表</h1>
     </div>
 
     <div class="admin">
