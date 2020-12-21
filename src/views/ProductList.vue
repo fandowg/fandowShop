@@ -1,18 +1,40 @@
 <template>
   <main class="page">
-    <div class="product-top">
-      <div class="container-xl">
-        <div class="bag-row">
-           <div class="bag-md-6">
-         <img src="@/assets/images/product_top_sm.jpg" alt="" />
+    <div class="container-xl">
+      <div class="product-top">
+        <div class="bag-row no-gutters">
+          <div class="bag-md-2 bag-4">
+            <!-- <div class="mobile-hide-md">
+              <img src="@/assets/images/product_top_sm.jpg" alt="" />
+            </div> -->
+
+            <img src="@/assets/images/feature.jpg" alt="" />
           </div>
-          <div class="bag-md-6">
-          <h2 class="product-top__title">領取折扣，一起加油</h2>
-          <p class="product-top__text">結帳輸入 <span class="product-top__text__sp">needwater</span><br> , 全品項8折優惠 </p>
+          <div class="bag-md-10 bag-8 product-top__content">
+            <h2 class="product-top__title">領取折扣，一起加油</h2>
+            <p class="product-top__text">
+              結帳輸入 <span class="product-top__text__sp">needwater</span> , <br />
+              全品項8折優惠<span class="mobile-hide-md">，CAMELBAK支持你的每個決定</span
+              >。
+            </p>
           </div>
-         
         </div>
       </div>
+      <!-- <div class="desk-hide-md">
+              <img src="@/assets/images/product_top.jpg" alt="" />
+            </div> -->
+
+      <!-- <div class="product-top">
+         <div class="bag-md-7 product-top__content">
+        <div class="product-top__content">
+          <h2 class="product-top__title">領取折扣，一起加油</h2>
+          <p class="product-top__text">
+            結帳輸入 <span class="product-top__text__sp">needwater</span> , 全品項8折優惠
+          </p>
+        </div>
+         </div>
+      </div>
+      <img src="@/assets/images/product_top_sm.jpg" alt="" /> -->
     </div>
     <!-- <div
       class="product-top"
@@ -66,13 +88,7 @@
           </ul>
         </div>
         <div class="side-box">
-          <select
-            class="form-control"
-            name=""
-            id=""
-            v-model="sort"
-            @change="changeSort"
-          >
+          <select class="form-control" name="" id="" v-model="sort" @change="changeSort">
             <option value="" disabled>價格排序</option>
             <option value="priceUp">價格高到低</option>
             <option value="priceDown">價格低到高</option>
@@ -90,6 +106,20 @@
           </div>
         </div>
       </div>
+      <!-- <img src="@/assets/images/product_top_sm.jpg" alt="" /> -->
+      <!-- <div class="product-top">
+        <div class="bag-row no-gutters">
+          <div class="bag-md-8 bag-8 product-top__content">
+            <h2 class="product-top__title">所有水瓶</h2>
+            <p class="product-top__text">看看有那些你中意的好水瓶，陪你過個好節。</p>
+          </div>
+          <div class="bag-md-4 bag-4">
+          
+
+            <img src="@/assets/images/product_top_sm.jpg" alt="" />
+          </div>
+        </div>
+      </div> -->
       <div class="product bag-row">
         <div
           v-for="item in productsByPage[currentPage]"
@@ -106,9 +136,7 @@
             </h3>
             <div class="product__bottom">
               <div>
-                <div class="product__origin_price">
-                  NT${{ item.origin_price }}
-                </div>
+                <div class="product__origin_price">NT${{ item.origin_price }}</div>
                 <div class="product__price">NT${{ item.price }}</div>
               </div>
 
@@ -146,10 +174,7 @@ export default {
       // products: [],
       // productsAll: [],
       // categories: [],
-      bgImg: {
-        img_1: require("@/assets/images/product_top.jpg"),
-        img_2: require("@/assets/images/top_2.jpg"),
-      },
+      scrollPosition: 0,
       currentCategory: "",
       productsBySort: [],
       productsByPage: [],
@@ -200,6 +225,9 @@ export default {
     //   console.log(123);
     //   this.$refs.page.createPage(this.filterProducts);
     // },
+    currentPage() {
+      this.toTop();
+    },
   },
   computed: {
     filterProducts: {
@@ -319,6 +347,9 @@ export default {
     //   this.$store.dispatch('deleteCart', id);
 
     // },
+    toTop() {
+      document.documentElement.scrollTop = 0;
+    },
   },
   components: {
     Page,
@@ -327,6 +358,11 @@ export default {
     this.getCurrentCategory();
     // this.getProducts();
     this.getProductsAll();
+  },
+  mounted() {
+    window.addEventListener("scroll", () => {
+      this.scrollPosition = window.pageYOffset;
+    });
   },
 };
 </script>

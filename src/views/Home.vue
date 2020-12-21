@@ -1,11 +1,11 @@
 <template>
-
   <main>
     <swiper class="top-banner" :options="swiperOptions">
       <swiper-slide>
         <div
+          v-if="device"
           class="top-banner__item"
-          :style="{ backgroundImage: 'url(' + bgImg.img_1 + ')' }"
+          :style="{ backgroundImage: `url(${bgImg[device][0]})` }"
         >
           <div class="top-banner__inner">
             <h2>挑戰各種不可能！</h2>
@@ -16,8 +16,9 @@
       </swiper-slide>
       <swiper-slide>
         <div
+          v-if="device"
           class="top-banner__item"
-          :style="{ backgroundImage: 'url(' + bgImg.img_2 + ')' }"
+          :style="{ backgroundImage: `url(${bgImg[device][1]})` }"
         >
           <div class="top-banner__inner">
             <h2>守護孩子的未來</h2>
@@ -73,15 +74,11 @@
               alt=""
             />
           </h3>
-          <p>
-            我們的目標是"幫助人們不再使用一次性的瓶裝水"，為環保和永續發展盡一份力。
-          </p>
+          <p>我們的目標是"幫助人們不再使用一次性的瓶裝水"，為環保和永續發展盡一份力。</p>
         </div>
       </div>
       <div class="btn-wrapper-center">
-        <router-link to="/about" class="btn btn-primary">
-          深入了解CAMELBAK
-        </router-link>
+        <router-link to="/about" class="btn btn-primary"> 深入了解CAMELBAK </router-link>
       </div>
     </section>
     <section class="section container-xl">
@@ -146,10 +143,10 @@
     <section class="section container-xl">
       <div class="bag-row feature">
         <div class="bag-xl-6 feature__item">
-          <div class="bag-row ">
+          <div class="bag-row">
             <div class="bag-xl-6 bag-md-4 feature__img">
               <!-- <img src="@/assets/images/feature.jpg" alt="" /> -->
-            <img src="@/assets/images/product_top.jpg" alt="" />
+              <img src="@/assets/images/feature.jpg" alt="" />
             </div>
             <div class="bag-xl-6 bag-md-8 feature__content">
               <h3>領取折扣，一起加油</h3>
@@ -160,7 +157,7 @@
             </div>
           </div>
         </div>
-        <div class=" bag-xl-6 feature__item">
+        <div class="bag-xl-6 feature__item">
           <div class="bag-row">
             <div class="bag-xl-6 bag-md-4 feature__img">
               <img src="@/assets/images/feature_2.jpg" alt="" />
@@ -194,9 +191,7 @@
               </h3>
               <div class="product__bottom">
                 <div>
-                  <div class="product__origin_price">
-                    NT${{ item.origin_price }}
-                  </div>
+                  <div class="product__origin_price">NT${{ item.origin_price }}</div>
                   <div class="product__price">NT${{ item.price }}</div>
                 </div>
                 <button class="product__addToCart btn btn-sm btn-primary">
@@ -208,15 +203,12 @@
         </div>
       </div>
       <div class="btn-wrapper-center">
-        <router-link to="/product-list" class="btn btn-primary">
-          看更多水瓶
-        </router-link>
+        <router-link to="/product-list" class="btn btn-primary"> 看更多水瓶 </router-link>
       </div>
     </section>
   </main>
 </template>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
 <script>
 import { mapGetters, mapActions } from "vuex";
 export default {
@@ -224,11 +216,23 @@ export default {
     return {
       products: [],
       pagination: {},
+      device: "",
       bgImg: {
-        img_1: require("@/assets/images/top_1.jpg"),
-        img_2: require("@/assets/images/top_2.jpg"),
+        desk: [
+          require("@/assets/images/top_1.jpg"),
+          require("@/assets/images/top_2.jpg"),
+        ],
+        mobile: [
+          require("@/assets/images/top_1_m.jpg"),
+          require("@/assets/images/top_2_m.jpg"),
+        ],
       },
-
+      // bgImgM: [
+      //   require("@/assets/images/top_1_m.jpg"),
+      //   require("@/assets/images/top_2_m.jpg"),
+      // ],
+      Width: 0,
+      // Height: 0,
       swiperOptions: {
         loop: true,
         // autoplay: {
@@ -248,6 +252,11 @@ export default {
       },
     };
   },
+  watch: {
+    Width(val) {
+      this.changeDevice();
+    },
+  },
   computed: {
     hotProducts() {
       return this.productsAll.filter(function (item, index) {
@@ -257,7 +266,15 @@ export default {
     ...mapGetters("productsModules", ["productsAll"]),
   },
   methods: {
+    changeDevice() {
+      if (this.Width < 768) {
+        this.device = "mobile";
+      } else {
+        this.device = "desk";
+      }
+    },
     ...mapActions("productsModules", ["getProductsAll"]),
+
     // getTop(e) {
     //   var offset = e.offsetTop;
     //   if (e.offsetParent != null) {
@@ -269,17 +286,27 @@ export default {
   created() {
     this.getProductsAll();
   },
-  // mounted() {
+  mounted() {
+    this.Width = window.innerWidth;
+    // console.log(this.Width);
 
-  // //不知為何mounted後的值少100多，除非有事件或者是資料讀完才正常
-  //     console.log(this.getTop(this.$refs.test));
-  //   window.addEventListener("scroll", () => {
-  //       console.log(this.getTop(this.$refs.test));
-  //     // console.log(this.$refs.test.offsetTop);
+    window.onresize = () => {
+      this.Width = window.innerWidth;
+      // this.Height = window.innerHeight;
+    };
+    this.changeDevice();
 
-  //     // console.log(this.scrollPosition>50);
-  //     // console.log(document.documentElement.scrollTop,window.pageYOffset);
-  //   });
-  // },
+    // console.log(this.bgImg[this.device][0]);
+
+    // //不知為何mounted後的值少100多，除非有事件或者是資料讀完才正常
+    //     console.log(this.getTop(this.$refs.test));
+    //   window.addEventListener("scroll", () => {
+    //       console.log(this.getTop(this.$refs.test));
+    //     // console.log(this.$refs.test.offsetTop);
+
+    //     // console.log(this.scrollPosition>50);
+    //     // console.log(document.documentElement.scrollTop,window.pageYOffset);
+    //   });
+  },
 };
 </script>

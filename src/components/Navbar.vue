@@ -1,9 +1,6 @@
 <template>
   <nav class="navbar" :class="{ 'bg-white': scrollPosition > 50 || checkHome }">
-    <button
-      class="desk-hide-md button-none"
-      @click.prevent="menuShow = !menuShow"
-    >
+    <button class="desk-hide-md button-none" @click.prevent="menuShow = !menuShow">
       <img src="@/assets/images/icon_bars.svg" alt="" />
     </button>
     <a href="" class="logo"><img src="@/assets/images/logo.svg" alt="" /></a>
@@ -23,14 +20,26 @@
             @click.prevent="toggleDropdown($event)"
             >購買水瓶 <i class="fas fa-chevron-down"></i
           ></a>
-          <div
-            class="dropdown__box navbar-dropdown"
-            :class="{ active: dropdownShow }"
-          >
-            <a class="dropdown__item" href="">吸管水瓶</a>
+          <div class="dropdown__box navbar-dropdown" :class="{ active: dropdownShow }">
+            <router-link class="dropdown__item" to="/product-list/all"
+              >所有水瓶</router-link
+            >
+            <router-link class="dropdown__item" to="/product-list/straw"
+              >吸管水瓶</router-link
+            >
+            <router-link class="dropdown__item" to="/product-list/sport"
+              >運動水瓶</router-link
+            >
+            <router-link class="dropdown__item" to="/product-list/kid"
+              >兒童水瓶</router-link
+            >
+            <router-link class="dropdown__item" to="/product-list/stainless-steel"
+              >不鏽鋼水瓶</router-link
+            >
+            <!-- <a class="dropdown__item" href="">吸管水瓶</a>
             <a class="dropdown__item" href="">運動水瓶</a>
             <a class="dropdown__item" href="">兒童水瓶</a>
-            <a class="dropdown__item" href="">不鏽鋼水瓶</a>
+            <a class="dropdown__item" href="">不鏽鋼水瓶</a> -->
           </div>
         </li>
         <li class="menu__item"><a class="menu__link" href="">深入了解CAMELBAK</a></li>
@@ -49,14 +58,9 @@
         ></router-link>
       </li>
       <li class="dropdown menu__item" ref="closeCart">
-        <a
-          href=""
-          @click.prevent="toggleCart($event)"
-          class="menu__link dropdown__btn"
+        <a href="" @click.prevent="toggleCart($event)" class="menu__link dropdown__btn"
           ><i class="fas fa-shopping-cart"></i
-          ><span class="cart-qty-icon" v-if="cartLength > 0">{{
-            cartLength
-          }}</span>
+          ><span class="cart-qty-icon" v-if="cartLength > 0">{{ cartLength }}</span>
         </a>
         <div
           class="dropdown__box dropdown__box--right no-padding"
@@ -103,10 +107,8 @@
             </div>
           </div>
           <div v-else>
-          購物車是空的喔，趕快來選購吧
-          <router-link class="btn btn-primary " to="/product-list"
-                >前往購物</router-link
-              >
+            購物車是空的喔，趕快來選購吧
+            <router-link class="btn btn-primary" to="/product-list">前往購物</router-link>
           </div>
         </div>
       </li>
@@ -123,13 +125,18 @@ export default {
       cartShow: false,
       // changeNavBg: false,
       scrollPosition: 0,
+      width: 0,
     };
   },
   watch: {
     $route: function () {
       this.menuShow = false;
-      this.dropdownShow = false;
+      // this.dropdownShow = false;
       this.cartShow = false;
+    },
+    width(val) {
+      console.log(val);
+      this.mobileOpenDropdown();
     },
   },
   computed: {
@@ -175,6 +182,14 @@ export default {
     //   this.$store.dispatch('deleteCart',id);
     // },
     ...mapActions("cartModules", ["getCart", "deleteCart"]),
+    mobileOpenDropdown() {
+      if (this.width < 768) {
+        this.dropdownShow = true;
+        console.log(this.dropdownShow);
+      } else {
+        this.dropdownShow = false;
+      }
+    },
   },
   created() {
     this.getCart();
@@ -186,6 +201,15 @@ export default {
       // console.log(this.scrollPosition>50);
       // console.log(document.documentElement.scrollTop,window.pageYOffset);
     });
+    this.width = window.innerWidth;
+    // console.log(this.Width);
+
+    window.onresize = () => {
+      this.width = window.innerWidth;
+      console.log(this.Width);
+      // this.Height = window.innerHeight;
+    };
+    this.mobileOpenDropdown();
   },
 };
 </script>
