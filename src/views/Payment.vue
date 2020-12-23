@@ -1,8 +1,10 @@
 <template>
   <div>
-    <div class="alert-box" v-if="routerName==='OrderDone'">
+    <div class="alert-box" v-if="routerName === 'OrderDone'">
       <h1 class="page__title"><i class="far fa-check-circle"></i>感謝你的購買</h1>
-      <p>親愛的顧客您好，您已付款成功，商品將於2日內送達，若喜歡我們的商品，歡迎關注我們的最新消息喔。</p>
+      <p>
+        親愛的顧客您好，您已付款成功，商品將於2日內送達，若喜歡我們的商品，歡迎關注我們的最新消息喔。
+      </p>
     </div>
     <h2 class="page__title--sm">商品明細</h2>
     <div class="cart no-delete">
@@ -63,36 +65,45 @@
     <div class="order-detail">
       <div class="order-detail__row">
         <div class="order-detail__title">姓名</div>
-        <div class="order-detail__content">{{order.user.name}}</div>
+        <div class="order-detail__content">{{ order.user.name }}</div>
       </div>
       <div class="order-detail__row">
         <div class="order-detail__title">手機</div>
-        <div class="order-detail__content">{{order.user.tel}}</div>
+        <div class="order-detail__content">{{ order.user.tel }}</div>
       </div>
       <div class="order-detail__row">
         <div class="order-detail__title">email</div>
-        <div class="order-detail__content">{{order.user.email}}</div>
+        <div class="order-detail__content">{{ order.user.email }}</div>
       </div>
       <div class="order-detail__row">
         <div class="order-detail__title">收件人地址</div>
         <div class="order-detail__content">
-          {{order.user.address}}
+          {{ order.user.address }}
         </div>
       </div>
       <div class="order-detail__row">
         <div class="order-detail__title">備註</div>
-        <div class="order-detail__content"> {{order.message}}</div>
+        <div class="order-detail__content">{{ order.message }}</div>
       </div>
       <div class="order-detail__row">
         <div class="order-detail__title">付款狀態</div>
-        <div class="order-detail__content"><span class="text-danger" v-if="!order.is_paid">未付款</span><span class="text-success" v-else>已付款</span></div>
+        <div class="order-detail__content">
+          <span class="text-danger" v-if="!order.is_paid">未付款</span
+          ><span class="text-success" v-else>已付款</span>
+        </div>
       </div>
     </div>
 
     <div class="btn-wrapper-side">
-      <button class="btn btn-primary" @click="payOrder" v-if="routerName==='Payment'">確認付款</button>
-      <router-link class="btn btn-primary" to="/product-list" v-if="routerName==='OrderDone'">繼續逛逛</router-link>
-      
+      <button class="btn btn-primary" @click="payOrder" v-if="routerName === 'Payment'">
+        確認付款
+      </button>
+      <router-link
+        class="btn btn-primary"
+        to="/product-list"
+        v-if="routerName === 'OrderDone'"
+        >繼續逛逛</router-link
+      >
     </div>
   </div>
 </template>
@@ -103,7 +114,7 @@ export default {
   data() {
     return {
       order: {
-        user:{
+        user: {
           // name:'',
           // email:'',
           // tel:'',
@@ -114,10 +125,10 @@ export default {
     };
   },
   computed: {
-    order_id(){
-      return this.$route.params.id
+    order_id() {
+      return this.$route.params.id;
     },
-    routerName(){
+    routerName() {
       return this.$route.name;
     },
     ...mapGetters("cartModules", ["cart"]),
@@ -126,24 +137,27 @@ export default {
     getOrder() {
       // const order_id = this.$route.params.id;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${this.order_id}`;
+      this.$store.commit("LOADING", true);
       this.$http.get(url).then((response) => {
         this.order = response.data.order;
-        console.log(response.data);
+        this.$store.commit("LOADING", false);
+        // console.log(response.data);
       });
     },
-    payOrder(){
+    payOrder() {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${this.order_id}`;
-      this.$http.post(url).then((response) => {      
-        console.log(response.data);
-        this.getOrder();
+      this.$store.commit("LOADING", true);
+      this.$http.post(url).then((response) => {
+        this.$store.commit("LOADING", false);
+        // console.log(response.data);
+        // this.getOrder();
         this.$router.push({
-          name:"OrderDone",
-          params:{
-            id:this.order_id,
+          name: "OrderDone",
+          params: {
+            id: this.order_id,
           },
         });
       });
-
     },
     ...mapActions("cartModules", ["getCart"]),
   },

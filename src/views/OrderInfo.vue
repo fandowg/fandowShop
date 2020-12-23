@@ -35,9 +35,7 @@
         <div class="cart__total">
           <div class="cart__total__row" v-if="cart.total !== cart.final_total">
             <span class="cart__total__row__title">總額：</span>
-            <span class="cart__total__row__content">
-              {{ cart.total | currency }}</span
-            >
+            <span class="cart__total__row__content"> {{ cart.total | currency }}</span>
           </div>
           <div class="cart__total__row" v-if="cart.total !== cart.final_total">
             <span class="cart__total__row__title">折扣：</span>
@@ -132,11 +130,7 @@
                   v-model="city"
                 >
                   <option :value="null" selected disabled>請選擇縣市</option>
-                  <option
-                    :value="item.name"
-                    v-for="item in postal"
-                    :key="item.name"
-                  >
+                  <option :value="item.name" v-for="item in postal" :key="item.name">
                     {{ item.name }}
                   </option>
                 </select>
@@ -157,11 +151,7 @@
                   v-model="area"
                 >
                   <option :value="{}" selected disabled>請選擇鄉政市區</option>
-                  <option
-                    :value="item"
-                    v-for="item in areaArray"
-                    :key="item.name"
-                  >
+                  <option :value="item" v-for="item in areaArray" :key="item.name">
                     {{ item.name }}
                   </option>
                 </select>
@@ -269,6 +259,7 @@ export default {
       };
       // form.user.address=this.address;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
+      this.$store.commit("LOADING", true);
       this.$http.post(url, { data: form }).then((response) => {
         if (response.data.success) {
           this.$router.push({
@@ -279,6 +270,7 @@ export default {
           });
         }
         this.getCart();
+        this.$store.commit("LOADING", false);
       });
     },
     ...mapActions("cartModules", ["getCart"]),

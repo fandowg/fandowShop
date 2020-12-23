@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { EventBus } from "@/bus";
+// import { EventBus } from "@/bus";
 export default {
   data() {
     return {
@@ -46,17 +46,19 @@ export default {
   methods: {
     //input加上id，才會自動填入
     signIn() {
-      console.log(EventBus);
+      // console.log(EventBus);
       const url = `${process.env.VUE_APP_APIPATH}/admin/signin`;
+      this.$store.commit("LOADING", true);
       this.$http.post(url, this.user).then((response) => {
         console.log(response.data);
         if (response.data.success) {
-          EventBus.$emit("message:push", response.data.message);
+          this.$bus.$emit("message:push", response.data.message);
           this.$emit("close");
           this.$router.push("/admin");
         } else {
-          EventBus.$emit("message:push", response.data.message, "fail");
+          this.$bus.$emit("message:push", response.data.message, "text-danger");
         }
+        this.$store.commit("LOADING", false);
       });
     },
   },

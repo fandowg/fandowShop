@@ -8,7 +8,7 @@
           :style="{ backgroundImage: `url(${bgImg[device][0]})` }"
         >
           <div class="top-banner__inner">
-            <h2>挑戰各種不可能！</h2>
+            <h2 class="animate__animated animate__fadeIn">挑戰各種不可能！</h2>
             <p>2021運動水瓶，全新上市</p>
             <a href="" class="btn btn-primary btn-lg">了解更多</a>
           </div>
@@ -36,54 +36,55 @@
       </div>
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
-
     <section class="section container-xl">
-      <h2><span>CAMELBAK，</span><span>不只是水瓶</span></h2>
+      <h2 v-scrollanimate><span>CAMELBAK，</span><span>不只是水瓶</span></h2>
       <div class="introduction bag-row">
         <div class="introduction__item bag-xl-4 bag-md-6">
-          <h3>
+          <h3 v-scrollanimate>
             是提醒你喝水的好朋友<img
               class="introduction__icon"
               src="@/assets/images/h3_icon_2.jpg"
               alt=""
             />
           </h3>
-          <p>
+          <p v-scrollanimate>
             專利吸管咬嘴，實驗證實較一般水瓶多出15% ~
             24%的飲水量，讓忙碌工作的你，多喝點水。
           </p>
         </div>
         <div class="introduction__item bag-xl-4 bag-md-6">
-          <h3>
+          <h3 v-scrollanimate>
             是你努力衝刺的好推手<img
               class="introduction__icon"
               src="@/assets/images/h3_icon_1.jpg"
               alt=""
             />
           </h3>
-          <p>
+          <p v-scrollanimate>
             獨家專利"
             噴射咬嘴閥"，擠壓瓶身即可直接飲水，你不須停下腳步，就可以暢快得補充水分。
           </p>
         </div>
         <div class="introduction__item bag-xl-4 bag-md-6">
-          <h3>
+          <h3 v-scrollanimate>
             是永續發展的推行者<img
               class="introduction__icon"
               src="@/assets/images/h3_icon_3.jpg"
               alt=""
             />
           </h3>
-          <p>我們的目標是"幫助人們不再使用一次性的瓶裝水"，為環保和永續發展盡一份力。</p>
+          <p v-scrollanimate>
+            我們的目標是"幫助人們不再使用一次性的瓶裝水"，為環保和永續發展盡一份力。
+          </p>
         </div>
       </div>
-      <div class="btn-wrapper-center">
+      <div class="btn-wrapper-center" v-scrollanimate>
         <router-link to="/about" class="btn btn-primary"> 深入了解CAMELBAK </router-link>
       </div>
     </section>
-    <section class="section container-xl">
+    <section class="section container-xl" ref="test">
       <div class="feature bag-row">
-        <div class="feature__item bag-xl-3 bag-sm-6">
+        <div class="feature__item bag-xl-3 bag-sm-6" v-scrollanimate>
           <div class="feature__img">
             <img src="@/assets/images/category_1.jpg" alt="" />
           </div>
@@ -96,7 +97,7 @@
             <a href="" class="btn btn-primary">了解更多</a>
           </div>
         </div>
-        <div class="feature__item bag-xl-3 bag-sm-6">
+        <div class="feature__item bag-xl-3 bag-sm-6" v-scrollanimate>
           <div class="feature__img">
             <img src="@/assets/images/category_2.jpg" alt="" />
           </div>
@@ -109,7 +110,7 @@
             <a href="" class="btn btn-primary">了解更多</a>
           </div>
         </div>
-        <div class="feature__item bag-xl-3 bag-sm-6">
+        <div class="feature__item bag-xl-3 bag-sm-6" v-scrollanimate>
           <div class="feature__img">
             <img src="@/assets/images/category_3.jpg" alt="" />
           </div>
@@ -123,7 +124,7 @@
             <a href="" class="btn btn-primary">了解更多</a>
           </div>
         </div>
-        <div class="feature__item bag-xl-3 bag-sm-6">
+        <div class="feature__item bag-xl-3 bag-sm-6" v-scrollanimate>
           <div class="feature__img">
             <img src="@/assets/images/category_4.jpg" alt="" />
           </div>
@@ -173,13 +174,13 @@
         </div>
       </div>
     </section>
-    <section class="section container-xl" ref="test">
+    <section class="section container-xl">
       <h2>選一個最熱銷的水瓶吧！</h2>
       <div class="product bag-row">
         <div
           v-for="item in hotProducts"
           :key="item.id"
-          class="product__item bag-lg-3 bag-md-6 bag-6"
+          class="product__item bag-lg-3 bag-sm-4 bag-6"
         >
           <router-link to="/product-list">
             <div class="product__img">
@@ -231,7 +232,7 @@ export default {
       //   require("@/assets/images/top_1_m.jpg"),
       //   require("@/assets/images/top_2_m.jpg"),
       // ],
-      Width: 0,
+      // width: 0,
       // Height: 0,
       swiperOptions: {
         loop: true,
@@ -253,7 +254,7 @@ export default {
     };
   },
   watch: {
-    Width(val) {
+    width() {
       this.changeDevice();
     },
   },
@@ -264,10 +265,11 @@ export default {
       });
     },
     ...mapGetters("productsModules", ["productsAll"]),
+    ...mapGetters(["width"]),
   },
   methods: {
     changeDevice() {
-      if (this.Width < 768) {
+      if (this.width < 768) {
         this.device = "mobile";
       } else {
         this.device = "desk";
@@ -275,38 +277,46 @@ export default {
     },
     ...mapActions("productsModules", ["getProductsAll"]),
 
-    // getTop(e) {
-    //   var offset = e.offsetTop;
-    //   if (e.offsetParent != null) {
-    //     offset += this.getTop(e.offsetParent);
-    //   }
-    //   return offset;
-    // },
+    getTop(e) {
+      var offset = e.offsetTop;
+      if (e.offsetParent != null) {
+        offset += this.getTop(e.offsetParent);
+      }
+      return offset;
+    },
   },
   created() {
     this.getProductsAll();
   },
   mounted() {
-    this.Width = window.innerWidth;
+    // console.log(this);
+    // this.width = window.innerWidth;
     // console.log(this.Width);
 
-    window.onresize = () => {
-      this.Width = window.innerWidth;
-      // this.Height = window.innerHeight;
-    };
+    // window.onresize = () => {
+    //   this.Width = window.innerWidth;
+    //   // this.Height = window.innerHeight;
+    // };
     this.changeDevice();
-
+    // window.addEventListener("scroll", () => {
+    //   console.log(this.$refs.test.getBoundingClientRect().top);
+    //   console.log(this.getTop(this.$refs.test));
+    //   console.log(this.$refs.test.offsetTop);
+    //   console.log(document.documentElement.scrollTop);
+    //   console.log(window.pageYOffset);
+    // });
     // console.log(this.bgImg[this.device][0]);
 
     // //不知為何mounted後的值少100多，除非有事件或者是資料讀完才正常
     //     console.log(this.getTop(this.$refs.test));
-    //   window.addEventListener("scroll", () => {
-    //       console.log(this.getTop(this.$refs.test));
-    //     // console.log(this.$refs.test.offsetTop);
+    // window.addEventListener("scroll", () => {
+    //   console.log(this.getTop(this.$refs.test));
+    //   console.log(this.$refs.test.offsetTop);
+    //   console.log(this.$refs.test.scrollTop);
 
-    //     // console.log(this.scrollPosition>50);
-    //     // console.log(document.documentElement.scrollTop,window.pageYOffset);
-    //   });
+    //   // console.log(this.scrollPosition>50);
+    //   // console.log(document.documentElement.scrollTop,window.pageYOffset);
+    // });
   },
 };
 </script>

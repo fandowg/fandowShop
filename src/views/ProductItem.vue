@@ -77,13 +77,12 @@ export default {
     },
   },
   methods: {
-    getProduct() {
-      this.$bus.$emit("changeLoading", true);
+    getProductItem() {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${this.product_id}`;
+      this.$store.commit("LOADING", true);
       this.$http.get(url).then((response) => {
         this.product = response.data.product;
-        console.log(this.product);
-        this.$bus.$emit("changeLoading", false);
+        this.$store.commit("LOADING", false);
       });
     },
     addToCart(id, qty) {
@@ -92,7 +91,7 @@ export default {
   },
   created() {
     // this.id = this.$route.params.id;
-    this.getProduct();
+    this.getProductItem();
   },
 };
 </script>

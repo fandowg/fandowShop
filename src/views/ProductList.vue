@@ -125,7 +125,8 @@
           v-for="item in productsByPage[currentPage]"
           :key="item.id"
           @click="toProductItem(item.category, item.id)"
-          class="product__item bag-lg-3 bag-md-6 bag-6"
+          class="product__item bag-lg-3 bag-sm-4 bag-6 animate__fadeIn"
+          :class="{ animate__animated: isShow }"
         >
           <div class="product__img">
             <img :src="item.imageUrl" :alt="item.title" />
@@ -182,6 +183,7 @@ export default {
       currentPage: 0,
       search: "",
       sort: "",
+      isShow: false,
       // cart: {},
     };
   },
@@ -201,6 +203,7 @@ export default {
         this.changeSort();
       }
       this.currentPage = 0;
+      this.itemShow();
       //
 
       // this.$refs.page.createPage(this.filterProducts);
@@ -227,6 +230,7 @@ export default {
     // },
     currentPage() {
       this.toTop();
+      this.itemShow();
     },
   },
   computed: {
@@ -264,6 +268,12 @@ export default {
     // },
   },
   methods: {
+    itemShow() {
+      this.isShow = true;
+      setTimeout(() => {
+        this.isShow = false;
+      }, 1000);
+    },
     getProductsByPage(products) {
       this.productsByPage = products;
     },
@@ -359,10 +369,11 @@ export default {
     // this.getProducts();
     this.getProductsAll();
   },
-  mounted() {
-    window.addEventListener("scroll", () => {
-      this.scrollPosition = window.pageYOffset;
-    });
-  },
+  // mounted() {
+  //   window.addEventListener("scroll", () => {
+  //     this.scrollPosition = window.pageYOffset;
+  //   });
+  //   console.log(this);
+  // },
 };
 </script>

@@ -1,5 +1,8 @@
+import Vue from 'vue'
+import '@/bus'
 import axios from 'axios'
-import {EventBus} from '@/bus'
+
+// import {EventBus} from '@/bus'
 export default {
   strict: true,
   namespaced: true,
@@ -42,7 +45,7 @@ export default {
     addToCart(context, { id, qty }) {
       // console.log(context.state.cart.carts.length);
       if(context.state.cart.carts.length>=9){
-        EventBus.$emit("message:push", '購物車已滿');
+        Vue.prototype.$emit("message:push", '購物車已滿');
         return;
       };
       // console.log(456);
@@ -73,6 +76,8 @@ export default {
         };
         context.commit('LOADING', true, { root: true });
         axios.post(url, { data: cart }).then((response) => {
+          // console.log(Vue.prototype);
+          Vue.prototype.$bus.$emit('message:push',response.data.message);  
           context.commit('LOADING', false, { root: true });
           context.dispatch('getCart');
         });

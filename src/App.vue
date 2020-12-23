@@ -2,81 +2,96 @@
   <div id="app">
     <!-- <img src="@/assets/logo.svg" alt=""> -->
     <Alert></Alert>
-    <loading :active.sync="isLoading" color="#006699" loader="bars" background-color="#fff">
+    <loading
+      :active.sync="isLoading"
+      color="#006699"
+      loader="bars"
+      background-color="#fff"
+    >
       <template slot="before">讀取中</template>
     </loading>
-     <Navbar v-if="isShow" />
-    <router-view/>
+    <Navbar v-if="isShow" />
+    <router-view />
     <Footer v-if="isShow" />
-    <a href="" @click.prevent="toTop" class="to-top-btn" :class="{'show':scrollPosition > 100}"><img src="@/assets/images/totop.svg" alt=""></a>
+    <a
+      href=""
+      @click.prevent="toTop"
+      class="to-top-btn"
+      :class="{ show: scrollPosition > 100 }"
+      ><img src="@/assets/images/totop.svg" alt=""
+    /></a>
   </div>
 </template>
 
 <style lang="scss">
 @import "@/assets/scss/all";
-
 </style>
 
 <script>
 import Navbar from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
 export default {
-  data(){
-    return{
+  data() {
+    return {
       // isLoading: false,
-      scrollPosition:0,
-      isShow:true,
+      scrollPosition: 0,
+      isShow: true,
       // toTop:false,
-    }
-    
+    };
   },
   watch: {
     $route: {
       immediate: true,
-      handler (newVal, oldVal) {
-        let regex = new RegExp('admin', 'gi')
-        let value = newVal.path
-        let result = value.match(regex)
+      handler(newVal, oldVal) {
+        let regex = new RegExp("admin", "gi");
+        let value = newVal.path;
+        let result = value.match(regex);
         if (result !== null) {
-          this.isShow = false
+          this.isShow = false;
         } else {
-          this.isShow = true
+          this.isShow = true;
         }
-      }
-    }
+      },
+    },
   },
-  computed:{
-    isLoading(){
+  computed: {
+    isLoading() {
       return this.$store.state.isLoading;
-    }
+    },
   },
-  methods:{
+  methods: {
     //  changeLoading(v) {
     //   this.isLoading = v;
-     
+
     // },
-    toTop(){
-      document.documentElement.scrollTop = 0;
-    }
+    toTop() {
+      // console.log(123);
+      let top = document.documentElement.scrollTop;
+      let toTop = setInterval(() => {
+        document.documentElement.scrollTop = top -= 50;
+        if (top <= 0) {
+          clearInterval(toTop);
+        }
+      }, 10);
+    },
   },
-  created(){
-    this.$bus.$on('changeLoading',(v)=>{
-      this. changeLoading(v);
-    });
-    
+  created() {
+    // this.$bus.$on("changeLoading", (v) => {
+    //   this.changeLoading(v);
+    // });
   },
   mounted() {
-     window.addEventListener('scroll',()=>{
-    this.scrollPosition = window.pageYOffset;
- 
+    window.addEventListener("scroll", () => {
+      this.scrollPosition = window.pageYOffset;
     });
+    this.$store.dispatch("watchResize");
   },
-  beforeDestroy(){
-    this.$bus.$off('changeLoading');
+  beforeDestroy() {
+    // this.$bus.$off("changeLoading");
   },
-   components: {
+  components: {
     Navbar,
-    Footer
+    Footer,
   },
 };
 </script>

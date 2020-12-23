@@ -16,12 +16,14 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import swiper, { Navigation, Pagination, Autoplay } from 'swiper'
 import 'swiper/swiper-bundle.css'
 import store from './store'
+import animated from 'animate.css' 
 
+import '@/bus'
 import Alert from './components/Alert.vue'
-import './bus'
 import date from './filters/date'
 import currency from './filters/currency'
 import categoryChangeCn from './filters/categoryChangeCn'
+import scrollAnimate from '@/directives/scrollAnimate'
 
 extend('required',required)
 extend('email',email)
@@ -45,6 +47,7 @@ Vue.use(VueAxios, axios)
 axios.defaults.withCredentials = true
 Vue.use(VueAwesomeSwiper)
 swiper.use([Navigation, Pagination, Autoplay])
+Vue.use(animated)
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
 
@@ -59,6 +62,7 @@ Vue.component('Alert', Alert)
 Vue.filter('date',date)
 Vue.filter('currency',currency)
 Vue.filter('categoryChangeCn',categoryChangeCn)
+Vue.directive('scrollanimate',scrollAnimate)
 Vue.config.productionTip = false
 
 new Vue({
@@ -83,8 +87,11 @@ router.beforeEach((to, from, next) => {
 
     })
 
-  } else {
+  } else {    
+    // Vue.prototype.$bus.$emit('message:push',103);
+    // console.log('換頁了');
     next();
+    
   }
 
 })

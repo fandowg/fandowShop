@@ -1,7 +1,7 @@
 <template>
   <modal
     name="editProduct"
-    :shiftY="0.3"   
+    :shiftY="0.3"
     :maxWidth="800"
     width="95%"
     height="auto"
@@ -221,30 +221,30 @@ export default {
     tempProduct() {
       this.editTemp = Object.assign({}, this.tempProduct);
       if (this.isNew) {
-      this.editTemp.category=null;    
+        this.editTemp.category = null;
       }
     },
   },
   methods: {
     updateProduct() {
       if (this.isNew) {
-        this.$bus.$emit("changeLoading", true);
         const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product`;
+        this.$store.commit("LOADING", true);
         this.$http.post(url, { data: this.editTemp }).then((response) => {
           this.$bus.$emit("message:push", response.data.message);
           this.$emit("get-products");
           this.$emit("close");
-          this.$bus.$emit("changeLoading", false);
+          this.$store.commit("LOADING", false);
         });
       } else {
-        this.$bus.$emit("changeLoading", true);
         const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${this.editTemp.id}`;
+        this.$store.commit("LOADING", true);
         this.$http.put(url, { data: this.editTemp }).then((response) => {
           this.$bus.$emit("message:push", response.data.message);
           // console.log(response.data);
           this.$emit("get-products");
           this.$emit("close");
-          this.$bus.$emit("changeLoading", false);
+          this.$store.commit("LOADING", false);
         });
       }
     },

@@ -94,5 +94,8 @@ export default {
     },
   },
   created() {},
+  mounted() {
+    console.log(this);
+  },
 };
 </script>

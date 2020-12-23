@@ -1,7 +1,7 @@
 <template>
   <modal
     name="editCoupons"
-    :shiftY="0.3"   
+    :shiftY="0.3"
     :maxWidth="800"
     width="95%"
     height="auto"
@@ -90,9 +90,8 @@
             </div>
           </div>
 
-         
-            <div class="edit__item  form-group">
-              <div class="form-check">
+          <div class="edit__item form-group">
+            <div class="form-check">
               <input
                 type="checkbox"
                 class="form-check-input"
@@ -102,18 +101,13 @@
                 :false-value="0"
               />
               <label class="form-check-label" for="is_enabled">是否啟用</label>
-              </div>
             </div>
-         
+          </div>
+
           <!-- <button @click="updateProduct">送出</button> -->
 
           <div class="btn-wrapper-side">
-            <button              
-              class="btn btn-outline-primary"
-              @click="$emit('close')"
-            >
-              取消
-            </button>
+            <button class="btn btn-outline-primary" @click="$emit('close')">取消</button>
             <button class="btn btn-primary" @click="handleSubmit(updateCoupon)">
               送出
             </button>
@@ -187,10 +181,10 @@ export default {
     // },
     updateCoupon() {
       if (this.isNew) {
-        this.$bus.$emit("changeLoading", true);
+        this.$store.commit("LOADING", true);
         const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`;
         this.$http.post(url, { data: this.editTemp }).then((response) => {
-          this.$bus.$emit("changeLoading", false);
+          this.$store.commit("LOADING", false);
           this.$emit("get-coupons");
           this.$emit("close");
           this.$bus.$emit("message:push", response.data.message);
@@ -199,10 +193,10 @@ export default {
         if (JSON.stringify(this.editTemp) === JSON.stringify(this.tempCoupon)) {
           return;
         }
-        this.$bus.$emit("changeLoading", true);
+        this.$store.commit("LOADING", true);
         const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${this.editTemp.id}`;
         this.$http.put(url, { data: this.editTemp }).then((response) => {
-          this.$bus.$emit("changeLoading", false);
+          this.$store.commit("LOADING", false);
           this.$emit("get-coupons");
           this.$emit("close");
           this.$bus.$emit("message:push", response.data.message);

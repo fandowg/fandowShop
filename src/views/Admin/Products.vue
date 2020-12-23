@@ -66,7 +66,12 @@
         </div>
       </div>
     </div>
-    <Page ref="page" :products="products" :current-page.sync="currentPage" @products-by-page="products=$event"/>
+    <Page
+      ref="page"
+      :products="products"
+      :current-page.sync="currentPage"
+      @products-by-page="products = $event"
+    />
     <!-- <Page :pagination="pagination" @get-pages="getProducts" /> -->
   </div>
 </template>
@@ -83,10 +88,15 @@ export default {
       currentPage: 0,
     };
   },
+  watch: {
+    currentPage() {
+      this.toTop();
+    },
+  },
   methods: {
     getProducts(page = 1) {
-      this.$bus.$emit("changeLoading", true);
       // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
+      this.$store.commit("LOADING", true);
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products/all`;
       this.$http.get(url).then((response) => {
         this.products = response.data.products;
@@ -94,18 +104,18 @@ export default {
         // this.pagination = response.data.pagination;
         this.$refs.page.createPage(response.data.products);
         // this.createPage();
-        this.$bus.$emit("changeLoading", false);
+        this.$store.commit("LOADING", false);
         // console.log(this.pagination);
       });
     },
     deleteProduct(id) {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${id}`;
-      this.$bus.$emit("changeLoading", true);
+      this.$store.commit("LOADING", true);
       this.$http.delete(url).then((response) => {
         this.$bus.$emit("message:push", response.data.message);
         console.log(response.data);
         this.getProducts();
-        this.$bus.$emit("changeLoading", false);
+        this.$store.commit("LOADING", false);
       });
     },
     openModal(isNew, item) {
@@ -125,6 +135,9 @@ export default {
     },
     closeModal() {
       this.$modal.hide("editProduct");
+    },
+    toTop() {
+      document.documentElement.scrollTop = 0;
     },
   },
   components: {

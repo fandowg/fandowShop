@@ -106,8 +106,8 @@
               >
             </div>
           </div>
-          <div v-else>
-            購物車是空的喔，趕快來選購吧
+          <div class="box-default" v-else>
+            <p>購物車是空的喔，趕快來選購吧</p>
             <router-link class="btn btn-primary" to="/product-list">前往購物</router-link>
           </div>
         </div>
@@ -125,7 +125,7 @@ export default {
       cartShow: false,
       // changeNavBg: false,
       scrollPosition: 0,
-      width: 0,
+      // width: 0,
     };
   },
   watch: {
@@ -134,8 +134,7 @@ export default {
       // this.dropdownShow = false;
       this.cartShow = false;
     },
-    width(val) {
-      console.log(val);
+    width() {
       this.mobileOpenDropdown();
     },
   },
@@ -147,6 +146,7 @@ export default {
       return this.cart.carts.length;
     },
     ...mapGetters("cartModules", ["cart"]),
+    ...mapGetters(["width"]),
   },
 
   methods: {
@@ -196,20 +196,21 @@ export default {
     console.log(this.cart);
   },
   mounted() {
+    this.mobileOpenDropdown();
+    // this.width = window.innerWidth;
+    // console.log(this.Width);
+    // window.onresize = () => {
+    //   console.log(123);
+    //   this.width = window.innerWidth;
+    //   console.log(this.Width);
+    //   // this.Height = window.innerHeight;
+    // };
+    // this.mobileOpenDropdown();
     window.addEventListener("scroll", () => {
       this.scrollPosition = window.pageYOffset;
       // console.log(this.scrollPosition>50);
       // console.log(document.documentElement.scrollTop,window.pageYOffset);
     });
-    this.width = window.innerWidth;
-    // console.log(this.Width);
-
-    window.onresize = () => {
-      this.width = window.innerWidth;
-      console.log(this.Width);
-      // this.Height = window.innerHeight;
-    };
-    this.mobileOpenDropdown();
   },
 };
 </script>

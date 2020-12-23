@@ -23,6 +23,12 @@
     display: none;
   }
 }
+.pre-load-img{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+}
 .button-none {
   padding: 0;
   border: 0;
@@ -389,6 +395,18 @@
     margin-bottom: 0;
   }
 }
+.box-default{
+  padding: $spacer-bg-2 $spacer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 340px;
+    @include max(360) {
+      width: 320px;
+      max-width: 85vw;
+    }
+}
 .top-banner {
   margin-bottom: $spacer-bottom*2;
   @include max(sm) {
@@ -672,6 +690,17 @@
   }
   &__img {
     position: relative;
+    // background-color: #eee;
+    height:240px;
+    @include max(md) {
+      height:220px;
+    }   
+    @include max(500) {
+      height:200px;
+    }   
+    @include max(400) {
+      height:160px;
+    }   
   }
   &__content {
     position: relative;
@@ -1295,21 +1324,24 @@
   }
 }
 .alert {
-  z-index: 1000;
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
+  position: fixed;
+  right: $spacer;
+  top: 75px;
   display: flex;
-  .one {
-    border: #ccc 1px solid;
-    padding: 1rem;
+  @include max(md){
+    top: 50px;
+
+  }
+  &__item {
+    @include border;
+    padding:$spacer 50px $spacer $spacer;
     background-color: #fff;
-    &.success {
-      color: #666;
-    }
-    &.fail {
-      color: #c00;
-    }
+    // &.success {
+    //   color: #666;
+    // }
+    // &.fail {
+    //   color: #c00;
+    // }
   }
 }
 .about {
