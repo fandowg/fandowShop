@@ -4,11 +4,11 @@
     <Alert></Alert>
     <loading
       :active.sync="isLoading"
-      color="#006699"
-      loader="bars"
+      color="#000"
+      loader="spinner"
       background-color="#fff"
     >
-      <template slot="before">讀取中</template>
+      <!-- <template slot="before">讀取中</template> -->
     </loading>
     <Navbar v-if="isShow" />
     <router-view />

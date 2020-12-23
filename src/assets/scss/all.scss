@@ -178,7 +178,9 @@
   position: fixed;
   right: $spacer;
   bottom: $spacer;
-  &.show {
+  @include transition;
+
+  &.show {  
     display: block;
   }
 }
@@ -537,13 +539,15 @@
     position: relative;
     width: 60px;
     transform: rotate(16deg);
-    margin-top: -40px;
+    margin-top: -43px;
     margin-left: $spacer;
     z-index: -1;
     @include max(md) {
-      position: absolute;
-      right: 0;
-      bottom: 0;
+      // position: absolute;
+      width: 50px;
+      margin-top: -20px;
+      // right: 0;
+      // bottom: 0;
     }
   }
   h3 {
@@ -552,6 +556,9 @@
     border-bottom: $primary 1px solid;
     margin-bottom: $spacer;
     position: relative;
+    @include max(md) {
+      border-bottom: 0;
+    }
   }
   &__item {
     padding-top: $spacer;
@@ -569,6 +576,15 @@
     @include max(sm) {
       width: 100%;
     }
+  }
+}
+.img-small-md{
+  text-align: center;
+  @include max(md) {
+    img{
+      max-width: 80%;
+    }
+
   }
 }
 .feature {

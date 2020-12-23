@@ -8,7 +8,7 @@
           :style="{ backgroundImage: `url(${bgImg[device][0]})` }"
         >
           <div class="top-banner__inner">
-            <h2 class="animate__animated animate__fadeIn">挑戰各種不可能！</h2>
+            <h2 >挑戰各種不可能！</h2>
             <p>2021運動水瓶，全新上市</p>
             <a href="" class="btn btn-primary btn-lg">了解更多</a>
           </div>
@@ -84,7 +84,7 @@
     </section>
     <section class="section container-xl" ref="test">
       <div class="feature bag-row">
-        <div class="feature__item bag-xl-3 bag-sm-6" v-scrollanimate>
+        <div class="feature__item bag-lg-3 bag-sm-6" v-scrollanimate>
           <div class="feature__img">
             <img src="@/assets/images/category_1.jpg" alt="" />
           </div>
@@ -97,7 +97,7 @@
             <a href="" class="btn btn-primary">了解更多</a>
           </div>
         </div>
-        <div class="feature__item bag-xl-3 bag-sm-6" v-scrollanimate>
+        <div class="feature__item bag-lg-3 bag-sm-6" v-scrollanimate>
           <div class="feature__img">
             <img src="@/assets/images/category_2.jpg" alt="" />
           </div>
@@ -110,7 +110,7 @@
             <a href="" class="btn btn-primary">了解更多</a>
           </div>
         </div>
-        <div class="feature__item bag-xl-3 bag-sm-6" v-scrollanimate>
+        <div class="feature__item bag-lg-3 bag-sm-6" v-scrollanimate>
           <div class="feature__img">
             <img src="@/assets/images/category_3.jpg" alt="" />
           </div>
@@ -124,7 +124,7 @@
             <a href="" class="btn btn-primary">了解更多</a>
           </div>
         </div>
-        <div class="feature__item bag-xl-3 bag-sm-6" v-scrollanimate>
+        <div class="feature__item bag-lg-3 bag-sm-6" v-scrollanimate>
           <div class="feature__img">
             <img src="@/assets/images/category_4.jpg" alt="" />
           </div>
@@ -143,13 +143,13 @@
 
     <section class="section container-xl">
       <div class="bag-row feature">
-        <div class="bag-xl-6 feature__item">
+        <div class="bag-lg-6 feature__item" v-scrollanimate>
           <div class="bag-row">
-            <div class="bag-xl-6 bag-md-4 feature__img">
+            <div class="bag-xl-6 bag-sm-4 feature__img img-small-md">
               <!-- <img src="@/assets/images/feature.jpg" alt="" /> -->
               <img src="@/assets/images/feature.jpg" alt="" />
             </div>
-            <div class="bag-xl-6 bag-md-8 feature__content">
+            <div class="bag-lg-6 bag-sm-8 feature__content">
               <h3>領取折扣，一起加油</h3>
               <p>
                 3/30前輸入優惠碼needwater，全品項8折優惠，CAMELBAK支持你的每個挑戰，為你加油。
@@ -158,12 +158,12 @@
             </div>
           </div>
         </div>
-        <div class="bag-xl-6 feature__item">
+        <div class="bag-lg-6 feature__item" v-scrollanimate>
           <div class="bag-row">
-            <div class="bag-xl-6 bag-md-4 feature__img">
+            <div class="bag-xl-6 bag-sm-4 feature__img img-small-md">
               <img src="@/assets/images/feature_2.jpg" alt="" />
             </div>
-            <div class="bag-xl-6 bag-md-8 feature__content">
+            <div class="bag-xl-6 bag-sm-8 feature__content">
               <h3>全新品項，酷炫登場</h3>
               <p>
                 補水也要補能量，看看我們最新的噴射水瓶，瞬間暢快補水，隨時隨地，展現自我。
@@ -174,13 +174,14 @@
         </div>
       </div>
     </section>
-    <section class="section container-xl">
-      <h2>選一個最熱銷的水瓶吧！</h2>
+    <section class="section container-xl" >
+      <h2 v-scrollanimate>選一個最熱銷的水瓶吧！</h2>
       <div class="product bag-row">
         <div
           v-for="item in hotProducts"
           :key="item.id"
           class="product__item bag-lg-3 bag-sm-4 bag-6"
+          v-scrollanimate
         >
           <router-link to="/product-list">
             <div class="product__img">

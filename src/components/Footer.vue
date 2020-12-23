@@ -12,7 +12,7 @@
 <span class="footer__word">此為練習作品，無商業行為</span>
 <span class="footer__word ">
    
-    © 2020 CamelBak, All Rights Reserved
+    © 2020 Fandow, All Rights Reserved
 </span>
 </div>
   </footer>

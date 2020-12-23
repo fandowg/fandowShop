@@ -19,7 +19,7 @@
         </li>
       </ol>
     </nav>
-    <div class="detail container-xl">
+    <div class="detail container-xl" v-scrollanimate>
       <div class="detail__top bag-row">
         <div class="bag-md-5 detail__img">
           <img :src="product.imageUrl" :alt="product.title" />
@@ -29,8 +29,9 @@
           <h1 class="detail__title">{{ product.title }}</h1>
           <h2 class="detail__title__sm">產品特色</h2>
           <p>{{ product.description }}</p>
-          <span class="product__price">NT${{ product.price }}</span>
           <span class="product__origin_price"> NT${{ product.origin_price }} </span>
+          <span class="product__price">NT${{ product.price }}</span>
+          
 
           <div class="input-group detail__qty">
             <select name="" id="" class="form-control" v-model="qty">
