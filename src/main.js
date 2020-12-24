@@ -71,27 +71,3 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth) {
-    const url = `${process.env.VUE_APP_APIPATH}/api/user/check`;
-    axios.post(url).then((response) => {
-      if (response.data.success) {
-        next();
-      } else {
-        Vue.prototype.$bus.$emit('message:push',response.data.message);  
-        next({
-          path: '/login',
-        });
-
-      }
-
-    })
-
-  } else {    
-    // Vue.prototype.$bus.$emit('message:push',103);
-    // console.log('換頁了');
-    next();
-    
-  }
-
-})

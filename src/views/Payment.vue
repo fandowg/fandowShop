@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="alert-box" v-if="routerName === 'OrderDone'">
+    <v-dialog />
+    <div class="alert-box" v-if="routeName === 'OrderDone'">
       <h1 class="page__title"><i class="far fa-check-circle"></i>感謝你的購買</h1>
       <p>
         親愛的顧客您好，您已付款成功，商品將於2日內送達，若喜歡我們的商品，歡迎關注我們的最新消息喔。
@@ -95,13 +96,13 @@
     </div>
 
     <div class="btn-wrapper-side">
-      <button class="btn btn-primary" @click="payOrder" v-if="routerName === 'Payment'">
+      <button class="btn btn-primary" @click="payOrder" v-if="routeName === 'Payment'">
         確認付款
       </button>
       <router-link
         class="btn btn-primary"
         to="/product-list"
-        v-if="routerName === 'OrderDone'"
+        v-if="routeName === 'OrderDone'"
         >繼續逛逛</router-link
       >
     </div>
@@ -128,7 +129,7 @@ export default {
     order_id() {
       return this.$route.params.id;
     },
-    routerName() {
+    routeName() {
       return this.$route.name;
     },
     ...mapGetters("cartModules", ["cart"]),
@@ -151,6 +152,7 @@ export default {
         this.$store.commit("LOADING", false);
         // console.log(response.data);
         // this.getOrder();
+        this.getOrder();
         this.$router.push({
           name: "OrderDone",
           params: {
@@ -163,6 +165,36 @@ export default {
   },
   created() {
     this.getOrder();
+  },
+  beforeRouteLeave(to, from, next) {
+    console.log(to, from, next);
+    if (from.name === "OrderDone" && to.name === "Payment") {
+      next({
+        path: "/",
+      });
+    }
+    if (to.name !== "OrderDone" && from.name !== "OrderDone" && !this.order.is_paid) {
+      this.$modal.show("dialog", {
+        text: `您尚未付款，確定要離開嗎？`,
+        buttons: [
+          {
+            title: "取消",
+            handler: () => {
+              this.$modal.hide("dialog");
+              next(false);
+            },
+          },
+          {
+            title: "確定",
+            handler: () => {
+              next();
+            },
+          },
+        ],
+      });
+    } else {
+      next();
+    }
   },
 };
 </script>

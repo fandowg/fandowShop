@@ -13,7 +13,8 @@
           <div class="bag-md-10 bag-8 product-top__content">
             <h2 class="product-top__title">領取折扣，一起加油</h2>
             <p class="product-top__text">
-              結帳輸入 <span class="product-top__text__sp">needwater</span> , <br />
+              結帳輸入 <span class="product-top__text__sp">needwater</span> ,
+              <br />
               全品項8折優惠<span class="mobile-hide-md">，CAMELBAK支持你的每個決定</span
               >。
             </p>
@@ -88,7 +89,7 @@
           </ul>
         </div>
         <div class="side-box">
-          <select class="form-control" name="" id="" v-model="sort" @change="changeSort">
+          <select class="form-control" name="" id="" v-model="sort">
             <option value="" disabled>價格排序</option>
             <option value="priceUp">價格高到低</option>
             <option value="priceDown">價格低到高</option>
@@ -153,7 +154,7 @@
       </div>
       <Page
         ref="page"
-        :products="productsBySort"
+        :products="filterProducts"
         @products-by-page="getProductsByPage"
         :current-page.sync="currentPage"
       />
@@ -177,7 +178,7 @@ export default {
       // categories: [],
       scrollPosition: 0,
       currentCategory: "",
-      productsBySort: [],
+      // productsBySort: [],
       productsByPage: [],
       // pagination: {},
       currentPage: 0,
@@ -194,14 +195,14 @@ export default {
     },
     search() {
       this.currentPage = 0;
-      this.changeSort();
+      // this.changeSort();
     },
     currentCategory() {
-      if (!this.sort) {
-        this.productsBySort = this.filterProducts;
-      } else {
-        this.changeSort();
-      }
+      // if (!this.sort) {
+      //   this.productsBySort = this.filterProducts;
+      // } else {
+      //   this.changeSort();
+      // }
       this.currentPage = 0;
       this.itemShow();
       //
@@ -209,17 +210,19 @@ export default {
       // this.$refs.page.createPage(this.filterProducts);
     },
     getPage() {
-      this.productsBySort = this.filterProducts;
+      console.log("取得頁面");
+      // this.productsBySort = this.filterProducts;
       this.$refs.page.createPage(this.filterProducts);
     },
     filterProducts(val) {
       console.log(val);
-      if (!this.sort) {
-        this.productsBySort = this.filterProducts;
-      }
+      // if (!this.sort) {
+      //   this.productsBySort = this.filterProducts;
+      // }
       // this.productsBySort = val;
-      console.log(this.productsBySort);
-      this.$refs.page.createPage(this.productsBySort);
+      // console.log(this.productsBySort);
+      this.$refs.page.createPage(this.filterProducts);
+      console.log("再取得頁面");
     },
     // sort() {
 
@@ -234,28 +237,47 @@ export default {
     },
   },
   computed: {
-    filterProducts: {
-      get() {
-        // console.log(this.currentCategory);
-        if (this.currentCategory === "all") {
-          console.log(this.search);
-          if (this.search === "") {
+    filterProducts() {
+      // console.log(this.currentCategory);
+      if (this.currentCategory === "all") {
+        console.log(this.search);
+        if (this.search === "") {
+          if (this.sort == "") {
+            console.log(this.productsAll);
             return this.productsAll;
+          } else {
+            console.log(this.changeSort(this.productsAll));
+            return this.changeSort(this.productsAll);
           }
-          let filter = this.filterSearch(this.productsAll);
-          console.log(filter);
-          return filter;
         } else {
-          let resault = this.productsAll.filter((item) => {
-            return item.category === this.currentCategory;
-          });
-          if (this.search === "") {
-            return resault;
+          let filter = this.filterSearch(this.productsAll);
+          if (this.sort == "") {
+            return filter;
+          } else {
+            return this.changeSort(filter);
           }
-          let filter = this.filterSearch(resault);
-          return filter;
+          console.log(filter);
         }
-      },
+      } else {
+        let resault = this.productsAll.filter((item) => {
+          return item.category === this.currentCategory;
+        });
+        if (this.search === "") {
+          if (this.sort == "") {
+            return resault;
+          } else {
+            return this.changeSort(resault);
+          }
+        } else {
+          let filter = this.filterSearch(resault);
+          if (this.sort == "") {
+            return filter;
+          } else {
+            return this.changeSort(filter);
+          }
+        }
+      }
+
       // set(val) {
       //   console.log(val);
       //   this.productsBySort = val;
@@ -277,42 +299,44 @@ export default {
     getProductsByPage(products) {
       this.productsByPage = products;
     },
-    changeSort() {
+    changeSort(products) {
       // console.log(456);
       this.currentPage = 0;
       let newSort = [];
-      let filterProducts = [...this.filterProducts];
+      let newProducts = [...products];
       switch (this.sort) {
         case "priceUp":
-          if (filterProducts.length) {
-            newSort = filterProducts.sort((a, b) => {
+          if (newProducts.length) {
+            newSort = newProducts.sort((a, b) => {
               const aPrice = a.price ? a.price : a.origin_price;
               const bPrice = b.price ? b.price : b.origin_price;
               // console.log(aPrice,bPrice);
               return bPrice - aPrice;
             });
           }
+          return newSort;
           console.log(newSort);
-          // return newSort;
-          this.productsBySort = newSort;
-          this.$refs.page.createPage(this.productsBySort);
-          // this.$refs.page.createPage(this.filterProducts);
-          break;
+        // return newSort;
+        // this.productsBySort = newSort;
+        // this.$refs.page.createPage(this.productsBySort);
+        // this.$refs.page.createPage(this.products);
+        // break;
         case "priceDown":
-          if (filterProducts.length) {
-            newSort = filterProducts.sort((a, b) => {
+          if (newProducts.length) {
+            newSort = newProducts.sort((a, b) => {
               const aPrice = a.price ? a.price : a.origin_price;
               const bPrice = b.price ? b.price : b.origin_price;
               // console.log(aPrice,bPrice);
               return aPrice - bPrice;
             });
           }
+          return newSort;
           console.log(newSort);
-          // return newSort;
-          this.productsBySort = newSort;
-          this.$refs.page.createPage(this.productsBySort);
-          // this.$refs.page.createPage(this.filterProducts);
-          break;
+        // return newSort;
+        // this.productsBySort = newSort;
+        // this.$refs.page.createPage(this.productsBySort);
+        // this.$refs.page.createPage(this.products);
+        // break;
       }
     },
     getCurrentCategory() {
@@ -337,6 +361,7 @@ export default {
 
     ...mapActions("productsModules", ["getProductsAll"]),
     toProductItem(category, id) {
+      // console.log(this);
       this.$router.push({
         name: "ProductItem",
         params: {

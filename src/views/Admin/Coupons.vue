@@ -42,7 +42,10 @@
             </button>
           </div>
           <div class="admin__item bag-md bag-6 text-right">
-            <button class="btn btn-outline-primary btn-sm" @click="deleteCoupon(item.id)">
+            <button
+              class="btn btn-outline-primary btn-sm"
+              @click="deleteCoupon(item.id, item)"
+            >
               刪除
             </button>
           </div>
@@ -63,10 +66,15 @@ export default {
       coupons: {},
       tempCoupon: {},
       today: "",
-      pagination: "",
+      pagination: {},
       isNew: false,
       text: "",
     };
+  },
+  watch: {
+    pagination() {
+      this.toTop();
+    },
   },
   methods: {
     getCoupons(page = 1) {
@@ -78,10 +86,10 @@ export default {
         this.pagination = response.data.pagination;
       });
     },
-    deleteCoupon(id) {
+    deleteCoupon(id, item) {
       this.$modal.show("dialog", {
         // title: "The standard Lorem Ipsum passage",
-        text: "確定要刪除嗎？",
+        text: `確定要刪除<br>「${item.title}」嗎？`,
         buttons: [
           {
             title: "取消",
@@ -92,8 +100,8 @@ export default {
           {
             title: "確定",
             handler: () => {
-              this.$store.commit("LOADING", true);
               const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${id}`;
+              this.$store.commit("LOADING", true);
               this.$http.delete(url).then((response) => {
                 this.$modal.hide("dialog");
                 this.$store.commit("LOADING", false);
@@ -133,6 +141,9 @@ export default {
     },
     closeModal() {
       this.$modal.hide("editCoupons");
+    },
+    toTop() {
+      document.documentElement.scrollTop = 0;
     },
   },
   components: {

@@ -71,7 +71,7 @@ export default {
     },
     createPage(products) {
       //父元件呼叫子元件，非同步事件必須傳參數
-      console.log(this.products, this.currentPage, this.pageItems, this.totalPage);
+      console.log(products, this.currentPage, this.pageItems, this.totalPage);
       let newProducts = [];
       let pagArray = [];
       let obKey = Object.keys(products);

@@ -9,6 +9,7 @@ let scrollObserves = new IntersectionObserver((entries, observer)=>{
 export default {
   bind(el){
     el.classList.add('animate__animated');
+    el.style.opacity="0";
     scrollObserves.observe(el);
   }
 }

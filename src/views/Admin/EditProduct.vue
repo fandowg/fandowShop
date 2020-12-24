@@ -1,6 +1,7 @@
 <template>
   <modal
     name="editProduct"
+    :adaptive="true"
     :shiftY="0.3"
     :maxWidth="800"
     width="95%"

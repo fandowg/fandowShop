@@ -1,7 +1,12 @@
 <template>
-  
-    <main class="page page--pt container-lg">
-      <h1 class="page__title">購物車清單</h1>
+  <main class="page page--pt container-lg">
+    <v-dialog />
+    <h1 class="page__title">購物車清單</h1>
+    <div v-if="cart.carts.length === 0">
+      <p>您的購物車還沒有任何內容，趕快來挑選你喜歡的水瓶吧</p>
+      <router-link class="btn btn-primary" to="/product-list">前往購物</router-link>
+    </div>
+    <div v-else>
       <div class="cart">
         <div class="cart__head bag-row no-gutters">
           <div class="cart__item">產品</div>
@@ -20,9 +25,7 @@
             <div class="bag-7 bag-md-8 bag-row no-gutters cart__group">
               <div class="cart__item cart__title bag-md-8">
                 {{ item.product.title }}<br />
-                <span class="text-success" v-if="item.coupon"
-                  >已套用優惠券</span
-                >
+                <span class="text-success" v-if="item.coupon">已套用優惠券</span>
               </div>
               <div class="cart__item cart__num bag-md-4">
                 <button
@@ -63,50 +66,41 @@
                 placeholder="請輸入優惠碼"
                 v-model="coupon"
               />
-              <button class="btn btn-outline-primary" @click="checkCoupon">
-                套用
-              </button>
+              <button class="btn btn-outline-primary" @click="checkCoupon">套用</button>
             </div>
             <span class="text-danger-message" v-if="!couponSuccess">
               {{ errorMessage }}</span
             >
           </div>
           <div class="cart__total">
-            <div
-              class="cart__total__row"
-              v-if="cart.total !== cart.final_total"
-            >
+            <div class="cart__total__row" v-if="cart.total !== cart.final_total">
               <span class="cart__total__row__title">總額：</span>
-              <span class="cart__total__row__content">
-                {{ cart.total | currency }}</span
-              >
+              <span class="cart__total__row__content"> {{ cart.total | currency }}</span>
             </div>
-            <div
-              class="cart__total__row"
-              v-if="cart.total !== cart.final_total"
-            >
+            <div class="cart__total__row" v-if="cart.total !== cart.final_total">
               <span class="cart__total__row__title">折扣：</span>
               <span class="cart__total__row__content text-success">
                 {{ (cart.total - cart.final_total) | currency }}
-                </span>
+              </span>
             </div>
             <div class="cart__total__row">
               <span class="cart__total__row__title">應付：</span>
               <span class="cart__total__row__content text-danger">
                 {{ cart.final_total | currency }}
-                </span>
+              </span>
             </div>
           </div>
         </div>
       </div>
       <div class="btn-wrapper-side delete-spacer">
-        <a class="btn btn-outline-primary">繼續購物</a>
-        <router-link to="/order/order-info" class="btn btn-primary"
-          >確認送出</router-link
+        <router-link class="btn btn-outline-primary" to="/product-list"
+          >繼續購物</router-link
         >
+
+        <router-link to="/order/order-info" class="btn btn-primary">確認送出</router-link>
       </div>
-    </main>
- 
+    </div>
+  </main>
 </template>
 
 <script>
@@ -148,5 +142,30 @@ export default {
     ...mapActions("cartModules", ["getCart", "deleteCart"]),
   },
   created() {},
+  beforeRouteLeave(to, from, next) {
+    console.log(to, from, next);
+    if (to.name !== "OrderInfo" && this.cart.carts.length !== 0) {
+      this.$modal.show("dialog", {
+        text: `購物車中還有${this.cart.carts.length}筆資料，確定要離開嗎？`,
+        buttons: [
+          {
+            title: "取消",
+            handler: () => {
+              this.$modal.hide("dialog");
+              next(false);
+            },
+          },
+          {
+            title: "確定",
+            handler: () => {
+              next();
+            },
+          },
+        ],
+      });
+    } else {
+      next();
+    }
+  },
 };
 </script>

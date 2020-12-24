@@ -23,7 +23,7 @@
     display: none;
   }
 }
-.pre-load-img{
+.pre-load-img {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,17 +111,63 @@
   }
 }
 //覆蓋套件的css
+
 .vm--container {
   padding-top: $spacer;
+  // padding-left: $spacer !important;
+  // padding-right: $spacer !important;
+  .vm--overlay{
+  
+  }
+  .vm--modal {
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    // position: relative;
+    box-shadow: none !important;
+    height: auto !important;
+    overflow-y: auto !important;
+  }
+  .vue-dialog {
+    padding: $spacer-bg-2 $spacer;
+    font-size: $font-size-base;
+    text-align: center;
+    @include max(sm){
+      width: 95% !important;
+      left:2.5% !important;
+    }
+    
+  }
+  .vue-dialog-content {
+    padding: 0;
+    margin-bottom:$spacer ;
+  }
+  .vue-dialog-buttons {
+    display: flex;
+    flex: 0 1 auto;
+    justify-content: center;
+    width: 100%;
+    border-top:0;
+    
+  }
+  .vue-dialog-button{
+    @extend .btn;    
+    width: auto ;
+    flex:0 0 auto !important;
+    &:nth-child(1){
+      @extend .btn-outline-primary;
+      margin-right: $spacer;
+    }
+    &:nth-child(2){
+      @extend .btn-primary;
+    }
+  }
+  .vue-dialog-button:not(:first-of-type) {
+    border-left: 0;
 }
-.vm--modal {
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-  // position: relative;
-  box-shadow: none;
-  overflow-y: auto;
 }
+
+
 // .vm-transition--modal{
 //   opacity: 0;
 // }
@@ -180,7 +226,7 @@
   bottom: $spacer;
   @include transition;
 
-  &.show {  
+  &.show {
     display: block;
   }
 }
@@ -397,17 +443,17 @@
     margin-bottom: 0;
   }
 }
-.box-default{
+.box-default {
   padding: $spacer-bg-2 $spacer;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   width: 340px;
-    @include max(360) {
-      width: 320px;
-      max-width: 85vw;
-    }
+  @include max(360) {
+    width: 320px;
+    max-width: 85vw;
+  }
 }
 .top-banner {
   margin-bottom: $spacer-bottom*2;
@@ -578,10 +624,10 @@
     }
   }
 }
-.img-small-md{
+.img-small-md {
   text-align: center;
   @include max(md) {
-    img{
+    img {
       max-width: 80%;
     }
 
@@ -707,16 +753,16 @@
   &__img {
     position: relative;
     // background-color: #eee;
-    height:240px;
+    height: 240px;
     @include max(md) {
-      height:220px;
-    }   
+      height: 220px;
+    }
     @include max(500) {
-      height:200px;
-    }   
+      height: 200px;
+    }
     @include max(400) {
-      height:160px;
-    }   
+      height: 160px;
+    }
   }
   &__content {
     position: relative;
@@ -777,7 +823,7 @@
   &--pt {
     padding-top: calc(65px + #{$spacer-bg-2});
     @include max(md) {
-      padding-top: calc(50px + #{$spacer-bg-2}); 
+      padding-top: calc(50px + #{$spacer-bg-2});
     }
   }
   &__title {
@@ -1211,7 +1257,7 @@
     min-height: 63px;
     @include border-top;
     padding: $spacer;
-    align-items: center;
+    align-items: flex-start;
     @include max(md) {
       padding: $spacer 0 $spacer-sm-2;
     }
@@ -1226,7 +1272,14 @@
   }
   &__order-product {
     margin-bottom: 0;
+    list-style: disc;
+    padding-left: 20px;
     &__item {
+      vertical-align: top;
+      line-height: 1.5;
+      // padding-bottom: $spacer;
+      // display: inline-block;
+      // @include border-bottom;
       // @include border-bottom;
     }
   }
@@ -1344,13 +1397,13 @@
   right: $spacer;
   top: 75px;
   display: flex;
-  @include max(md){
+  @include max(md) {
     top: 50px;
 
   }
   &__item {
     @include border;
-    padding:$spacer 50px $spacer $spacer;
+    padding: $spacer 50px $spacer $spacer;
     background-color: #fff;
     // &.success {
     //   color: #666;
@@ -1422,7 +1475,7 @@
     font-size: $h5-font-size;
     line-height: 2rem;
   }
-  .btn{
+  .btn {
     @include max(md) {
       width: 100%;
     }

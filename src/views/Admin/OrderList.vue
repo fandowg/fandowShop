@@ -8,7 +8,7 @@
       <div class="admin__head bag-row no-gutters">
         <div class="admin__item text-left bag-md">購買時間</div>
         <div class="admin__item bag-md-3">Email</div>
-        <div class="admin__item bag-md-4">購買款項</div>
+        <div class="admin__item bag-md-5">購買項目</div>
         <div class="admin__item bag-md">應付金額</div>
         <div class="admin__item bag-md text-right">是否付款</div>
       </div>
@@ -24,14 +24,15 @@
           <div class="admin__item bag-md-3 bag-6 text-right-max-md">
             {{ item.user.email }}
           </div>
-          <div class="admin__item bag-md-4 bag-12">
+          <div class="admin__item bag-md-5 bag-12">
             <ul class="admin__order-product">
               <li
                 class="admin__order-product__item"
                 v-for="product in item.products"
                 :key="product.id"
               >
-                {{ product.product.title }}數量{{ product.qty }}{{ product.product.unit }}
+                {{ product.product.title }} 數量{{ product.qty
+                }}{{ product.product.unit }}
               </li>
             </ul>
           </div>
@@ -40,8 +41,8 @@
             <span class="price">{{ item.total }}</span>
           </div>
           <div class="admin__item bag-md bag-6 text-right">
-            <span v-if="item.is_paid === true">已付款</span>
-            <span v-else>尚未付款</span>
+            <span v-if="item.is_paid === true" class="text-success">已付款</span>
+            <span v-else class="text-danger">尚未付款</span>
           </div>
           <!-- <div class="one">
           <button @click="openModal(false,item)">編輯</button>
@@ -59,9 +60,14 @@ import PageApi from "@/components/PaginationApi.vue";
 export default {
   data() {
     return {
-      pagination: "",
+      pagination: {},
       orderlist: {},
     };
+  },
+  watch: {
+    pagination() {
+      this.toTop();
+    },
   },
   methods: {
     getOrderList(page = 1) {
@@ -73,6 +79,9 @@ export default {
         this.orderlist = response.data.orders;
         this.pagination = response.data.pagination;
       });
+    },
+    toTop() {
+      document.documentElement.scrollTop = 0;
     },
   },
   components: {

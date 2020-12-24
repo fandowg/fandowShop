@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import axios from 'axios'
 import VueRouter from 'vue-router'
 
 
@@ -131,5 +132,27 @@ const router = new VueRouter({
     return { x: 0, y: 0 }
   }
 })
+
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    const url = `${process.env.VUE_APP_APIPATH}/api/user/check`;
+    axios.post(url).then((response) => {
+      if (response.data.success) {
+        next();
+      } else {
+        Vue.prototype.$bus.$emit('message:push',response.data.message);  
+        next({
+          path: '/login',
+        });
+      }
+    })
+  } else {    
+    // Vue.prototype.$bus.$emit('message:push',103);
+    // console.log('換頁了');
+    next();    
+  }
+})
+
 
 export default router

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-dialog />
     <h2 class="page__title--sm">商品明細</h2>
     <div class="cart no-delete">
       <div class="cart__head bag-row no-gutters">
@@ -199,7 +200,10 @@
       </div>
 
       <div class="btn-wrapper-side">
-        <a class="btn btn-outline-primary">回購物車</a>
+        <router-link class="btn btn-outline-primary" to="/check-cart"
+          >回購物車</router-link
+        >
+
         <button class="btn btn-primary" @click="handleSubmit(createOrder)">
           建立訂單
         </button>
@@ -275,6 +279,35 @@ export default {
     },
     ...mapActions("cartModules", ["getCart"]),
   },
-  created() {},
+  created() {
+    if (this.cart.carts.length === 0) {
+      this.$router.go(-1);
+    }
+  },
+  beforeRouteLeave(to, from, next) {
+    console.log(to, from, next);
+    if (to.name !== "Payment" && this.cart.carts.length !== 0) {
+      this.$modal.show("dialog", {
+        text: `您的訂單尚未完成，確定要離開嗎？`,
+        buttons: [
+          {
+            title: "取消",
+            handler: () => {
+              this.$modal.hide("dialog");
+              next(false);
+            },
+          },
+          {
+            title: "確定",
+            handler: () => {
+              next();
+            },
+          },
+        ],
+      });
+    } else {
+      next();
+    }
+  },
 };
 </script>

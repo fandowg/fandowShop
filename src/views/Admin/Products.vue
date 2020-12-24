@@ -6,7 +6,7 @@
       :is-new="isNew"
       :temp-product="tempProduct"
     />
-
+    <v-dialog />
     <div class="menu-block menu-block--inline">
       <h1 class="page__title">產品列表</h1>
       <button class="btn btn-primary" @click="openModal(true)">新增產品</button>
@@ -58,7 +58,7 @@
           <div class="admin__item bag-md bag-6 text-right">
             <button
               class="btn btn-outline-primary btn-sm"
-              @click="deleteProduct(item.id)"
+              @click="deleteProduct(item.id, item)"
             >
               刪除
             </button>
@@ -108,14 +108,33 @@ export default {
         // console.log(this.pagination);
       });
     },
-    deleteProduct(id) {
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${id}`;
-      this.$store.commit("LOADING", true);
-      this.$http.delete(url).then((response) => {
-        this.$bus.$emit("message:push", response.data.message);
-        console.log(response.data);
-        this.getProducts();
-        this.$store.commit("LOADING", false);
+    deleteProduct(id, item) {
+      console.log(123);
+      console.log(this.$modal);
+      this.$modal.show("dialog", {
+        // title: "The standard Lorem Ipsum passage",
+        text: `確定要刪除<br>「${item.title}」嗎？`,
+        buttons: [
+          {
+            title: "取消",
+            handler: () => {
+              this.$modal.hide("dialog");
+            },
+          },
+          {
+            title: "確定",
+            handler: () => {
+              const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${id}`;
+              this.$store.commit("LOADING", true);
+              this.$http.delete(url).then((response) => {
+                this.$bus.$emit("message:push", response.data.message);
+                console.log(response.data);
+                this.getProducts();
+                this.$store.commit("LOADING", false);
+              });
+            },
+          },
+        ],
       });
     },
     openModal(isNew, item) {
