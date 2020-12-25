@@ -52,12 +52,14 @@ export default {
   methods: {
     logOut() {
       const url = `${process.env.VUE_APP_APIPATH}/logout`;
+      this.$store.commit("LOADING", true);
       this.$http.post(url).then((response) => {
         if (response.data.success) {
-          console.log(response.data);
+          // console.log(response.data);
           this.$bus.$emit("message:push", response.data.message);
           this.$router.push("/");
         }
+        this.$store.commit("LOADING", false);
       });
     },
   },

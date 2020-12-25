@@ -42,12 +42,15 @@
             <a class="dropdown__item" href="">不鏽鋼水瓶</a> -->
           </div>
         </li>
-        <li class="menu__item"><a class="menu__link" href="">深入了解CAMELBAK</a></li>
-        <!-- <li class="menu__item">
+        <li class="menu__item">
+          <router-link class="menu__link" to="/about">深入了解CAMELBAK</router-link>
+
+          <!-- <li class="menu__item">
           <router-link class="menu__link" to="/check-cart"
             >前往購物</router-link
           >
         </li> -->
+        </li>
       </ul>
     </div>
 

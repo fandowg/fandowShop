@@ -74,10 +74,12 @@ export default {
       this.$store.commit("LOADING", true);
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`;
       this.$http.get(url).then((response) => {
-        console.log(response.data);
+        if (response.data.success) {
+          // console.log(response.data);
+          this.orderlist = response.data.orders;
+          this.pagination = response.data.pagination;
+        }
         this.$store.commit("LOADING", false);
-        this.orderlist = response.data.orders;
-        this.pagination = response.data.pagination;
       });
     },
     toTop() {

@@ -31,7 +31,6 @@
           <p>{{ product.description }}</p>
           <span class="product__origin_price"> NT${{ product.origin_price }} </span>
           <span class="product__price">NT${{ product.price }}</span>
-          
 
           <div class="input-group detail__qty">
             <select name="" id="" class="form-control" v-model="qty">
@@ -66,7 +65,7 @@ export default {
   },
   watch: {
     product_id() {
-      this.getProduct();
+      this.getProductItem();
     },
   },
   computed: {
@@ -82,7 +81,11 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${this.product_id}`;
       this.$store.commit("LOADING", true);
       this.$http.get(url).then((response) => {
-        this.product = response.data.product;
+        if (response.data.success) {
+          this.product = response.data.product;
+        } else {
+          this.$bus.$emit("message:push", response.data.message, "text-danger");
+        }
         this.$store.commit("LOADING", false);
       });
     },

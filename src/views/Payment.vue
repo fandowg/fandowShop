@@ -140,7 +140,13 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${this.order_id}`;
       this.$store.commit("LOADING", true);
       this.$http.get(url).then((response) => {
-        this.order = response.data.order;
+        console.log(response.data);
+        if (response.data.success) {
+          this.order = response.data.order;
+          if (response.data.order === null) {
+            this.$bus.$emit("message:push", "訂單不存在", "text-danger");
+          }
+        }
         this.$store.commit("LOADING", false);
         // console.log(response.data);
       });
@@ -149,16 +155,18 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${this.order_id}`;
       this.$store.commit("LOADING", true);
       this.$http.post(url).then((response) => {
+        if (response.data.success) {
+          // console.log(response.data);
+          // this.getOrder();
+          this.getOrder();
+          this.$router.push({
+            name: "OrderDone",
+            params: {
+              id: this.order_id,
+            },
+          });
+        }
         this.$store.commit("LOADING", false);
-        // console.log(response.data);
-        // this.getOrder();
-        this.getOrder();
-        this.$router.push({
-          name: "OrderDone",
-          params: {
-            id: this.order_id,
-          },
-        });
       });
     },
     ...mapActions("cartModules", ["getCart"]),

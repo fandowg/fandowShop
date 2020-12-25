@@ -62,7 +62,7 @@ $enable-deprecation-messages:                 true !default;
 $z-index:(
   navbar:90,
   menu:100,
-  alert:900,
+  alert:1000,
 );
 
 // The yiq lightness value that determines when the lightness of color changes from "dark" to "light". Acceptable values are between 0 and 255.

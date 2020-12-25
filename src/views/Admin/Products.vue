@@ -99,13 +99,15 @@ export default {
       this.$store.commit("LOADING", true);
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products/all`;
       this.$http.get(url).then((response) => {
-        this.products = response.data.products;
-        // console.log({ ...this.products });
-        // this.pagination = response.data.pagination;
-        this.$refs.page.createPage(response.data.products);
-        // this.createPage();
+        if (response.data.success) {
+          this.products = response.data.products;
+          // console.log({ ...this.products });
+          // this.pagination = response.data.pagination;
+          this.$refs.page.createPage(response.data.products);
+          // this.createPage();
+          // console.log(this.pagination);
+        }
         this.$store.commit("LOADING", false);
-        // console.log(this.pagination);
       });
     },
     deleteProduct(id, item) {
@@ -127,9 +129,14 @@ export default {
               const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${id}`;
               this.$store.commit("LOADING", true);
               this.$http.delete(url).then((response) => {
-                this.$bus.$emit("message:push", response.data.message);
-                console.log(response.data);
-                this.getProducts();
+                if (response.data.success) {
+                  this.$bus.$emit("message:push", response.data.message);
+                  // console.log(response.data);
+                  this.getProducts();
+                } else {
+                  this.$bus.$emit("message:push", response.data.message, "text-danger");
+                }
+                this.$modal.hide("dialog");
                 this.$store.commit("LOADING", false);
               });
             },

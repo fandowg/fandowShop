@@ -54,7 +54,7 @@
       </div>
     </div>
     <h2 class="page__title--sm">填寫資料</h2>
-    <ValidationObserver v-slot="{ handleSubmit, invalid }">
+    <ValidationObserver v-slot="{ handleSubmit }">
       <div class="form order">
         <div class="form-row">
           <div class="bag-md-6 form-group">
@@ -83,7 +83,7 @@
             >
               <label for="phone">手機</label>
               <input
-                type="number"
+                type="tel"
                 v-model="user.tel"
                 class="form-control"
                 :class="{ 'is-invalid': failed, 'is-valid': passed }"
@@ -272,8 +272,10 @@ export default {
               id: response.data.orderId,
             },
           });
+          this.getCart();
+        } else {
+          this.$bus.$emit("message:push", response.data.message, "text-danger");
         }
-        this.getCart();
         this.$store.commit("LOADING", false);
       });
     },

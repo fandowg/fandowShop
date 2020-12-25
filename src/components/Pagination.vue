@@ -6,7 +6,7 @@
           class="pagination__link"
           @click.prevent="prev"
           :class="{
-            disabled: currentPage === totalPage - 1,
+            disabled: currentPage === 0,
           }"
         >
           <img v-if="currentPage !== 0" src="@/assets/images/prev_page.svg" alt="" />

@@ -240,13 +240,13 @@ export default {
     filterProducts() {
       // console.log(this.currentCategory);
       if (this.currentCategory === "all") {
-        console.log(this.search);
+        // console.log(this.search);
         if (this.search === "") {
           if (this.sort == "") {
-            console.log(this.productsAll);
+            // console.log(this.productsAll);
             return this.productsAll;
           } else {
-            console.log(this.changeSort(this.productsAll));
+            // console.log(this.changeSort(this.productsAll));
             return this.changeSort(this.productsAll);
           }
         } else {
@@ -256,7 +256,7 @@ export default {
           } else {
             return this.changeSort(filter);
           }
-          console.log(filter);
+          // console.log(filter);
         }
       } else {
         let resault = this.productsAll.filter((item) => {
@@ -304,40 +304,44 @@ export default {
       this.currentPage = 0;
       let newSort = [];
       let newProducts = [...products];
-      switch (this.sort) {
-        case "priceUp":
-          if (newProducts.length) {
-            newSort = newProducts.sort((a, b) => {
-              const aPrice = a.price ? a.price : a.origin_price;
-              const bPrice = b.price ? b.price : b.origin_price;
-              // console.log(aPrice,bPrice);
-              return bPrice - aPrice;
-            });
-          }
-          return newSort;
-          console.log(newSort);
-        // return newSort;
-        // this.productsBySort = newSort;
-        // this.$refs.page.createPage(this.productsBySort);
-        // this.$refs.page.createPage(this.products);
-        // break;
-        case "priceDown":
-          if (newProducts.length) {
-            newSort = newProducts.sort((a, b) => {
-              const aPrice = a.price ? a.price : a.origin_price;
-              const bPrice = b.price ? b.price : b.origin_price;
-              // console.log(aPrice,bPrice);
-              return aPrice - bPrice;
-            });
-          }
-          return newSort;
-          console.log(newSort);
-        // return newSort;
-        // this.productsBySort = newSort;
-        // this.$refs.page.createPage(this.productsBySort);
-        // this.$refs.page.createPage(this.products);
-        // break;
-      }
+      newSort = newProducts.sort((a, b) => {
+        const aPrice = a.price ? a.price : a.origin_price;
+        const bPrice = b.price ? b.price : b.origin_price;
+        // console.log(aPrice,bPrice);
+        switch (this.sort) {
+          case "priceUp":
+            return bPrice - aPrice;
+          case "priceDown":
+            return aPrice - bPrice;
+        }
+      });
+      return newSort;
+      // switch (this.sort) {
+      //   case "priceUp":
+
+      //     // console.log(newSort);
+      //   // return newSort;
+      //   // this.productsBySort = newSort;
+      //   // this.$refs.page.createPage(this.productsBySort);
+      //   // this.$refs.page.createPage(this.products);
+      //   // break;
+      //   case "priceDown":
+      //     // if (newProducts.length) {
+      //     //   newSort = newProducts.sort((a, b) => {
+      //     //     const aPrice = a.price ? a.price : a.origin_price;
+      //     //     const bPrice = b.price ? b.price : b.origin_price;
+      //     //     // console.log(aPrice,bPrice);
+      //     //     return aPrice - bPrice;
+      //     //   });
+      //     // }
+      //     // return newSort;
+      //     // console.log(newSort);
+      //   // return newSort;
+      //   // this.productsBySort = newSort;
+      //   // this.$refs.page.createPage(this.productsBySort);
+      //   // this.$refs.page.createPage(this.products);
+      //   // break;
+      // }
     },
     getCurrentCategory() {
       this.currentCategory = this.$route.params.category;
@@ -390,6 +394,7 @@ export default {
     Page,
   },
   created() {
+    console.log(process.env.VUE_APP_MAX_QTY);
     this.getCurrentCategory();
     // this.getProducts();
     this.getProductsAll();

@@ -25,7 +25,9 @@
       </div>
       <div class="admin__list">
         <div class="admin__row bag-row no-gutters" v-for="item in coupons" :key="item.id">
-          <div class="admin__item admin__title bag-md-4 bag-12">{{ item.title }}</div>
+          <div class="admin__item admin__title bag-md-4 bag-12">
+            {{ item.title }}
+          </div>
           <div class="admin__item bag-md bag-4">
             <span class="desk-hide-md">折扣 </span>{{ item.percent }}%
           </div>
@@ -81,9 +83,11 @@ export default {
       this.$store.commit("LOADING", true);
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`;
       this.$http.get(url).then((response) => {
+        if (response.data.success) {
+          this.coupons = response.data.coupons;
+          this.pagination = response.data.pagination;
+        }
         this.$store.commit("LOADING", false);
-        this.coupons = response.data.coupons;
-        this.pagination = response.data.pagination;
       });
     },
     deleteCoupon(id, item) {
@@ -103,14 +107,14 @@ export default {
               const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${id}`;
               this.$store.commit("LOADING", true);
               this.$http.delete(url).then((response) => {
-                this.$modal.hide("dialog");
-                this.$store.commit("LOADING", false);
-                this.getCoupons();
                 if (response.data.success) {
+                  this.getCoupons();
                   this.$bus.$emit("message:push", response.data.message);
                 } else {
                   this.$bus.$emit("message:push", response.data.message, "text-danger");
                 }
+                this.$modal.hide("dialog");
+                this.$store.commit("LOADING", false);
               });
             },
           },

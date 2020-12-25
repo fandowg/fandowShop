@@ -1,3 +1,5 @@
+import Vue from 'vue'
+// import '@/bus'
 import axios from 'axios'
 export default {
   strict: true,
@@ -5,7 +7,7 @@ export default {
   state: {
     productsAll: [],
     categories: [],
-    getPage:false,
+    getPage: false,
   },
   actions: {
 
@@ -13,10 +15,13 @@ export default {
       context.commit('LOADING', true, { root: true });
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
       axios.get(url).then((response) => {
-        // console.log(response.data.products);
-        context.commit('PRODUCTSALL', response.data.products);
-        context.commit('CATEGORIES', response.data.products);
-        context.commit('GETPAGE', true);
+        if (response.data.success) {
+          context.commit('PRODUCTSALL', response.data.products);
+          context.commit('CATEGORIES', response.data.products);
+          context.commit('GETPAGE', true);         
+        } else {
+          Vue.prototype.$bus.$emit("message:push", '取得資料錯誤', "text-danger");          
+        }
         context.commit('LOADING', false, { root: true });
       });
     },
@@ -36,7 +41,7 @@ export default {
     },
   },
   getters: {
-    getPage(state){
+    getPage(state) {
       return state.getPage;
     },
     categories(state) {

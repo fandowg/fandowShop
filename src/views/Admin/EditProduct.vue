@@ -18,13 +18,16 @@
         </h2>
         <div class="edit">
           <div class="edit__item form-group">
-            <label for>輸入圖片網址</label>
+            <label>輸入圖片網址</label>
             <input type="text" class="form-control" v-model="editTemp.imageUrl" />
           </div>
           <div class="edit__row form-row">
             <div class="edit__item bag-md-9 form-group">
-              <label for>或上傳圖片</label>
-              <i class="fas fa-circle-notch fa-spin" v-if="loadStatus.upLoadImage"></i>
+              <label style="margin-right: 1rem"
+                >或上傳圖片
+                <i class="fas fa-circle-notch fa-spin" v-if="loadStatus.upLoadImage"></i
+              ></label>
+
               <input type="file" ref="upImage" @change="upLoadImage" />
             </div>
             <div v-if="editTemp.imageUrl" class="edit__item bag-md-3 bag-6 form-group">
@@ -220,7 +223,7 @@ export default {
   props: ["isNew", "tempProduct"],
   watch: {
     tempProduct() {
-      this.editTemp = Object.assign({}, this.tempProduct);
+      this.editTemp = { ...this.tempProduct };
       if (this.isNew) {
         this.editTemp.category = null;
       }
@@ -232,18 +235,28 @@ export default {
         const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product`;
         this.$store.commit("LOADING", true);
         this.$http.post(url, { data: this.editTemp }).then((response) => {
-          this.$bus.$emit("message:push", response.data.message);
-          this.$emit("get-products");
+          if (response.data.success) {
+            this.$bus.$emit("message:push", response.data.message);
+            this.$emit("get-products");
+          }
           this.$emit("close");
           this.$store.commit("LOADING", false);
         });
       } else {
+        // console.log(JSON.stringify(this.editTemp), JSON.stringify(this.tempCoupon));
+        if (JSON.stringify(this.editTemp) === JSON.stringify(this.tempProduct)) {
+          // this.$bus.$emit("message:push", "資料無變更");
+          this.$emit("close");
+          return;
+        }
         const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${this.editTemp.id}`;
         this.$store.commit("LOADING", true);
         this.$http.put(url, { data: this.editTemp }).then((response) => {
-          this.$bus.$emit("message:push", response.data.message);
-          // console.log(response.data);
-          this.$emit("get-products");
+          if (response.data.success) {
+            this.$bus.$emit("message:push", response.data.message);
+            // console.log(response.data);
+            this.$emit("get-products");
+          }
           this.$emit("close");
           this.$store.commit("LOADING", false);
         });
@@ -263,20 +276,20 @@ export default {
           },
         })
         .then((response) => {
-          console.log(this.editTemp);
-          this.loadStatus.upLoadImage = false;
+          // console.log(this.editTemp);
           if (response.data.success) {
             this.$set(this.editTemp, "imageUrl", response.data.imageUrl);
             // this.tempProduct.imageUrl=response.data.imageUrl;
           } else {
-            this.$bus.$emit("message:push", response.data.message, "fail");
+            this.$bus.$emit("message:push", response.data.message, "text-danger");
           }
+          this.loadStatus.upLoadImage = false;
         });
     },
   },
   created() {},
   mounted() {
-    console.log(category);
+    // console.log(category);
   },
 };
 </script>

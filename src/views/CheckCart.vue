@@ -37,7 +37,7 @@
                 <span class="cart__num__content">{{ item.qty }}</span>
                 <button
                   class="btn btn-outline-primary btn-sm"
-                  :disabled="item.qty >= 4"
+                  :disabled="item.qty >= maxQty"
                   @click="addToCart(item.product_id, 1)"
                 >
                   +
@@ -111,6 +111,7 @@ export default {
       coupon: "",
       errorMessage: "",
       couponSuccess: true,
+      maxQty: process.env.VUE_APP_MAX_QTY,
     };
   },
   computed: {
@@ -119,7 +120,7 @@ export default {
   methods: {
     checkCoupon() {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
-      this.$store.dispatch("updateLoading", true);
+      this.$store.commit("LOADING", true);
       this.$http.post(url, { data: { code: this.coupon } }).then((response) => {
         console.log(response.data);
         if (response.data.success) {
@@ -129,7 +130,7 @@ export default {
           this.couponSuccess = false;
           this.errorMessage = response.data.message;
         }
-        this.$store.dispatch("updateLoading", false);
+        this.$store.commit("LOADING", false);
       });
     },
     addToCart(id, qty) {

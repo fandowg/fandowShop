@@ -19,12 +19,13 @@ const routes = [
   },
   {
     path: '/product-list',
-    name: 'ProductList',
+    // name: 'ProductList',
     component: () => import('@/views/ProductList'),
     children: [
       
       {
         path: '',
+        name: 'ProductList',
         redirect:'/product-list/all',     
       },
       {
@@ -61,7 +62,7 @@ const routes = [
   },
   {
     path: '/order',
-    name: 'Order',
+    // name: 'Order',
     component: () => import('@/views/Order.vue'),
     children:[
       {
@@ -141,7 +142,7 @@ router.beforeEach((to, from, next) => {
       if (response.data.success) {
         next();
       } else {
-        Vue.prototype.$bus.$emit('message:push',response.data.message);  
+        Vue.prototype.$bus.$emit('message:push',response.data.message,"text-danger");  
         next({
           path: '/login',
         });

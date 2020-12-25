@@ -8,9 +8,11 @@
           :style="{ backgroundImage: `url(${bgImg[device][0]})` }"
         >
           <div class="top-banner__inner">
-            <h2 >挑戰各種不可能！</h2>
+            <h2>挑戰各種不可能！</h2>
             <p>2021運動水瓶，全新上市</p>
-            <a href="" class="btn btn-primary btn-lg">了解更多</a>
+            <router-link class="btn btn-primary btn-lg" to="/product-list/sport"
+              >了解更多</router-link
+            >
           </div>
         </div>
       </swiper-slide>
@@ -23,7 +25,9 @@
           <div class="top-banner__inner">
             <h2>守護孩子的未來</h2>
             <p>全產品不含環境賀爾蒙BPA</p>
-            <a href="" class="btn btn-primary btn-lg">了解更多</a>
+            <router-link class="btn btn-primary btn-lg" to="/product-list/kid"
+              >了解更多</router-link
+            >
           </div>
         </div>
       </swiper-slide>
@@ -94,7 +98,9 @@
             <p>
               專利吸管咬嘴設計，咬嘴可自動閉合，即使不小心打翻也不溢漏，幫助你補充一整天水分。
             </p>
-            <a href="" class="btn btn-primary">了解更多</a>
+            <router-link class="btn btn-primary" to="/product-list/straw"
+              >了解更多</router-link
+            >
           </div>
         </div>
         <div class="feature__item bag-lg-3 bag-sm-6" v-scrollanimate>
@@ -107,7 +113,9 @@
             <p>
               專為跑步或單車等高強度運動設計，讓運動員可以在不需停止的狀況下持續補水。
             </p>
-            <a href="" class="btn btn-primary">了解更多</a>
+            <router-link class="btn btn-primary" to="/product-list/sport"
+              >了解更多</router-link
+            >
           </div>
         </div>
         <div class="feature__item bag-lg-3 bag-sm-6" v-scrollanimate>
@@ -121,7 +129,9 @@
               針對 1-8
               歲孩童所設計，有效訓練小朋友自己喝水的習慣，減少飲料的攝取，輕咬即飲直覺式飲水模式。
             </p>
-            <a href="" class="btn btn-primary">了解更多</a>
+            <router-link class="btn btn-primary" to="/product-list/kid"
+              >了解更多</router-link
+            >
           </div>
         </div>
         <div class="feature__item bag-lg-3 bag-sm-6" v-scrollanimate>
@@ -135,7 +145,9 @@
               採用18/8
               不鏽鋼製成，真空保冰保溫，瓶身不冒汗，保養清洗簡單容易，瓶蓋可放置於洗碗機做清洗。
             </p>
-            <a href="" class="btn btn-primary">了解更多</a>
+            <router-link class="btn btn-primary" to="/product-list/stainless-steel"
+              >了解更多</router-link
+            >
           </div>
         </div>
       </div>
@@ -154,7 +166,9 @@
               <p>
                 3/30前輸入優惠碼needwater，全品項8折優惠，CAMELBAK支持你的每個挑戰，為你加油。
               </p>
-              <a href="" class="btn btn-primary">了解更多</a>
+              <router-link class="btn btn-primary" to="/product-list/all"
+                >了解更多</router-link
+              >
             </div>
           </div>
         </div>
@@ -168,40 +182,46 @@
               <p>
                 補水也要補能量，看看我們最新的噴射水瓶，瞬間暢快補水，隨時隨地，展現自我。
               </p>
-              <a href="" class="btn btn-primary">了解更多</a>
+              <router-link
+                class="btn btn-primary"
+                to="/product-list/sport/-MJzui6Ec5e3qvPxRY-S"
+                >了解更多</router-link
+              >
             </div>
           </div>
         </div>
       </div>
     </section>
-    <section class="section container-xl" >
+    <section class="section container-xl">
       <h2 v-scrollanimate>選一個最熱銷的水瓶吧！</h2>
       <div class="product bag-row">
         <div
+          @click="toProductItem(item.category, item.id)"
           v-for="item in hotProducts"
           :key="item.id"
           class="product__item bag-lg-3 bag-sm-4 bag-6"
           v-scrollanimate
         >
-          <router-link to="/product-list">
-            <div class="product__img">
-              <img :src="item.imageUrl" :alt="item.title" />
-            </div>
-            <div class="product__content">
-              <h3 class="product__title">
-                {{ item.title }}
-              </h3>
-              <div class="product__bottom">
-                <div>
-                  <div class="product__origin_price">NT${{ item.origin_price }}</div>
-                  <div class="product__price">NT${{ item.price }}</div>
-                </div>
-                <button class="product__addToCart btn btn-sm btn-primary">
-                  <i class="fas fa-cart-plus"></i>
-                </button>
+          <div class="product__img">
+            <img :src="item.imageUrl" :alt="item.title" />
+          </div>
+          <div class="product__content">
+            <h3 class="product__title">
+              {{ item.title }}
+            </h3>
+            <div class="product__bottom">
+              <div>
+                <div class="product__origin_price">NT${{ item.origin_price }}</div>
+                <div class="product__price">NT${{ item.price }}</div>
               </div>
+              <button
+                class="product__addToCart btn btn-sm btn-primary"
+                @click.stop="addToCart(item.id, 1)"
+              >
+                <i class="fas fa-cart-plus"></i>
+              </button>
             </div>
-          </router-link>
+          </div>
         </div>
       </div>
       <div class="btn-wrapper-center">
@@ -210,7 +230,7 @@
     </section>
   </main>
 </template>
-<style lang="scss" scoped></style>
+
 <script>
 import { mapGetters, mapActions } from "vuex";
 export default {
@@ -269,6 +289,19 @@ export default {
     ...mapGetters(["width"]),
   },
   methods: {
+    addToCart(id, qty) {
+      this.$store.dispatch("cartModules/addToCart", { id, qty });
+    },
+    toProductItem(category, id) {
+      // console.log(this);
+      this.$router.push({
+        name: "ProductItem",
+        params: {
+          category,
+          id,
+        },
+      });
+    },
     changeDevice() {
       if (this.width < 768) {
         this.device = "mobile";

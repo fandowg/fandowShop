@@ -42,11 +42,13 @@ export default {
   watch: {
     $route: {
       immediate: true,
-      handler(newVal, oldVal) {
-        let regex = new RegExp("admin", "gi");
-        let value = newVal.path;
-        let result = value.match(regex);
-        if (result !== null) {
+      handler(val) {
+        console.log(val);
+        let check = val.path.indexOf("admin");
+        // let regex = new RegExp("admin", "gi");
+        // let value = newVal.path;
+        // let result = value.match(regex);
+        if (check !== -1) {
           this.isShow = false;
         } else {
           this.isShow = true;
