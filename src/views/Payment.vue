@@ -110,9 +110,9 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  data() {
+  data () {
     return {
       order: {
         user: {
@@ -120,89 +120,90 @@ export default {
           // email:'',
           // tel:'',
           // address:'',
-        },
+        }
         // message:'',
-      },
-    };
+      }
+    }
   },
   computed: {
-    order_id() {
-      return this.$route.params.id;
+    orderId () {
+      return this.$route.params.id
     },
-    routeName() {
-      return this.$route.name;
+    routeName () {
+      return this.$route.name
     },
-    ...mapGetters("cartModules", ["cart"]),
+    ...mapGetters('cartModules', ['cart'])
   },
   methods: {
-    getOrder() {
+    getOrder () {
       // const order_id = this.$route.params.id;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${this.order_id}`;
-      this.$store.commit("LOADING", true);
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${this.orderId}`
+      this.$store.commit('LOADING', true)
       this.$http.get(url).then((response) => {
-        console.log(response.data);
+        console.log(response.data)
         if (response.data.success) {
-          this.order = response.data.order;
+          this.order = response.data.order
           if (response.data.order === null) {
-            this.$bus.$emit("message:push", "訂單不存在", "text-danger");
+            this.$bus.$emit('message:push', '訂單不存在', 'text-danger')
           }
         }
-        this.$store.commit("LOADING", false);
+        this.$store.commit('LOADING', false)
         // console.log(response.data);
-      });
+      })
     },
-    payOrder() {
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${this.order_id}`;
-      this.$store.commit("LOADING", true);
+    payOrder () {
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${this.orderId}`
+      this.$store.commit('LOADING', true)
       this.$http.post(url).then((response) => {
         if (response.data.success) {
+          this.$bus.$emit('message:push', response.data.message)
           // console.log(response.data);
           // this.getOrder();
-          this.getOrder();
+          this.getOrder()
           this.$router.push({
-            name: "OrderDone",
+            name: 'OrderDone',
             params: {
-              id: this.order_id,
-            },
-          });
+              id: this.orderId
+            }
+          })
         }
-        this.$store.commit("LOADING", false);
-      });
+        this.$store.commit('LOADING', false)
+      })
     },
-    ...mapActions("cartModules", ["getCart"]),
+    ...mapActions('cartModules', ['getCart'])
   },
-  created() {
-    this.getOrder();
+  created () {
+    this.getOrder()
   },
-  beforeRouteLeave(to, from, next) {
-    console.log(to, from, next);
-    if (from.name === "OrderDone" && to.name === "Payment") {
+  beforeRouteLeave (to, from, next) {
+    console.log(to, from, next)
+    if (from.name === 'OrderDone' && to.name === 'Payment') {
       next({
-        path: "/",
-      });
+        path: '/'
+      })
     }
-    if (to.name !== "OrderDone" && from.name !== "OrderDone" && !this.order.is_paid) {
-      this.$modal.show("dialog", {
-        text: `您尚未付款，確定要離開嗎？`,
+    if (to.name !== 'OrderDone' && from.name !== 'OrderDone' && !this.order.is_paid) {
+      this.$modal.show('dialog', {
+        text: '您尚未付款，確定要離開嗎？',
         buttons: [
           {
-            title: "取消",
+            title: '取消',
             handler: () => {
-              this.$modal.hide("dialog");
-              next(false);
-            },
+              this.$modal.hide('dialog')
+              next(false)
+            }
           },
           {
-            title: "確定",
+            title: '確定',
             handler: () => {
-              next();
-            },
-          },
-        ],
-      });
+              next()
+            }
+          }
+        ]
+      })
     } else {
-      next();
+      next()
     }
-  },
-};
+  }
+}
 </script>

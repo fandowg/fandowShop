@@ -56,41 +56,41 @@
 </template>
 
 <script>
-import PageApi from "@/components/PaginationApi.vue";
+import PageApi from '@/components/PaginationApi.vue'
 export default {
-  data() {
+  data () {
     return {
       pagination: {},
-      orderlist: {},
-    };
+      orderlist: {}
+    }
   },
   watch: {
-    pagination() {
-      this.toTop();
-    },
+    pagination () {
+      this.toTop()
+    }
   },
   methods: {
-    getOrderList(page = 1) {
-      this.$store.commit("LOADING", true);
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`;
+    getOrderList (page = 1) {
+      this.$store.commit('LOADING', true)
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`
       this.$http.get(url).then((response) => {
         if (response.data.success) {
           // console.log(response.data);
-          this.orderlist = response.data.orders;
-          this.pagination = response.data.pagination;
+          this.orderlist = response.data.orders
+          this.pagination = response.data.pagination
         }
-        this.$store.commit("LOADING", false);
-      });
+        this.$store.commit('LOADING', false)
+      })
     },
-    toTop() {
-      document.documentElement.scrollTop = 0;
-    },
+    toTop () {
+      document.documentElement.scrollTop = 0
+    }
   },
   components: {
-    PageApi,
+    PageApi
   },
-  created() {
-    this.getOrderList(1);
-  },
-};
+  created () {
+    this.getOrderList(1)
+  }
+}
 </script>

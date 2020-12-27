@@ -76,102 +76,102 @@
   </div>
 </template>
 <script>
-import EditProduct from "./EditProduct.vue";
-import Page from "@/components/Pagination.vue";
+import EditProduct from './EditProduct.vue'
+import Page from '@/components/Pagination.vue'
 export default {
-  data() {
+  data () {
     return {
       products: {},
       tempProduct: {},
       // pagination: "",
       isNew: true,
-      currentPage: 0,
-    };
+      currentPage: 0
+    }
   },
   watch: {
-    currentPage() {
-      this.toTop();
-    },
+    currentPage () {
+      this.toTop()
+    }
   },
   methods: {
-    getProducts(page = 1) {
+    getProducts (page = 1) {
       // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
-      this.$store.commit("LOADING", true);
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products/all`;
+      this.$store.commit('LOADING', true)
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products/all`
       this.$http.get(url).then((response) => {
         if (response.data.success) {
-          this.products = response.data.products;
+          this.products = response.data.products
           // console.log({ ...this.products });
           // this.pagination = response.data.pagination;
-          this.$refs.page.createPage(response.data.products);
+          this.$refs.page.createPage(response.data.products)
           // this.createPage();
           // console.log(this.pagination);
         }
-        this.$store.commit("LOADING", false);
-      });
+        this.$store.commit('LOADING', false)
+      })
     },
-    deleteProduct(id, item) {
-      console.log(123);
-      console.log(this.$modal);
-      this.$modal.show("dialog", {
+    deleteProduct (id, item) {
+      console.log(123)
+      console.log(this.$modal)
+      this.$modal.show('dialog', {
         // title: "The standard Lorem Ipsum passage",
         text: `確定要刪除<br>「${item.title}」嗎？`,
         buttons: [
           {
-            title: "取消",
+            title: '取消',
             handler: () => {
-              this.$modal.hide("dialog");
-            },
+              this.$modal.hide('dialog')
+            }
           },
           {
-            title: "確定",
+            title: '確定',
             handler: () => {
-              const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${id}`;
-              this.$store.commit("LOADING", true);
+              const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${id}`
+              this.$store.commit('LOADING', true)
               this.$http.delete(url).then((response) => {
                 if (response.data.success) {
-                  this.$bus.$emit("message:push", response.data.message);
+                  this.$bus.$emit('message:push', response.data.message)
                   // console.log(response.data);
-                  this.getProducts();
+                  this.getProducts()
                 } else {
-                  this.$bus.$emit("message:push", response.data.message, "text-danger");
+                  this.$bus.$emit('message:push', response.data.message, 'text-danger')
                 }
-                this.$modal.hide("dialog");
-                this.$store.commit("LOADING", false);
-              });
-            },
-          },
-        ],
-      });
+                this.$modal.hide('dialog')
+                this.$store.commit('LOADING', false)
+              })
+            }
+          }
+        ]
+      })
     },
-    openModal(isNew, item) {
+    openModal (isNew, item) {
       if (isNew) {
         this.tempProduct = {
           is_enabled: 0,
-          category: "default",
+          category: 'default'
           //  imageUrl:'',
-        };
-        this.isNew = isNew;
+        }
+        this.isNew = isNew
       } else {
-        this.tempProduct = item;
-        this.isNew = isNew;
+        this.tempProduct = item
+        this.isNew = isNew
       }
 
-      this.$modal.show("editProduct");
+      this.$modal.show('editProduct')
     },
-    closeModal() {
-      this.$modal.hide("editProduct");
+    closeModal () {
+      this.$modal.hide('editProduct')
     },
-    toTop() {
-      document.documentElement.scrollTop = 0;
-    },
+    toTop () {
+      document.documentElement.scrollTop = 0
+    }
   },
   components: {
     EditProduct,
-    Page,
+    Page
   },
-  created() {
-    this.getProducts(1);
-  },
-};
+  created () {
+    this.getProducts(1)
+  }
+}
 </script>

@@ -1,16 +1,18 @@
 <template>
   <footer class="footer">
     <div class="container-xl footer__inner">
-      <div>
+      <div class="footer__side">
+        <span class="footer__word">
         關注我們
-        <a class="footer__link">
+        </span>
+        <a href="#" class="footer__link">
           <i class="fab fa-facebook-square"></i>
         </a>
-        <a class="footer__link">
+        <a href="#" class="footer__link ">
           <i class="fab fa-instagram"></i>
         </a>
       </div>
-      <div class="footer__right">
+      <div class="footer__side">
         <span class="footer__word">此為練習作品，無商業行為</span>
         <span class="footer__word"> © 2020 Fandow, All Rights Reserved </span>
       </div>
@@ -19,8 +21,8 @@
 </template>
 <script>
 export default {
-  data() {
-    return {};
-  },
-};
+  data () {
+    return {}
+  }
+}
 </script>

@@ -39,29 +39,29 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
-      menuShow: false,
-    };
+      menuShow: false
+    }
   },
   watch: {
     $route: function () {
-      this.menuShow = false;
-    },
+      this.menuShow = false
+    }
   },
   methods: {
-    logOut() {
-      const url = `${process.env.VUE_APP_APIPATH}/logout`;
-      this.$store.commit("LOADING", true);
+    logOut () {
+      const url = `${process.env.VUE_APP_APIPATH}/logout`
+      this.$store.commit('LOADING', true)
       this.$http.post(url).then((response) => {
         if (response.data.success) {
           // console.log(response.data);
-          this.$bus.$emit("message:push", response.data.message);
-          this.$router.push("/");
+          this.$bus.$emit('message:push', response.data.message)
+          this.$router.push('/')
         }
-        this.$store.commit("LOADING", false);
-      });
-    },
-  },
-};
+        this.$store.commit('LOADING', false)
+      })
+    }
+  }
+}
 </script>

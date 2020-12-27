@@ -28,72 +28,72 @@
 </style>
 
 <script>
-import Navbar from "@/components/Navbar.vue";
-import Footer from "@/components/Footer.vue";
+import Navbar from '@/components/Navbar.vue'
+import Footer from '@/components/Footer.vue'
 export default {
-  data() {
+  data () {
     return {
       // isLoading: false,
       scrollPosition: 0,
-      isShow: true,
+      isShow: true
       // toTop:false,
-    };
+    }
   },
   watch: {
     $route: {
       immediate: true,
-      handler(val) {
-        console.log(val);
-        let check = val.path.indexOf("admin");
+      handler (val) {
+        // console.log(val);
+        const check = val.path.indexOf('admin')
         // let regex = new RegExp("admin", "gi");
         // let value = newVal.path;
         // let result = value.match(regex);
         if (check !== -1) {
-          this.isShow = false;
+          this.isShow = false
         } else {
-          this.isShow = true;
+          this.isShow = true
         }
-      },
-    },
+      }
+    }
   },
   computed: {
-    isLoading() {
-      return this.$store.state.isLoading;
-    },
+    isLoading () {
+      return this.$store.state.isLoading
+    }
   },
   methods: {
     //  changeLoading(v) {
     //   this.isLoading = v;
 
     // },
-    toTop() {
+    toTop () {
       // console.log(123);
-      let top = document.documentElement.scrollTop;
-      let toTop = setInterval(() => {
-        document.documentElement.scrollTop = top -= 50;
+      let top = document.documentElement.scrollTop
+      const toTop = setInterval(() => {
+        document.documentElement.scrollTop = top -= 50
         if (top <= 0) {
-          clearInterval(toTop);
+          clearInterval(toTop)
         }
-      }, 10);
-    },
+      }, 10)
+    }
   },
-  created() {
+  created () {
     // this.$bus.$on("changeLoading", (v) => {
     //   this.changeLoading(v);
     // });
   },
-  mounted() {
-    window.addEventListener("scroll", () => {
-      this.scrollPosition = window.pageYOffset;
-    });
-    this.$store.dispatch("watchResize");
+  mounted () {
+    window.addEventListener('scroll', () => {
+      this.scrollPosition = window.pageYOffset
+    })
+    this.$store.dispatch('watchResize')
   },
-  beforeDestroy() {
+  beforeDestroy () {
     // this.$bus.$off("changeLoading");
   },
   components: {
     Navbar,
-    Footer,
-  },
-};
+    Footer
+  }
+}
 </script>

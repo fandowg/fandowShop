@@ -232,22 +232,22 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  data() {
+  data () {
     return {
       products: [],
       pagination: {},
-      device: "",
+      device: '',
       bgImg: {
         desk: [
-          require("@/assets/images/top_1.jpg"),
-          require("@/assets/images/top_2.jpg"),
+          require('@/assets/images/top_1.jpg'),
+          require('@/assets/images/top_2.jpg')
         ],
         mobile: [
-          require("@/assets/images/top_1_m.jpg"),
-          require("@/assets/images/top_2_m.jpg"),
-        ],
+          require('@/assets/images/top_1_m.jpg'),
+          require('@/assets/images/top_2_m.jpg')
+        ]
       },
       // bgImgM: [
       //   require("@/assets/images/top_1_m.jpg"),
@@ -263,66 +263,66 @@ export default {
         // },
         speed: 800,
         navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
         },
         pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
+          el: '.swiper-pagination',
+          clickable: true
+        }
         // Some Swiper option/callback...
-      },
-    };
+      }
+    }
   },
   watch: {
-    width() {
-      this.changeDevice();
-    },
+    width () {
+      this.changeDevice()
+    }
   },
   computed: {
-    hotProducts() {
+    hotProducts () {
       return this.productsAll.filter(function (item, index) {
-        return item.hotProducts === 1;
-      });
+        return item.hotProducts === 1
+      })
     },
-    ...mapGetters("productsModules", ["productsAll"]),
-    ...mapGetters(["width"]),
+    ...mapGetters('productsModules', ['productsAll']),
+    ...mapGetters(['width'])
   },
   methods: {
-    addToCart(id, qty) {
-      this.$store.dispatch("cartModules/addToCart", { id, qty });
+    addToCart (id, qty) {
+      this.$store.dispatch('cartModules/addToCart', { id, qty })
     },
-    toProductItem(category, id) {
+    toProductItem (category, id) {
       // console.log(this);
       this.$router.push({
-        name: "ProductItem",
+        name: 'ProductItem',
         params: {
           category,
-          id,
-        },
-      });
+          id
+        }
+      })
     },
-    changeDevice() {
+    changeDevice () {
       if (this.width < 768) {
-        this.device = "mobile";
+        this.device = 'mobile'
       } else {
-        this.device = "desk";
+        this.device = 'desk'
       }
     },
-    ...mapActions("productsModules", ["getProductsAll"]),
+    ...mapActions('productsModules', ['getProductsAll']),
 
-    getTop(e) {
-      var offset = e.offsetTop;
+    getTop (e) {
+      var offset = e.offsetTop
       if (e.offsetParent != null) {
-        offset += this.getTop(e.offsetParent);
+        offset += this.getTop(e.offsetParent)
       }
-      return offset;
-    },
+      return offset
+    }
   },
-  created() {
-    this.getProductsAll();
+  created () {
+    this.getProductsAll()
   },
-  mounted() {
+  mounted () {
     // console.log(this);
     // this.width = window.innerWidth;
     // console.log(this.Width);
@@ -331,7 +331,7 @@ export default {
     //   this.Width = window.innerWidth;
     //   // this.Height = window.innerHeight;
     // };
-    this.changeDevice();
+    this.changeDevice()
     // window.addEventListener("scroll", () => {
     //   console.log(this.$refs.test.getBoundingClientRect().top);
     //   console.log(this.getTop(this.$refs.test));
@@ -351,6 +351,6 @@ export default {
     //   // console.log(this.scrollPosition>50);
     //   // console.log(document.documentElement.scrollTop,window.pageYOffset);
     // });
-  },
-};
+  }
+}
 </script>

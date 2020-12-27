@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="container-500 only-box-top">
-      <ValidationObserver v-slot="{ handleSubmit, invalid }">
+      <ValidationObserver v-slot="{ handleSubmit }">
         <form @submit.prevent="handleSubmit(signIn)" class="only-box">
           <h1 class="only-box-top__title">請先登入</h1>
 
@@ -53,32 +53,32 @@
 <script>
 // import { EventBus } from "@/bus";
 export default {
-  data() {
+  data () {
     return {
       user: {
-        username: "",
-        password: "",
-      },
-    };
+        username: '',
+        password: ''
+      }
+    }
   },
   methods: {
-    //input加上id，才會自動填入
-    signIn() {
+    // input加上id，才會自動填入
+    signIn () {
       // console.log(EventBus);
-      const url = `${process.env.VUE_APP_APIPATH}/admin/signin`;
-      this.$store.commit("LOADING", true);
+      const url = `${process.env.VUE_APP_APIPATH}/admin/signin`
+      this.$store.commit('LOADING', true)
       this.$http.post(url, this.user).then((response) => {
-        console.log(response.data);
+        console.log(response.data)
         if (response.data.success) {
-          this.$bus.$emit("message:push", response.data.message);
+          this.$bus.$emit('message:push', response.data.message)
           // this.$emit("close");
-          this.$router.push("/admin");
+          this.$router.push('/admin')
         } else {
-          this.$bus.$emit("message:push", response.data.message, "text-danger");
+          this.$bus.$emit('message:push', response.data.message, 'text-danger')
         }
-        this.$store.commit("LOADING", false);
-      });
-    },
-  },
-};
+        this.$store.commit('LOADING', false)
+      })
+    }
+  }
+}
 </script>

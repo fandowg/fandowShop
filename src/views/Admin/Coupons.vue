@@ -59,67 +59,67 @@
 </template>
 
 <script>
-import EditCoupons from "./EditCoupons";
-import PageApi from "@/components/PaginationApi.vue";
+import EditCoupons from './EditCoupons'
+import PageApi from '@/components/PaginationApi.vue'
 // import Confirm from "../components/confirm.vue";
 export default {
-  data() {
+  data () {
     return {
       coupons: {},
       tempCoupon: {},
-      today: "",
+      today: '',
       pagination: {},
       isNew: false,
-      text: "",
-    };
+      text: ''
+    }
   },
   watch: {
-    pagination() {
-      this.toTop();
-    },
+    pagination () {
+      this.toTop()
+    }
   },
   methods: {
-    getCoupons(page = 1) {
-      this.$store.commit("LOADING", true);
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`;
+    getCoupons (page = 1) {
+      this.$store.commit('LOADING', true)
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`
       this.$http.get(url).then((response) => {
         if (response.data.success) {
-          this.coupons = response.data.coupons;
-          this.pagination = response.data.pagination;
+          this.coupons = response.data.coupons
+          this.pagination = response.data.pagination
         }
-        this.$store.commit("LOADING", false);
-      });
+        this.$store.commit('LOADING', false)
+      })
     },
-    deleteCoupon(id, item) {
-      this.$modal.show("dialog", {
+    deleteCoupon (id, item) {
+      this.$modal.show('dialog', {
         // title: "The standard Lorem Ipsum passage",
         text: `確定要刪除<br>「${item.title}」嗎？`,
         buttons: [
           {
-            title: "取消",
+            title: '取消',
             handler: () => {
-              this.$modal.hide("dialog");
-            },
+              this.$modal.hide('dialog')
+            }
           },
           {
-            title: "確定",
+            title: '確定',
             handler: () => {
-              const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${id}`;
-              this.$store.commit("LOADING", true);
+              const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${id}`
+              this.$store.commit('LOADING', true)
               this.$http.delete(url).then((response) => {
                 if (response.data.success) {
-                  this.getCoupons();
-                  this.$bus.$emit("message:push", response.data.message);
+                  this.getCoupons()
+                  this.$bus.$emit('message:push', response.data.message)
                 } else {
-                  this.$bus.$emit("message:push", response.data.message, "text-danger");
+                  this.$bus.$emit('message:push', response.data.message, 'text-danger')
                 }
-                this.$modal.hide("dialog");
-                this.$store.commit("LOADING", false);
-              });
-            },
-          },
-        ],
-      });
+                this.$modal.hide('dialog')
+                this.$store.commit('LOADING', false)
+              })
+            }
+          }
+        ]
+      })
       // this.$modal.show(
       //   Confirm,
       //   { text: "確定要刪除嗎？" },
@@ -127,36 +127,36 @@ export default {
       //   { "before-close": (event) => {} }
       // );
     },
-    openModal(isNew, item) {
-      this.$modal.show("editCoupons");
+    openModal (isNew, item) {
+      this.$modal.show('editCoupons')
 
       if (isNew) {
         this.tempCoupon = {
           due_date: 0,
-          is_enabled: 0,
-        };
-        this.isNew = isNew;
-        this.today = new Date().toISOString().split("T")[0];
+          is_enabled: 0
+        }
+        this.isNew = isNew
+        this.today = new Date().toISOString().split('T')[0]
       } else {
-        this.tempCoupon = item;
-        this.isNew = isNew;
+        this.tempCoupon = item
+        this.isNew = isNew
       }
       //  this.$refs.editCoupons.sendStatus();
     },
-    closeModal() {
-      this.$modal.hide("editCoupons");
+    closeModal () {
+      this.$modal.hide('editCoupons')
     },
-    toTop() {
-      document.documentElement.scrollTop = 0;
-    },
+    toTop () {
+      document.documentElement.scrollTop = 0
+    }
   },
   components: {
     EditCoupons,
-    PageApi,
+    PageApi
     // Confirm,
   },
-  created() {
-    this.getCoupons();
-  },
-};
+  created () {
+    this.getCoupons()
+  }
+}
 </script>

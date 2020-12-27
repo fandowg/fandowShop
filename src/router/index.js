@@ -2,8 +2,6 @@ import Vue from 'vue'
 import axios from 'axios'
 import VueRouter from 'vue-router'
 
-
-
 Vue.use(VueRouter)
 
 const routes = [
@@ -22,23 +20,23 @@ const routes = [
     // name: 'ProductList',
     component: () => import('@/views/ProductList'),
     children: [
-      
+
       {
         path: '',
         name: 'ProductList',
-        redirect:'/product-list/all',     
+        redirect: '/product-list/all'
       },
       {
-      path: ':category',
-      name: 'ProductListCategory',
-      component: () => import('@/views/ProductList'),
-    },
-     //不知為何重導向放到children第一個就會出錯
+        path: ':category',
+        name: 'ProductListCategory',
+        component: () => import('@/views/ProductList')
+      }
+      // 不知為何重導向放到children第一個就會出錯
     // {
     //   path: '*',
-    //   redirect:'/product-list/all/',     
-    // },   
-  ]
+    //   redirect:'/product-list/all/',
+    // },
+    ]
   },
   {
     path: '/product-list/:category/:id',
@@ -64,10 +62,10 @@ const routes = [
     path: '/order',
     // name: 'Order',
     component: () => import('@/views/Order.vue'),
-    children:[
+    children: [
       {
         path: '',
-        redirect:'order-info',     
+        redirect: 'order-info'
       },
       {
         path: 'order-info',
@@ -83,77 +81,74 @@ const routes = [
         path: 'order-done/:id',
         name: 'OrderDone',
         component: () => import('@/views/Payment.vue')
-      },
+      }
 
     ]
   },
 
- 
   {
     path: '/admin',
     name: 'Admin',
     redirect: '/admin/products',
-    component: () => import('@/views/Admin/Dashboard.vue'),   
+    component: () => import('@/views/Admin/Dashboard.vue'),
     children: [{
-        path: 'products',
-        name: 'Products',
-        component: () => import('@/views/Admin/Products.vue'),
-        meta: {
-          requiresAuth: true,
-        }
-      },
-      {
-        path: 'coupons',
-        name: 'Coupons',
-        component: () => import('@/views/Admin/Coupons.vue'),
-        meta: {
-          requiresAuth: true,
-        }
-      },
-      {
-        path: 'orderlist',
-        name: 'OrderList',
-        component: () => import('@/views/Admin/OrderList.vue'),
-        meta: {
-          requiresAuth: true,
-        }
-      },
+      path: 'products',
+      name: 'Products',
+      component: () => import('@/views/Admin/Products.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'coupons',
+      name: 'Coupons',
+      component: () => import('@/views/Admin/Coupons.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: 'orderlist',
+      name: 'OrderList',
+      component: () => import('@/views/Admin/OrderList.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    }
     ]
   },
   {
     path: '*',
     redirect: '/'
-  },
+  }
 
 ]
 
 const router = new VueRouter({
   routes,
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior (to, from, savedPosition) {
     return { x: 0, y: 0 }
   }
 })
 
-
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    const url = `${process.env.VUE_APP_APIPATH}/api/user/check`;
+    const url = `${process.env.VUE_APP_APIPATH}/api/user/check`
     axios.post(url).then((response) => {
       if (response.data.success) {
-        next();
+        next()
       } else {
-        Vue.prototype.$bus.$emit('message:push',response.data.message,"text-danger");  
+        Vue.prototype.$bus.$emit('message:push', response.data.message, 'text-danger')
         next({
-          path: '/login',
-        });
+          path: '/login'
+        })
       }
     })
-  } else {    
+  } else {
     // Vue.prototype.$bus.$emit('message:push',103);
     // console.log('換頁了');
-    next();    
+    next()
   }
 })
-
 
 export default router

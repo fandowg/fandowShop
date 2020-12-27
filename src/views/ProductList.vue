@@ -15,7 +15,8 @@
             <p class="product-top__text">
               結帳輸入 <span class="product-top__text__sp">needwater</span> ,
               <br />
-              全品項8折優惠<span class="mobile-hide-md">，CAMELBAK支持你的每個決定</span
+              全品項8折優惠<span class="mobile-hide-md"
+                >，CAMELBAK支持你的每個決定</span
               >。
             </p>
           </div>
@@ -50,7 +51,7 @@
     <!-- <h1>所有產品</h1> -->
     <div class="container-xl">
       <div class="menu-block">
-        <div class="nav-menu">
+        <div class="nav-menu" ref="navMenu">
           <ul class="nav-menu__box">
             <!-- <li class="nav-menu__item" v-for="item in categories" :key="item">
             <a class="nav-menu__link">{{item}}</a>
@@ -115,7 +116,6 @@
             <p class="product-top__text">看看有那些你中意的好水瓶，陪你過個好節。</p>
           </div>
           <div class="bag-md-4 bag-4">
-          
 
             <img src="@/assets/images/product_top_sm.jpg" alt="" />
           </div>
@@ -138,7 +138,9 @@
             </h3>
             <div class="product__bottom">
               <div>
-                <div class="product__origin_price">NT${{ item.origin_price }}</div>
+                <div class="product__origin_price">
+                  NT${{ item.origin_price }}
+                </div>
                 <div class="product__price">NT${{ item.price }}</div>
               </div>
 
@@ -168,62 +170,72 @@
 </template>
 <style lang="scss" scoped></style>
 <script>
-import Page from "@/components/Pagination.vue";
-import { mapGetters, mapActions } from "vuex";
+import Page from '@/components/Pagination.vue'
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  data() {
+  data () {
     return {
       // products: [],
       // productsAll: [],
       // categories: [],
       scrollPosition: 0,
-      currentCategory: "",
+      // currentCategory: "",
       // productsBySort: [],
       productsByPage: [],
       // pagination: {},
       currentPage: 0,
-      search: "",
-      sort: "",
-      isShow: false,
+      search: '',
+      sort: '',
+      isShow: false
+      // isScroll: false,
       // cart: {},
-    };
+    }
   },
   watch: {
-    $route() {
-      this.getCurrentCategory();
+    $route () {
+      // this.getCurrentCategory();
+      this.scrollToRight()
+    },
+    search () {
+      this.currentPage = 0
       // this.changeSort();
     },
-    search() {
-      this.currentPage = 0;
-      // this.changeSort();
-    },
-    currentCategory() {
+    currentCategory () {
       // if (!this.sort) {
       //   this.productsBySort = this.filterProducts;
       // } else {
       //   this.changeSort();
       // }
-      this.currentPage = 0;
-      this.itemShow();
+      this.currentPage = 0
+      this.itemShow()
       //
 
       // this.$refs.page.createPage(this.filterProducts);
     },
-    getPage() {
-      console.log("取得頁面");
-      // this.productsBySort = this.filterProducts;
-      this.$refs.page.createPage(this.filterProducts);
-    },
-    filterProducts(val) {
-      console.log(val);
+    // productReady() {
+    //   // console.log("取得頁面");
+    //   // this.productsBySort = this.filterProducts;
+    //   this.$refs.page.createPage(this.filterProducts);
+    //   this.scrollToRight();
+    //   console.log('有座');
+    // },
+    filterProducts (val) {
+      // console.log(val);
       // if (!this.sort) {
       //   this.productsBySort = this.filterProducts;
       // }
       // this.productsBySort = val;
       // console.log(this.productsBySort);
-      this.$refs.page.createPage(this.filterProducts);
-      console.log("再取得頁面");
+
+      this.$refs.page.createPage(this.filterProducts)
+      // console.log("再取得頁面");
     },
+
+    // productsByPage(val) {
+    //   if (val.length!==0) {
+    //     this.scrollToRight();
+    //   }
+    // },
     // sort() {
 
     // },
@@ -231,49 +243,61 @@ export default {
     //   console.log(123);
     //   this.$refs.page.createPage(this.filterProducts);
     // },
-    currentPage() {
-      this.toTop();
-      this.itemShow();
+    currentPage () {
+      this.toTop()
+      this.itemShow()
     },
+    // categories(){
+    //   // setTimeout( this.scrollToRight,0);
+
+    // },
+    productsAll () {
+      console.log('我改變1')
+      // this.scrollToRight;
+      setTimeout(this.scrollToRight, 0)
+    }
   },
   computed: {
-    filterProducts() {
-      // console.log(this.currentCategory);
-      if (this.currentCategory === "all") {
+    currentCategory () {
+      return this.$route.params.category
+    },
+    filterProducts () {
+      // console.log("產生");
+      if (this.currentCategory === 'all') {
         // console.log(this.search);
-        if (this.search === "") {
-          if (this.sort == "") {
+        if (this.search === '') {
+          if (this.sort === '') {
             // console.log(this.productsAll);
-            return this.productsAll;
+            return this.productsAll
           } else {
             // console.log(this.changeSort(this.productsAll));
-            return this.changeSort(this.productsAll);
+            return this.changeSort(this.productsAll)
           }
         } else {
-          let filter = this.filterSearch(this.productsAll);
-          if (this.sort == "") {
-            return filter;
+          const filter = this.filterSearch(this.productsAll)
+          if (this.sort === '') {
+            return filter
           } else {
-            return this.changeSort(filter);
+            return this.changeSort(filter)
           }
           // console.log(filter);
         }
       } else {
-        let resault = this.productsAll.filter((item) => {
-          return item.category === this.currentCategory;
-        });
-        if (this.search === "") {
-          if (this.sort == "") {
-            return resault;
+        const resault = this.productsAll.filter((item) => {
+          return item.category === this.currentCategory
+        })
+        if (this.search === '') {
+          if (this.sort === '') {
+            return resault
           } else {
-            return this.changeSort(resault);
+            return this.changeSort(resault)
           }
         } else {
-          let filter = this.filterSearch(resault);
-          if (this.sort == "") {
-            return filter;
+          const filter = this.filterSearch(resault)
+          if (this.sort === '') {
+            return filter
           } else {
-            return this.changeSort(filter);
+            return this.changeSort(filter)
           }
         }
       }
@@ -283,39 +307,40 @@ export default {
       //   this.productsBySort = val;
       // },
     },
-    ...mapGetters("productsModules", ["categories", "productsAll", "getPage"]),
+    ...mapGetters('productsModules', ['categories', 'productsAll']),
+    ...mapGetters(['width'])
 
     // cart() {
     //   return this.$store.state.cart;
     // },
   },
   methods: {
-    itemShow() {
-      this.isShow = true;
+    itemShow () {
+      this.isShow = true
       setTimeout(() => {
-        this.isShow = false;
-      }, 1000);
+        this.isShow = false
+      }, 1000)
     },
-    getProductsByPage(products) {
-      this.productsByPage = products;
+    getProductsByPage (products) {
+      this.productsByPage = products
     },
-    changeSort(products) {
+    changeSort (products) {
       // console.log(456);
-      this.currentPage = 0;
-      let newSort = [];
-      let newProducts = [...products];
+      this.currentPage = 0
+      let newSort = []
+      const newProducts = [...products]
       newSort = newProducts.sort((a, b) => {
-        const aPrice = a.price ? a.price : a.origin_price;
-        const bPrice = b.price ? b.price : b.origin_price;
+        const aPrice = a.price ? a.price : a.origin_price
+        const bPrice = b.price ? b.price : b.origin_price
         // console.log(aPrice,bPrice);
         switch (this.sort) {
-          case "priceUp":
-            return bPrice - aPrice;
-          case "priceDown":
-            return aPrice - bPrice;
+          case 'priceUp':
+            return bPrice - aPrice
+          case 'priceDown':
+            return aPrice - bPrice
         }
-      });
-      return newSort;
+      })
+      return newSort
       // switch (this.sort) {
       //   case "priceUp":
 
@@ -343,13 +368,13 @@ export default {
       //   // break;
       // }
     },
-    getCurrentCategory() {
-      this.currentCategory = this.$route.params.category;
-    },
-    filterSearch(resault) {
+    // getCurrentCategory() {
+    //   this.currentCategory = this.$route.params.category;
+    // },
+    filterSearch (resault) {
       return resault.filter((item) => {
-        return item.title.indexOf(this.search) != -1;
-      });
+        return item.title.indexOf(this.search) !== -1
+      })
     },
     // getProducts(page = 1) {
     //   this.$store.dispatch("updateLoading", true);
@@ -363,19 +388,19 @@ export default {
     //   });
     // },
 
-    ...mapActions("productsModules", ["getProductsAll"]),
-    toProductItem(category, id) {
+    ...mapActions('productsModules', ['getProductsAll']),
+    toProductItem (category, id) {
       // console.log(this);
       this.$router.push({
-        name: "ProductItem",
+        name: 'ProductItem',
         params: {
           category,
-          id,
-        },
-      });
+          id
+        }
+      })
     },
-    addToCart(id, qty) {
-      this.$store.dispatch("cartModules/addToCart", { id, qty });
+    addToCart (id, qty) {
+      this.$store.dispatch('cartModules/addToCart', { id, qty })
     },
     // getCart() {
     //   this.$store.dispatch('getCart');
@@ -386,24 +411,56 @@ export default {
     //   this.$store.dispatch('deleteCart', id);
 
     // },
-    toTop() {
-      document.documentElement.scrollTop = 0;
+    toTop () {
+      document.documentElement.scrollTop = 0
     },
+    scrollToRight () {
+      if (this.width < 576) {
+        if (
+          this.currentCategory === 'kid' ||
+          this.currentCategory === 'stainless-steel'
+        ) {
+          this.$refs.navMenu.scrollLeft = this.$refs.navMenu.offsetWidth
+        } else {
+          this.$refs.navMenu.scrollLeft = 0
+        }
+        console.log('有執行')
+        console.log(this.$refs.navMenu.scrollLeft)
+      }
+    }
   },
   components: {
-    Page,
+    Page
   },
-  created() {
-    console.log(process.env.VUE_APP_MAX_QTY);
-    this.getCurrentCategory();
+  created () {
+    // console.log(process.env.VUE_APP_MAX_QTY);
+    // this.getCurrentCategory();
     // this.getProducts();
-    this.getProductsAll();
-  },
+    this.getProductsAll()
+  }
+  // mounted() {
+  //   // if(!this.categories){
+  //   //   return;
+  //   // }
+
+  //   // console.log(this.$refs.navMenu);
+  //   // // this.scrollToRight;
+  //   // setTimeout( this.scrollToRight,0);
+  //   // // console.log(this.$refs.navMenu.scrollLeft);
+  //   // console.log("我改變2");
+  //   // // this.scrollToRight();
+  // },
+  // updated() {
+
+  //   // setTimeout( this.scrollToRight,0);
+  //   // this.isScroll=true;
+  //     // this.scrollToRight();
+  // },
   // mounted() {
   //   window.addEventListener("scroll", () => {
   //     this.scrollPosition = window.pageYOffset;
   //   });
   //   console.log(this);
   // },
-};
+}
 </script>

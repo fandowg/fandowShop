@@ -3,7 +3,7 @@
     <button class="desk-hide-md button-none" @click.prevent="menuShow = !menuShow">
       <img src="@/assets/images/icon_bars.svg" alt="" />
     </button>
-    <a href="" class="logo"><img src="@/assets/images/logo.svg" alt="" /></a>
+    <router-link class="logo" to="/"><img src="@/assets/images/logo.svg" alt="" /></router-link>
 
     <div class="menu menu--left off-canvas" :class="{ active: menuShow }">
       <button
@@ -17,23 +17,23 @@
           <a
             href=""
             class="menu__link dropdown__btn"
-            @click.prevent="toggleDropdown($event)"
+            @click.prevent="toggleDropdown"
             >購買水瓶 <i class="fas fa-chevron-down"></i
           ></a>
           <div class="dropdown__box navbar-dropdown" :class="{ active: dropdownShow }">
-            <router-link class="dropdown__item" to="/product-list/all"
+            <router-link @click.native="closeMenu()" class="dropdown__item" to="/product-list/all"
               >所有水瓶</router-link
             >
-            <router-link class="dropdown__item" to="/product-list/straw"
+            <router-link @click.native="closeMenu()" class="dropdown__item" to="/product-list/straw"
               >吸管水瓶</router-link
             >
-            <router-link class="dropdown__item" to="/product-list/sport"
+            <router-link @click.native="closeMenu()" class="dropdown__item" to="/product-list/sport"
               >運動水瓶</router-link
             >
-            <router-link class="dropdown__item" to="/product-list/kid"
+            <router-link @click.native="closeMenu()" class="dropdown__item" to="/product-list/kid"
               >兒童水瓶</router-link
             >
-            <router-link class="dropdown__item" to="/product-list/stainless-steel"
+            <router-link @click.native="closeMenu()" class="dropdown__item" to="/product-list/stainless-steel"
               >不鏽鋼水瓶</router-link
             >
             <!-- <a class="dropdown__item" href="">吸管水瓶</a>
@@ -43,7 +43,7 @@
           </div>
         </li>
         <li class="menu__item">
-          <router-link class="menu__link" to="/about">深入了解CAMELBAK</router-link>
+          <router-link @click.native="closeMenu()" class="menu__link" to="/about">深入了解CAMELBAK</router-link>
 
           <!-- <li class="menu__item">
           <router-link class="menu__link" to="/check-cart"
@@ -61,7 +61,7 @@
         ></router-link>
       </li>
       <li class="dropdown menu__item" ref="closeCart">
-        <a href="" @click.prevent="toggleCart($event)" class="menu__link dropdown__btn"
+        <a href="" @click.prevent="toggleCart" class="menu__link dropdown__btn"
           ><i class="fas fa-shopping-cart"></i
           ><span class="cart-qty-icon" v-if="cartLength > 0">{{ cartLength }}</span>
         </a>
@@ -119,87 +119,101 @@
   </nav>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  data() {
+  data () {
     return {
       menuShow: false,
       dropdownShow: false,
       cartShow: false,
       // changeNavBg: false,
-      scrollPosition: 0,
+      scrollPosition: 0
       // width: 0,
-    };
+    }
   },
   watch: {
     $route: function () {
-      this.menuShow = false;
+      this.menuShow = false
+      this.mobileOpenDropdown()
       // this.dropdownShow = false;
-      this.cartShow = false;
+      this.cartShow = false
     },
-    width() {
-      this.mobileOpenDropdown();
+    width () {
+      this.mobileOpenDropdown()
     },
+    menuShow (val) {
+      if (val) {
+        this.dropdownShow = true
+      }
+    }
   },
   computed: {
-    checkHome() {
-      return this.$route.name !== "Home";
+    checkHome () {
+      return this.$route.name !== 'Home'
     },
-    cartLength() {
-      return this.cart.carts.length;
+    cartLength () {
+      return this.cart.carts.length
     },
-    ...mapGetters("cartModules", ["cart"]),
-    ...mapGetters(["width"]),
+    ...mapGetters('cartModules', ['cart']),
+    ...mapGetters(['width'])
   },
 
   methods: {
-    toggleDropdown(e) {
+    toggleDropdown () {
       // e.stopPropagation();
-      this.dropdownShow = !this.dropdownShow;
+      this.dropdownShow = !this.dropdownShow
       if (this.dropdownShow === true) {
-        document.addEventListener("click", this.closeBlankDropdown);
+        document.addEventListener('click', this.closeBlankDropdown)
+      } else {
+        document.removeEventListener('click', this.closeBlankDropdown)
       }
     },
-    toggleCart(e) {
+    toggleCart () {
       // e.stopPropagation();
-      this.cartShow = !this.cartShow;
+      this.cartShow = !this.cartShow
       if (this.cartShow === true) {
-        document.addEventListener("click", this.closeBlankCart);
+        document.addEventListener('click', this.closeBlankCart)
+      } else {
+        document.removeEventListener('click', this.closeBlankCart)
       }
     },
-    closeBlankDropdown(e) {
-      console.log(this.$refs.closeDropdown);
+    closeBlankDropdown (e) {
+      // console.log(this.$refs.closeDropdown);
       if (!this.$refs.closeDropdown.contains(e.target)) {
-        this.dropdownShow = false;
-        document.removeEventListener("click", this.closeBlankDropdown);
+        this.dropdownShow = false
+        document.removeEventListener('click', this.closeBlankDropdown)
       }
     },
-    closeBlankCart(e) {
-      console.log(this.$refs.closeCart);
+    closeBlankCart (e) {
+      // console.log(this.$refs.closeCart);
       if (!this.$refs.closeCart.contains(e.target)) {
-        this.cartShow = false;
-        document.removeEventListener("click", this.closeBlankCart);
+        this.cartShow = false
+        document.removeEventListener('click', this.closeBlankCart)
       }
     },
     // deleteCart(id) {
     //   this.$store.dispatch('deleteCart',id);
     // },
-    ...mapActions("cartModules", ["getCart", "deleteCart"]),
-    mobileOpenDropdown() {
+    ...mapActions('cartModules', ['getCart', 'deleteCart']),
+    mobileOpenDropdown () {
       if (this.width < 768) {
-        this.dropdownShow = true;
-        console.log(this.dropdownShow);
+        this.dropdownShow = true
+        // console.log(this.dropdownShow);
       } else {
-        this.dropdownShow = false;
+        this.dropdownShow = false
       }
     },
+    closeMenu () {
+      this.menuShow = false
+      this.dropdownShow = false
+    }
   },
-  created() {
-    this.getCart();
-    console.log(this.cart);
+  created () {
+    this.getCart()
+    // console.log(this.cart);
   },
-  mounted() {
-    this.mobileOpenDropdown();
+  mounted () {
+    this.mobileOpenDropdown()
     // this.width = window.innerWidth;
     // console.log(this.Width);
     // window.onresize = () => {
@@ -209,11 +223,11 @@ export default {
     //   // this.Height = window.innerHeight;
     // };
     // this.mobileOpenDropdown();
-    window.addEventListener("scroll", () => {
-      this.scrollPosition = window.pageYOffset;
+    window.addEventListener('scroll', () => {
+      this.scrollPosition = window.pageYOffset
       // console.log(this.scrollPosition>50);
       // console.log(document.documentElement.scrollTop,window.pageYOffset);
-    });
-  },
-};
+    })
+  }
+}
 </script>

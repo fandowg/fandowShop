@@ -104,69 +104,69 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  data() {
+  data () {
     return {
-      coupon: "",
-      errorMessage: "",
+      coupon: '',
+      errorMessage: '',
       couponSuccess: true,
-      maxQty: process.env.VUE_APP_MAX_QTY,
-    };
+      maxQty: process.env.VUE_APP_MAX_QTY
+    }
   },
   computed: {
-    ...mapGetters("cartModules", ["cart"]),
+    ...mapGetters('cartModules', ['cart'])
   },
   methods: {
-    checkCoupon() {
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
-      this.$store.commit("LOADING", true);
+    checkCoupon () {
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`
+      this.$store.commit('LOADING', true)
       this.$http.post(url, { data: { code: this.coupon } }).then((response) => {
-        console.log(response.data);
+        console.log(response.data)
         if (response.data.success) {
-          this.couponSuccess = true;
-          this.getCart();
+          this.couponSuccess = true
+          this.getCart()
         } else {
-          this.couponSuccess = false;
-          this.errorMessage = response.data.message;
+          this.couponSuccess = false
+          this.errorMessage = response.data.message
         }
-        this.$store.commit("LOADING", false);
-      });
+        this.$store.commit('LOADING', false)
+      })
     },
-    addToCart(id, qty) {
-      this.$store.dispatch("cartModules/addToCart", { id, qty });
+    addToCart (id, qty) {
+      this.$store.dispatch('cartModules/addToCart', { id, qty })
     },
     //  deleteCart(id) {
     //   this.$store.dispatch('deleteCart',id);
 
     // },
-    ...mapActions("cartModules", ["getCart", "deleteCart"]),
+    ...mapActions('cartModules', ['getCart', 'deleteCart'])
   },
-  created() {},
-  beforeRouteLeave(to, from, next) {
-    console.log(to, from, next);
-    if (to.name !== "OrderInfo" && this.cart.carts.length !== 0) {
-      this.$modal.show("dialog", {
+  created () {},
+  beforeRouteLeave (to, from, next) {
+    console.log(to, from, next)
+    if (to.name !== 'OrderInfo' && this.cart.carts.length !== 0) {
+      this.$modal.show('dialog', {
         text: `購物車中還有${this.cart.carts.length}筆資料，確定要離開嗎？`,
         buttons: [
           {
-            title: "取消",
+            title: '取消',
             handler: () => {
-              this.$modal.hide("dialog");
-              next(false);
-            },
+              this.$modal.hide('dialog')
+              next(false)
+            }
           },
           {
-            title: "確定",
+            title: '確定',
             handler: () => {
-              next();
-            },
-          },
-        ],
-      });
+              next()
+            }
+          }
+        ]
+      })
     } else {
-      next();
+      next()
     }
-  },
-};
+  }
+}
 </script>

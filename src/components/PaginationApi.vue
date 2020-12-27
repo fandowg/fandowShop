@@ -38,11 +38,11 @@
 
 <script>
 export default {
-  props: ["pagination", "get-pages"],
-  data() {
+  props: ['pagination', 'get-pages'],
+  data () {
     return {
       //  pagination: {},
-    };
+    }
   },
   // watch: {
   //   products() {
@@ -51,7 +51,7 @@ export default {
   //   },
   // },
   methods: {},
-  created() {},
-  mounted() {},
-};
+  created () {},
+  mounted () {}
+}
 </script>

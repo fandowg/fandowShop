@@ -120,43 +120,43 @@
 </template>
 
 <script>
-//需要傳送三個東西  isNew  tempCoupon  today的 due_date_model ,執行端應該要在外層，內層純粹接受isNew  tempCoupon  today的 due_date_model的資料
+// 需要傳送三個東西  isNew  tempCoupon  today的 due_date_model ,執行端應該要在外層，內層純粹接受isNew  tempCoupon  today的 due_date_model的資料
 export default {
-  props: ["isNew", "tempCoupon", "today"],
-  data() {
+  props: ['isNew', 'tempCoupon', 'today'],
+  data () {
     return {
-      due_date_model: "",
-      editTemp: {},
-    };
+      due_date_model: '',
+      editTemp: {}
+    }
   },
   watch: {
-    due_date_model() {
-      //Math.floor(new Date(日期)) 把日期轉成timestamp，input date取得的時間格式為xxxx-xx-xx，要先轉成正式的格式才能轉成timestamp
-      this.editTemp.due_date = Math.floor(new Date(this.due_date_model)) / 1000;
-      console.log(this.editTemp.due_date);
+    due_date_model () {
+      // Math.floor(new Date(日期)) 把日期轉成timestamp，input date取得的時間格式為xxxx-xx-xx，要先轉成正式的格式才能轉成timestamp
+      this.editTemp.due_date = Math.floor(new Date(this.due_date_model)) / 1000
+      console.log(this.editTemp.due_date)
       // console.log(new Date(this.due_date_model));
-      //測試git
-      //測試git2
-      //測試git3
+      // 測試git
+      // 測試git2
+      // 測試git3
     },
-    tempCoupon() {
+    tempCoupon () {
       // let today = new Date().toISOString().split("T")[0];
       if (this.isNew) {
-        this.editTemp = { ...this.tempCoupon };
-        this.due_date_model = this.today;
-        //若編輯時項目的到期日是今天，due_date_model不會watch，所以這邊強制再寫入一次
-        this.editTemp.due_date = Math.floor(new Date(this.today)) / 1000;
+        this.editTemp = { ...this.tempCoupon }
+        this.due_date_model = this.today
+        // 若編輯時項目的到期日是今天，due_date_model不會watch，所以這邊強制再寫入一次
+        this.editTemp.due_date = Math.floor(new Date(this.today)) / 1000
       } else {
-        this.editTemp = Object.assign({}, this.tempCoupon);
+        this.editTemp = Object.assign({}, this.tempCoupon)
         // if (!this.tempCoupon.due_date) {
         //   this.due_date_model = today;
         //   return;
         // }
         this.due_date_model = new Date(this.editTemp.due_date * 1000)
           .toISOString()
-          .split("T")[0];
+          .split('T')[0]
       }
-    },
+    }
   },
   methods: {
     // sendStatus(){
@@ -180,37 +180,37 @@ export default {
     //       .split("T")[0];
     //   }
     // },
-    updateCoupon() {
+    updateCoupon () {
       if (this.isNew) {
-        this.$store.commit("LOADING", true);
-        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`;
+        this.$store.commit('LOADING', true)
+        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`
         this.$http.post(url, { data: this.editTemp }).then((response) => {
           if (response.data.success) {
-            this.$emit("get-coupons");
-            this.$bus.$emit("message:push", response.data.message);
+            this.$emit('get-coupons')
+            this.$bus.$emit('message:push', response.data.message)
           }
-          this.$store.commit("LOADING", false);
-          this.$emit("close");
-        });
+          this.$store.commit('LOADING', false)
+          this.$emit('close')
+        })
       } else {
         if (JSON.stringify(this.editTemp) === JSON.stringify(this.tempCoupon)) {
           // this.$bus.$emit("message:push", "資料無變更");
-          this.$emit("close");
-          return;
+          this.$emit('close')
+          return
         }
-        this.$store.commit("LOADING", true);
-        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${this.editTemp.id}`;
+        this.$store.commit('LOADING', true)
+        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${this.editTemp.id}`
         this.$http.put(url, { data: this.editTemp }).then((response) => {
           if (response.data.success) {
-            this.$emit("get-coupons");
-            this.$bus.$emit("message:push", response.data.message);
+            this.$emit('get-coupons')
+            this.$bus.$emit('message:push', response.data.message)
           }
-          this.$store.commit("LOADING", false);
-          this.$emit("close");
-        });
+          this.$store.commit('LOADING', false)
+          this.$emit('close')
+        })
       }
-    },
+    }
   },
-  created() {},
-};
+  created () {}
+}
 </script>

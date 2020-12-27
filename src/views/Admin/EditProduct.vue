@@ -39,7 +39,7 @@
             <ValidationProvider name="email" rules="required|email" v-slot="{failed, errors }">
               <label for>產品名稱</label>
               <input type="text" id="title" placeholder="請輸入產品名稱" v-model="editTemp.title" />
-           
+
               <span class="text-danger" v-if="failed">{{errors[0]}}</span>
             </ValidationProvider>
           </div>
@@ -209,87 +209,87 @@
 </template>
 
 <script>
-import category from "@/assets/category";
+import category from '@/assets/category'
 export default {
-  data() {
+  data () {
     return {
       category,
       loadStatus: {
-        upLoadImage: false,
+        upLoadImage: false
       },
-      editTemp: {},
-    };
+      editTemp: {}
+    }
   },
-  props: ["isNew", "tempProduct"],
+  props: ['isNew', 'tempProduct'],
   watch: {
-    tempProduct() {
-      this.editTemp = { ...this.tempProduct };
+    tempProduct () {
+      this.editTemp = { ...this.tempProduct }
       if (this.isNew) {
-        this.editTemp.category = null;
+        this.editTemp.category = null
       }
-    },
+    }
   },
   methods: {
-    updateProduct() {
+    updateProduct () {
       if (this.isNew) {
-        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product`;
-        this.$store.commit("LOADING", true);
+        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product`
+        this.$store.commit('LOADING', true)
         this.$http.post(url, { data: this.editTemp }).then((response) => {
           if (response.data.success) {
-            this.$bus.$emit("message:push", response.data.message);
-            this.$emit("get-products");
+            this.$bus.$emit('message:push', response.data.message)
+            this.$emit('get-products')
           }
-          this.$emit("close");
-          this.$store.commit("LOADING", false);
-        });
+          this.$emit('close')
+          this.$store.commit('LOADING', false)
+        })
       } else {
         // console.log(JSON.stringify(this.editTemp), JSON.stringify(this.tempCoupon));
         if (JSON.stringify(this.editTemp) === JSON.stringify(this.tempProduct)) {
           // this.$bus.$emit("message:push", "資料無變更");
-          this.$emit("close");
-          return;
+          this.$emit('close')
+          return
         }
-        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${this.editTemp.id}`;
-        this.$store.commit("LOADING", true);
+        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${this.editTemp.id}`
+        this.$store.commit('LOADING', true)
         this.$http.put(url, { data: this.editTemp }).then((response) => {
           if (response.data.success) {
-            this.$bus.$emit("message:push", response.data.message);
+            this.$bus.$emit('message:push', response.data.message)
             // console.log(response.data);
-            this.$emit("get-products");
+            this.$emit('get-products')
           }
-          this.$emit("close");
-          this.$store.commit("LOADING", false);
-        });
+          this.$emit('close')
+          this.$store.commit('LOADING', false)
+        })
       }
     },
-    upLoadImage() {
-      console.log(this);
-      const image = this.$refs.upImage.files[0];
-      const formData = new FormData();
-      formData.append("file-to-upload", image);
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/upload`;
-      this.loadStatus.upLoadImage = true;
+    upLoadImage () {
+      console.log(this)
+      const image = this.$refs.upImage.files[0]
+      const formData = new FormData()
+      formData.append('file-to-upload', image)
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/upload`
+      this.loadStatus.upLoadImage = true
       this.$http
         .post(url, formData, {
           headers: {
-            "Content-type": "multipart/form-data",
-          },
+            'Content-type': 'multipart/form-data'
+          }
         })
         .then((response) => {
           // console.log(this.editTemp);
           if (response.data.success) {
-            this.$set(this.editTemp, "imageUrl", response.data.imageUrl);
+            this.$set(this.editTemp, 'imageUrl', response.data.imageUrl)
             // this.tempProduct.imageUrl=response.data.imageUrl;
           } else {
-            this.$bus.$emit("message:push", response.data.message, "text-danger");
+            this.$bus.$emit('message:push', response.data.message, 'text-danger')
           }
-          this.loadStatus.upLoadImage = false;
-        });
-    },
+          this.loadStatus.upLoadImage = false
+        })
+    }
   },
-  created() {},
-  mounted() {
+  created () {},
+  mounted () {
     // console.log(category);
-  },
-};
+  }
+}
 </script>

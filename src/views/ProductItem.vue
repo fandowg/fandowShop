@@ -56,46 +56,46 @@
 <style lang="scss" scoped></style>
 <script>
 export default {
-  data() {
+  data () {
     return {
       // id: "",
       product: {},
-      qty: 1,
-    };
+      qty: 1
+    }
   },
   watch: {
-    product_id() {
-      this.getProductItem();
-    },
+    product_id () {
+      this.getProductItem()
+    }
   },
   computed: {
-    product_id() {
-      return this.$route.params.id;
+    product_id () {
+      return this.$route.params.id
     },
-    category() {
-      return this.$route.params.category;
-    },
+    category () {
+      return this.$route.params.category
+    }
   },
   methods: {
-    getProductItem() {
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${this.product_id}`;
-      this.$store.commit("LOADING", true);
+    getProductItem () {
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${this.product_id}`
+      this.$store.commit('LOADING', true)
       this.$http.get(url).then((response) => {
         if (response.data.success) {
-          this.product = response.data.product;
+          this.product = response.data.product
         } else {
-          this.$bus.$emit("message:push", response.data.message, "text-danger");
+          this.$bus.$emit('message:push', response.data.message, 'text-danger')
         }
-        this.$store.commit("LOADING", false);
-      });
+        this.$store.commit('LOADING', false)
+      })
     },
-    addToCart(id, qty) {
-      this.$store.dispatch("cartModules/addToCart", { id, qty });
-    },
+    addToCart (id, qty) {
+      this.$store.dispatch('cartModules/addToCart', { id, qty })
+    }
   },
-  created() {
+  created () {
     // this.id = this.$route.params.id;
-    this.getProductItem();
-  },
-};
+    this.getProductItem()
+  }
+}
 </script>

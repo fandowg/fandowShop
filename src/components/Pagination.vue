@@ -9,7 +9,11 @@
             disabled: currentPage === 0,
           }"
         >
-          <img v-if="currentPage !== 0" src="@/assets/images/prev_page.svg" alt="" />
+          <img
+            v-if="currentPage !== 0"
+            src="@/assets/images/prev_page.svg"
+            alt=""
+          />
           <img v-else src="@/assets/images/prev_page_disabled.svg" alt="" />
         </a>
       </li>
@@ -45,12 +49,12 @@
 
 <script>
 export default {
-  props: ["products", "currentPage"],
-  data() {
+  props: ['products', 'currentPage'],
+  data () {
     return {
       pageItems: 12,
-      totalPage: 0,
-    };
+      totalPage: 0
+    }
   },
   // watch: {
   //   products() {
@@ -59,43 +63,43 @@ export default {
   //   },
   // },
   methods: {
-    next() {
+    next () {
       if (this.currentPage !== this.totalPage - 1) {
-        this.$emit("update:currentPage", this.currentPage + 1);
+        this.$emit('update:currentPage', this.currentPage + 1)
       }
     },
-    prev() {
+    prev () {
       if (this.currentPage !== 0) {
-        this.$emit("update:currentPage", this.currentPage - 1);
+        this.$emit('update:currentPage', this.currentPage - 1)
       }
     },
-    createPage(products) {
-      //父元件呼叫子元件，非同步事件必須傳參數
-      console.log(products, this.currentPage, this.pageItems, this.totalPage);
-      let newProducts = [];
-      let pagArray = [];
-      let obKey = Object.keys(products);
-      console.log(obKey);
+    createPage (products) {
+      // 父元件呼叫子元件，非同步事件必須傳參數
+      // console.log(products, this.currentPage, this.pageItems, this.totalPage);
+      const newProducts = []
+      let pagArray = []
+      const obKey = Object.keys(products)
+      // console.log(obKey);
       obKey.forEach((item, index) => {
-        pagArray.push(products[item]);
+        pagArray.push(products[item])
         if (index !== 0 && (index + 1) % this.pageItems === 0) {
-          newProducts.push(pagArray);
+          newProducts.push(pagArray)
           // console.log(pagArray);
           // console.log(index);
-          pagArray = [];
+          pagArray = []
         }
         if (index + 1 === obKey.length && obKey.length % this.pageItems !== 0) {
-          newProducts.push(pagArray);
+          newProducts.push(pagArray)
         }
-      });
-      this.totalPage = newProducts.length;
+      })
+      this.totalPage = newProducts.length
       // console.log(newProducts, this.totalPage);
-      this.$emit("products-by-page", newProducts);
-    },
+      this.$emit('products-by-page', newProducts)
+    }
   },
-  created() {},
-  mounted() {
-    console.log(this);
-  },
-};
+  created () {},
+  mounted () {
+    // console.log(this);
+  }
+}
 </script>

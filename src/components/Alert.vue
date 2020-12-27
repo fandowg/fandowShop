@@ -18,42 +18,42 @@
 <script>
 // import {EventBus} from '@/bus'
 export default {
-  data() {
+  data () {
     return {
-      message: [],
-    };
+      message: []
+    }
   },
   methods: {
-    updateMessage(message, status) {
-      const timestamp = Math.floor(new Date() / 1000);
-      console.log("有觸發");
+    updateMessage (message, status) {
+      const timestamp = Math.floor(new Date() / 1000)
+      console.log('有觸發')
       this.message.push({
         message,
         status,
-        timestamp,
-      });
-      this.deleteMessageWithTiming(timestamp);
+        timestamp
+      })
+      this.deleteMessageWithTiming(timestamp)
     },
-    deleteMessage(key) {
-      this.message.splice(key, 1);
+    deleteMessage (key) {
+      this.message.splice(key, 1)
     },
-    deleteMessageWithTiming(timestamp) {
+    deleteMessageWithTiming (timestamp) {
       setTimeout(() => {
         const key = this.message.findIndex((item) => {
-          return item.timestamp === timestamp;
-        });
-        this.message.splice(key, 1);
-      }, 2000);
-    },
+          return item.timestamp === timestamp
+        })
+        this.message.splice(key, 1)
+      }, 2000)
+    }
   },
-  created() {
-    this.$bus.$on("message:push", (message, status = "text-success") => {
-      this.updateMessage(message, status);
+  created () {
+    this.$bus.$on('message:push', (message, status = 'text-success') => {
+      this.updateMessage(message, status)
       // console.log("發送訊息");
-    });
+    })
   },
-  beforeDestroy() {
-    this.$bus.$off("message:push");
-  },
-};
+  beforeDestroy () {
+    this.$bus.$off('message:push')
+  }
+}
 </script>

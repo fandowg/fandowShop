@@ -7,13 +7,13 @@
   </div>
 </template>
 <script>
-import NavbarAdmin from "@/components/Admin/NavbarAdmin.vue";
+import NavbarAdmin from '@/components/Admin/NavbarAdmin.vue'
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
   components: {
-    NavbarAdmin,
-  },
-};
+    NavbarAdmin
+  }
+}
 </script>

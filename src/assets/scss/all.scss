@@ -64,12 +64,18 @@
   display: flex;
   justify-content: flex-end;
   margin-bottom: $spacer-bottom;
+  @include max(md) {
+    justify-content: center;
+  }
   &.delete-spacer {
     @include min(md) {
       padding-right: 6%;
     }
   }
   .btn {
+    @include max(md) {
+      width: 100%;
+    }
     +.btn {
       margin-left: $spacer;
     }
@@ -234,7 +240,7 @@
   padding: $spacer-bg $spacer;
 
   &__inner {
-    text-align: center;
+    // text-align: center;
     @include min(md) {
       // padding: $spacer-bg $spacer-bg-2;
       display: flex;
@@ -242,17 +248,26 @@
     }
 
   }
+  &__side{
+    
+  }
 
   &__link {
+    font-size: $h3-font-size;
     color: #fff;
+  
+      margin-left: $spacer-sm;
+    
     &:hover {
-      color: $gray-300;
+      color: $gray-400;
     }
   }
   &__word {
     display: inline-block;
     @include min(md) {
+      & + .footer__word {
       padding-left: $spacer;
+      }
     }
     @include max(md) {
       padding-top: $spacer-sm;
@@ -899,8 +914,10 @@
   overflow-x: scroll;
   scrollbar-width: none;
   margin-bottom: $spacer;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style:none;
   @include max(md) {
-    margin-bottom: $spacer;
+    margin-bottom: $spacer-bg;
   }
   &::-webkit-scrollbar {
     display: none

@@ -1,6 +1,6 @@
 <template>
   <div class="container-xl">
-    
+
     <main>
       <div class="product-list one-wrapper">
         <div class="one-md-4" v-for="item in shoppingList" :key="item.id">
@@ -14,10 +14,9 @@
                <span v-if="item.price">{{item.price}}</span>
              </div>
           </div>
-         
 
         </div>
-     
+
       </div>
     </main>
   </div>
@@ -25,26 +24,25 @@
 
 <script>
 export default {
-  data(){
-    return{
-      shoppingList:[],
+  data () {
+    return {
+      shoppingList: []
     }
   },
-  methods:{
-    getShoppingList(page = 1) {
-       this.$bus.$emit('changeLoading',true); 
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`;
+  methods: {
+    getShoppingList (page = 1) {
+      this.$bus.$emit('changeLoading', true)
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`
       this.$http.get(url).then(response => {
-        
-        this.shoppingList = response.data.products;
-        this.pagination = response.data.pagination;
-        this.$bus.$emit('changeLoading',false); 
-      console.log(this.shoppingList);
-      });
-    },
+        this.shoppingList = response.data.products
+        this.pagination = response.data.pagination
+        this.$bus.$emit('changeLoading', false)
+        console.log(this.shoppingList)
+      })
+    }
   },
-  created(){
-    this.getShoppingList(1);
+  created () {
+    this.getShoppingList(1)
   }
-};
+}
 </script>

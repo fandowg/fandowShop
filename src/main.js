@@ -8,15 +8,15 @@ import 'bootstrap'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import VModal from 'vue-js-modal'
-import { ValidationProvider,ValidationObserver, extend } from 'vee-validate';
-import { localize } from 'vee-validate';
+import { ValidationProvider, ValidationObserver, extend, localize } from 'vee-validate'
+
 import TW from './assets/validate/zh_TW.json'
-import { required, email, digits } from 'vee-validate/dist/rules';
+import { required, email, digits } from 'vee-validate/dist/rules'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import swiper, { Navigation, Pagination, Autoplay } from 'swiper'
 import 'swiper/swiper-bundle.css'
 import store from './store'
-import animated from 'animate.css' 
+import animated from 'animate.css'
 
 import '@/bus'
 import Alert from './components/Alert.vue'
@@ -25,9 +25,9 @@ import currency from './filters/currency'
 import categoryChangeCn from './filters/categoryChangeCn'
 import scrollAnimate from '@/directives/scrollAnimate'
 
-extend('required',required)
-extend('email',email)
-extend('digits',digits)
+extend('required', required)
+extend('email', email)
+extend('digits', digits)
 // extend('email', {
 // ...email,
 // message: '叫你填資料'
@@ -39,7 +39,7 @@ extend('digits',digits)
 Vue.use(VModal, {
   dialog: true,
   dynamicDefaults: {
-    draggable: false,
+    draggable: false
   }
 })
 Vue.use(Vuex)
@@ -51,18 +51,15 @@ Vue.use(animated)
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
 
-localize('zh_TW',TW)
-
-
+localize('zh_TW', TW)
 
 Vue.component('Loading', Loading)
 
-
 Vue.component('Alert', Alert)
-Vue.filter('date',date)
-Vue.filter('currency',currency)
-Vue.filter('categoryChangeCn',categoryChangeCn)
-Vue.directive('scrollanimate',scrollAnimate)
+Vue.filter('date', date)
+Vue.filter('currency', currency)
+Vue.filter('categoryChangeCn', categoryChangeCn)
+Vue.directive('scrollanimate', scrollAnimate)
 Vue.config.productionTip = false
 
 new Vue({
@@ -70,4 +67,3 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
-

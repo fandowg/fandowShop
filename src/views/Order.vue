@@ -22,15 +22,15 @@
 
 <script>
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
   computed: {
-    active() {
-      return this.$route.name;
-    },
+    active () {
+      return this.$route.name
+    }
   },
   methods: {},
-  created() {},
-};
+  created () {}
+}
 </script>

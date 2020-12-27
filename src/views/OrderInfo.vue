@@ -217,10 +217,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import postal from "@/assets/postal.json";
+import { mapGetters, mapActions } from 'vuex'
+import postal from '@/assets/postal.json'
 export default {
-  data() {
+  data () {
     return {
       user: {
         // name: "",
@@ -232,84 +232,85 @@ export default {
       city: null,
       area: {},
       areaArray: [],
-      addressText: "",
-      message: "",
-    };
+      addressText: '',
+      message: ''
+    }
   },
   watch: {
-    city() {
-      let currentArea = postal.find((item) => {
-        return item.name === this.city;
-      });
-      this.areaArray = currentArea ? currentArea.children : [];
-      this.area = {};
-      console.log(this.areaArray);
+    city () {
+      const currentArea = postal.find((item) => {
+        return item.name === this.city
+      })
+      this.areaArray = currentArea ? currentArea.children : []
+      this.area = {}
+      console.log(this.areaArray)
     },
-    address(val) {
-      this.user.address = val;
-    },
+    address (val) {
+      this.user.address = val
+    }
   },
   computed: {
-    address() {
-      return `${this.area.code} ${this.city} ${this.area.name} ${this.addressText} `;
+    address () {
+      return `${this.area.code} ${this.city} ${this.area.name} ${this.addressText} `
     },
-    ...mapGetters("cartModules", ["cart"]),
+    ...mapGetters('cartModules', ['cart'])
   },
   methods: {
-    createOrder() {
+    createOrder () {
       const form = {
         user: this.user,
-        message: this.message,
-      };
+        message: this.message
+      }
       // form.user.address=this.address;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
-      this.$store.commit("LOADING", true);
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`
+      this.$store.commit('LOADING', true)
       this.$http.post(url, { data: form }).then((response) => {
         if (response.data.success) {
+          this.$bus.$emit('message:push', response.data.message)
           this.$router.push({
-            name: "Payment",
+            name: 'Payment',
             params: {
-              id: response.data.orderId,
-            },
-          });
-          this.getCart();
+              id: response.data.orderId
+            }
+          })
+          this.getCart()
         } else {
-          this.$bus.$emit("message:push", response.data.message, "text-danger");
+          this.$bus.$emit('message:push', response.data.message, 'text-danger')
         }
-        this.$store.commit("LOADING", false);
-      });
+        this.$store.commit('LOADING', false)
+      })
     },
-    ...mapActions("cartModules", ["getCart"]),
+    ...mapActions('cartModules', ['getCart'])
   },
-  created() {
+  created () {
     if (this.cart.carts.length === 0) {
-      this.$router.go(-1);
+      this.$router.go(-1)
     }
   },
-  beforeRouteLeave(to, from, next) {
-    console.log(to, from, next);
-    if (to.name !== "Payment" && this.cart.carts.length !== 0) {
-      this.$modal.show("dialog", {
-        text: `您的訂單尚未完成，確定要離開嗎？`,
+  beforeRouteLeave (to, from, next) {
+    console.log(to, from, next)
+    if (to.name !== 'Payment' && this.cart.carts.length !== 0) {
+      this.$modal.show('dialog', {
+        text: '您的訂單尚未完成，確定要離開嗎？',
         buttons: [
           {
-            title: "取消",
+            title: '取消',
             handler: () => {
-              this.$modal.hide("dialog");
-              next(false);
-            },
+              this.$modal.hide('dialog')
+              next(false)
+            }
           },
           {
-            title: "確定",
+            title: '確定',
             handler: () => {
-              next();
-            },
-          },
-        ],
-      });
+              next()
+            }
+          }
+        ]
+      })
     } else {
-      next();
+      next()
     }
-  },
-};
+  }
+}
 </script>
