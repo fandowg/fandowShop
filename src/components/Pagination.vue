@@ -46,7 +46,6 @@
     </ul>
   </nav>
 </template>
-
 <script>
 export default {
   props: ['products', 'currentPage'],
@@ -56,12 +55,6 @@ export default {
       totalPage: 0
     }
   },
-  // watch: {
-  //   products() {
-  //     console.log(this.products);
-  //     this.createPage();
-  //   },
-  // },
   methods: {
     next () {
       if (this.currentPage !== this.totalPage - 1) {
@@ -74,18 +67,13 @@ export default {
       }
     },
     createPage (products) {
-      // 父元件呼叫子元件，非同步事件必須傳參數
-      // console.log(products, this.currentPage, this.pageItems, this.totalPage);
       const newProducts = []
       let pagArray = []
       const obKey = Object.keys(products)
-      // console.log(obKey);
       obKey.forEach((item, index) => {
         pagArray.push(products[item])
         if (index !== 0 && (index + 1) % this.pageItems === 0) {
           newProducts.push(pagArray)
-          // console.log(pagArray);
-          // console.log(index);
           pagArray = []
         }
         if (index + 1 === obKey.length && obKey.length % this.pageItems !== 0) {
@@ -93,13 +81,8 @@ export default {
         }
       })
       this.totalPage = newProducts.length
-      // console.log(newProducts, this.totalPage);
       this.$emit('products-by-page', newProducts)
     }
-  },
-  created () {},
-  mounted () {
-    // console.log(this);
   }
 }
 </script>

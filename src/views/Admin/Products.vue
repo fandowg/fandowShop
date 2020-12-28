@@ -35,7 +35,6 @@
 
           <div class="admin__item admin__title bag-md-4 bag-10">
             {{ item.title }}
-            <!-- {{item.video}} -->
           </div>
           <div class="admin__item bag-md bag-3">
             {{ item.category | categoryChangeCn }}
@@ -51,7 +50,10 @@
             <span v-else>未啟用</span>
           </div>
           <div class="admin__item bag-md bag-6 text-right-min-md">
-            <button class="btn btn-primary btn-sm" @click="openModal(false, item)">
+            <button
+              class="btn btn-primary btn-sm"
+              @click="openModal(false, item)"
+            >
               編輯
             </button>
           </div>
@@ -72,7 +74,6 @@
       :current-page.sync="currentPage"
       @products-by-page="products = $event"
     />
-    <!-- <Page :pagination="pagination" @get-pages="getProducts" /> -->
   </div>
 </template>
 <script>
@@ -83,7 +84,7 @@ export default {
     return {
       products: {},
       tempProduct: {},
-      // pagination: "",
+
       isNew: true,
       currentPage: 0
     }
@@ -95,26 +96,19 @@ export default {
   },
   methods: {
     getProducts (page = 1) {
-      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
       this.$store.commit('LOADING', true)
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products/all`
       this.$http.get(url).then((response) => {
         if (response.data.success) {
           this.products = response.data.products
-          // console.log({ ...this.products });
-          // this.pagination = response.data.pagination;
+
           this.$refs.page.createPage(response.data.products)
-          // this.createPage();
-          // console.log(this.pagination);
         }
         this.$store.commit('LOADING', false)
       })
     },
     deleteProduct (id, item) {
-      console.log(123)
-      console.log(this.$modal)
       this.$modal.show('dialog', {
-        // title: "The standard Lorem Ipsum passage",
         text: `確定要刪除<br>「${item.title}」嗎？`,
         buttons: [
           {
@@ -131,10 +125,14 @@ export default {
               this.$http.delete(url).then((response) => {
                 if (response.data.success) {
                   this.$bus.$emit('message:push', response.data.message)
-                  // console.log(response.data);
+
                   this.getProducts()
                 } else {
-                  this.$bus.$emit('message:push', response.data.message, 'text-danger')
+                  this.$bus.$emit(
+                    'message:push',
+                    response.data.message,
+                    'text-danger'
+                  )
                 }
                 this.$modal.hide('dialog')
                 this.$store.commit('LOADING', false)
@@ -149,7 +147,6 @@ export default {
         this.tempProduct = {
           is_enabled: 0,
           category: 'default'
-          //  imageUrl:'',
         }
         this.isNew = isNew
       } else {

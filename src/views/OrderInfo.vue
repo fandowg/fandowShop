@@ -36,7 +36,9 @@
         <div class="cart__total">
           <div class="cart__total__row" v-if="cart.total !== cart.final_total">
             <span class="cart__total__row__title">總額：</span>
-            <span class="cart__total__row__content"> {{ cart.total | currency }}</span>
+            <span class="cart__total__row__content">
+              {{ cart.total | currency }}</span
+            >
           </div>
           <div class="cart__total__row" v-if="cart.total !== cart.final_total">
             <span class="cart__total__row__title">折扣：</span>
@@ -94,7 +96,6 @@
             </ValidationProvider>
           </div>
         </div>
-
         <div class="form-group">
           <ValidationProvider
             name="email"
@@ -113,7 +114,6 @@
             <span class="text-danger" v-if="failed">{{ errors[0] }}</span>
           </ValidationProvider>
         </div>
-
         <div class="form-group-wrapper">
           <label for="address">收件人地址</label>
           <div class="form-row">
@@ -131,7 +131,11 @@
                   v-model="city"
                 >
                   <option :value="null" selected disabled>請選擇縣市</option>
-                  <option :value="item.name" v-for="item in postal" :key="item.name">
+                  <option
+                    :value="item.name"
+                    v-for="item in postal"
+                    :key="item.name"
+                  >
                     {{ item.name }}
                   </option>
                 </select>
@@ -152,7 +156,11 @@
                   v-model="area"
                 >
                   <option :value="{}" selected disabled>請選擇鄉政市區</option>
-                  <option :value="item" v-for="item in areaArray" :key="item.name">
+                  <option
+                    :value="item"
+                    v-for="item in areaArray"
+                    :key="item.name"
+                  >
                     {{ item.name }}
                   </option>
                 </select>
@@ -198,36 +206,24 @@
           </ValidationProvider>
         </div>
       </div>
-
       <div class="btn-wrapper-side">
         <router-link class="btn btn-outline-primary" to="/check-cart"
           >回購物車</router-link
         >
-
         <button class="btn btn-primary" @click="handleSubmit(createOrder)">
           建立訂單
         </button>
-        <!-- <router-link to="/order/payment" class="btn btn-primary"
-        >建立訂單</router-link
-      > -->
       </div>
     </ValidationObserver>
-    <!-- {{address}} -->
   </div>
 </template>
-
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import postal from '@/assets/postal.json'
 export default {
   data () {
     return {
-      user: {
-        // name: "",
-        // email: "",
-        // tel: "",
-        // address: "",
-      },
+      user: {},
       postal,
       city: null,
       area: {},
@@ -243,7 +239,6 @@ export default {
       })
       this.areaArray = currentArea ? currentArea.children : []
       this.area = {}
-      console.log(this.areaArray)
     },
     address (val) {
       this.user.address = val
@@ -261,7 +256,6 @@ export default {
         user: this.user,
         message: this.message
       }
-      // form.user.address=this.address;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`
       this.$store.commit('LOADING', true)
       this.$http.post(url, { data: form }).then((response) => {
@@ -288,7 +282,6 @@ export default {
     }
   },
   beforeRouteLeave (to, from, next) {
-    console.log(to, from, next)
     if (to.name !== 'Payment' && this.cart.carts.length !== 0) {
       this.$modal.show('dialog', {
         text: '您的訂單尚未完成，確定要離開嗎？',

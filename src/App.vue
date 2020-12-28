@@ -1,15 +1,12 @@
 <template>
   <div id="app">
-    <!-- <img src="@/assets/logo.svg" alt=""> -->
-    <Alert></Alert>
-    <loading
+    <Alert />
+    <Loading
       :active.sync="isLoading"
       color="#000"
       loader="spinner"
       background-color="#fff"
-    >
-      <!-- <template slot="before">讀取中</template> -->
-    </loading>
+    />
     <Navbar v-if="isShow" />
     <router-view />
     <Footer v-if="isShow" />
@@ -22,32 +19,25 @@
     /></a>
   </div>
 </template>
-
 <style lang="scss">
 @import "@/assets/scss/all";
 </style>
-
 <script>
+import Alert from './components/Alert.vue'
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
 export default {
   data () {
     return {
-      // isLoading: false,
       scrollPosition: 0,
       isShow: true
-      // toTop:false,
     }
   },
   watch: {
     $route: {
       immediate: true,
       handler (val) {
-        // console.log(val);
         const check = val.path.indexOf('admin')
-        // let regex = new RegExp("admin", "gi");
-        // let value = newVal.path;
-        // let result = value.match(regex);
         if (check !== -1) {
           this.isShow = false
         } else {
@@ -62,12 +52,7 @@ export default {
     }
   },
   methods: {
-    //  changeLoading(v) {
-    //   this.isLoading = v;
-
-    // },
     toTop () {
-      // console.log(123);
       let top = document.documentElement.scrollTop
       const toTop = setInterval(() => {
         document.documentElement.scrollTop = top -= 50
@@ -77,23 +62,16 @@ export default {
       }, 10)
     }
   },
-  created () {
-    // this.$bus.$on("changeLoading", (v) => {
-    //   this.changeLoading(v);
-    // });
-  },
   mounted () {
     window.addEventListener('scroll', () => {
       this.scrollPosition = window.pageYOffset
     })
     this.$store.dispatch('watchResize')
   },
-  beforeDestroy () {
-    // this.$bus.$off("changeLoading");
-  },
   components: {
     Navbar,
-    Footer
+    Footer,
+    Alert
   }
 }
 </script>

@@ -4,10 +4,6 @@
       <div class="product-top">
         <div class="bag-row no-gutters">
           <div class="bag-md-2 bag-4">
-            <!-- <div class="mobile-hide-md">
-              <img src="@/assets/images/product_top_sm.jpg" alt="" />
-            </div> -->
-
             <img src="@/assets/images/feature.jpg" alt="" />
           </div>
           <div class="bag-md-10 bag-8 product-top__content">
@@ -22,40 +18,11 @@
           </div>
         </div>
       </div>
-      <!-- <div class="desk-hide-md">
-              <img src="@/assets/images/product_top.jpg" alt="" />
-            </div> -->
-
-      <!-- <div class="product-top">
-         <div class="bag-md-7 product-top__content">
-        <div class="product-top__content">
-          <h2 class="product-top__title">領取折扣，一起加油</h2>
-          <p class="product-top__text">
-            結帳輸入 <span class="product-top__text__sp">needwater</span> , 全品項8折優惠
-          </p>
-        </div>
-         </div>
-      </div>
-      <img src="@/assets/images/product_top_sm.jpg" alt="" /> -->
     </div>
-    <!-- <div
-      class="product-top"
-      :style="{ backgroundImage: 'url(' + bgImg.img_1 + ')' }"
-    >
-      <div class="product-top__inner">
-        <h2 class="product-top__title">領取折扣，一起加油</h2>
-        <p class="product-top__text">結帳輸入 needwater</p>
-        <img src="@/assets/images/product_top.jpg" alt="" />
-      </div>
-    </div> -->
-    <!-- <h1>所有產品</h1> -->
     <div class="container-xl">
       <div class="menu-block">
         <div class="nav-menu" ref="navMenu">
           <ul class="nav-menu__box">
-            <!-- <li class="nav-menu__item" v-for="item in categories" :key="item">
-            <a class="nav-menu__link">{{item}}</a>
-          </li>  -->
             <li class="nav-menu__item">
               <router-link
                 class="nav-menu__link"
@@ -78,15 +45,6 @@
                 >{{ item | categoryChangeCn }}</router-link
               >
             </li>
-            <!-- <li class="nav-menu__item">
-              <a class="nav-menu__link">運動水瓶</a>
-            </li>
-            <li class="nav-menu__item">
-              <a class="nav-menu__link">兒童水瓶</a>
-            </li>
-            <li class="nav-menu__item">
-              <a class="nav-menu__link">不鏽鋼水瓶</a>
-            </li> -->
           </ul>
         </div>
         <div class="side-box">
@@ -95,7 +53,6 @@
             <option value="priceUp">價格高到低</option>
             <option value="priceDown">價格低到高</option>
           </select>
-
           <div class="search">
             <input
               type="text"
@@ -108,19 +65,6 @@
           </div>
         </div>
       </div>
-      <!-- <img src="@/assets/images/product_top_sm.jpg" alt="" /> -->
-      <!-- <div class="product-top">
-        <div class="bag-row no-gutters">
-          <div class="bag-md-8 bag-8 product-top__content">
-            <h2 class="product-top__title">所有水瓶</h2>
-            <p class="product-top__text">看看有那些你中意的好水瓶，陪你過個好節。</p>
-          </div>
-          <div class="bag-md-4 bag-4">
-
-            <img src="@/assets/images/product_top_sm.jpg" alt="" />
-          </div>
-        </div>
-      </div> -->
       <div class="product bag-row">
         <div
           v-for="item in productsByPage[currentPage]"
@@ -143,7 +87,6 @@
                 </div>
                 <div class="product__price">NT${{ item.price }}</div>
               </div>
-
               <button
                 class="product__addToCart btn btn-sm btn-primary"
                 @click.stop="addToCart(item.id, 1)"
@@ -160,11 +103,6 @@
         @products-by-page="getProductsByPage"
         :current-page.sync="currentPage"
       />
-      <!-- <Page
-        :pagination="pagination"
-        @get-pages="getProducts"
-        v-if="currentCategory === 'all'"
-      /> -->
     </div>
   </main>
 </template>
@@ -175,85 +113,33 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   data () {
     return {
-      // products: [],
-      // productsAll: [],
-      // categories: [],
       scrollPosition: 0,
-      // currentCategory: "",
-      // productsBySort: [],
       productsByPage: [],
-      // pagination: {},
       currentPage: 0,
       search: '',
       sort: '',
       isShow: false
-      // isScroll: false,
-      // cart: {},
     }
   },
   watch: {
     $route () {
-      // this.getCurrentCategory();
       this.scrollToRight()
     },
     search () {
       this.currentPage = 0
-      // this.changeSort();
     },
     currentCategory () {
-      // if (!this.sort) {
-      //   this.productsBySort = this.filterProducts;
-      // } else {
-      //   this.changeSort();
-      // }
       this.currentPage = 0
       this.itemShow()
-      //
-
-      // this.$refs.page.createPage(this.filterProducts);
     },
-    // productReady() {
-    //   // console.log("取得頁面");
-    //   // this.productsBySort = this.filterProducts;
-    //   this.$refs.page.createPage(this.filterProducts);
-    //   this.scrollToRight();
-    //   console.log('有座');
-    // },
     filterProducts (val) {
-      // console.log(val);
-      // if (!this.sort) {
-      //   this.productsBySort = this.filterProducts;
-      // }
-      // this.productsBySort = val;
-      // console.log(this.productsBySort);
-
       this.$refs.page.createPage(this.filterProducts)
-      // console.log("再取得頁面");
     },
-
-    // productsByPage(val) {
-    //   if (val.length!==0) {
-    //     this.scrollToRight();
-    //   }
-    // },
-    // sort() {
-
-    // },
-    // filterProducts() {
-    //   console.log(123);
-    //   this.$refs.page.createPage(this.filterProducts);
-    // },
     currentPage () {
       this.toTop()
       this.itemShow()
     },
-    // categories(){
-    //   // setTimeout( this.scrollToRight,0);
-
-    // },
     productsAll () {
-      console.log('我改變1')
-      // this.scrollToRight;
       setTimeout(this.scrollToRight, 0)
     }
   },
@@ -262,15 +148,11 @@ export default {
       return this.$route.params.category
     },
     filterProducts () {
-      // console.log("產生");
       if (this.currentCategory === 'all') {
-        // console.log(this.search);
         if (this.search === '') {
           if (this.sort === '') {
-            // console.log(this.productsAll);
             return this.productsAll
           } else {
-            // console.log(this.changeSort(this.productsAll));
             return this.changeSort(this.productsAll)
           }
         } else {
@@ -280,7 +162,6 @@ export default {
           } else {
             return this.changeSort(filter)
           }
-          // console.log(filter);
         }
       } else {
         const resault = this.productsAll.filter((item) => {
@@ -301,18 +182,9 @@ export default {
           }
         }
       }
-
-      // set(val) {
-      //   console.log(val);
-      //   this.productsBySort = val;
-      // },
     },
     ...mapGetters('productsModules', ['categories', 'productsAll']),
     ...mapGetters(['width'])
-
-    // cart() {
-    //   return this.$store.state.cart;
-    // },
   },
   methods: {
     itemShow () {
@@ -325,14 +197,12 @@ export default {
       this.productsByPage = products
     },
     changeSort (products) {
-      // console.log(456);
       this.currentPage = 0
       let newSort = []
       const newProducts = [...products]
       newSort = newProducts.sort((a, b) => {
         const aPrice = a.price ? a.price : a.origin_price
         const bPrice = b.price ? b.price : b.origin_price
-        // console.log(aPrice,bPrice);
         switch (this.sort) {
           case 'priceUp':
             return bPrice - aPrice
@@ -341,56 +211,14 @@ export default {
         }
       })
       return newSort
-      // switch (this.sort) {
-      //   case "priceUp":
-
-      //     // console.log(newSort);
-      //   // return newSort;
-      //   // this.productsBySort = newSort;
-      //   // this.$refs.page.createPage(this.productsBySort);
-      //   // this.$refs.page.createPage(this.products);
-      //   // break;
-      //   case "priceDown":
-      //     // if (newProducts.length) {
-      //     //   newSort = newProducts.sort((a, b) => {
-      //     //     const aPrice = a.price ? a.price : a.origin_price;
-      //     //     const bPrice = b.price ? b.price : b.origin_price;
-      //     //     // console.log(aPrice,bPrice);
-      //     //     return aPrice - bPrice;
-      //     //   });
-      //     // }
-      //     // return newSort;
-      //     // console.log(newSort);
-      //   // return newSort;
-      //   // this.productsBySort = newSort;
-      //   // this.$refs.page.createPage(this.productsBySort);
-      //   // this.$refs.page.createPage(this.products);
-      //   // break;
-      // }
     },
-    // getCurrentCategory() {
-    //   this.currentCategory = this.$route.params.category;
-    // },
     filterSearch (resault) {
       return resault.filter((item) => {
         return item.title.indexOf(this.search) !== -1
       })
     },
-    // getProducts(page = 1) {
-    //   this.$store.dispatch("updateLoading", true);
-    //   const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`;
-    //   this.$http.get(url).then((response) => {
-    //     this.products = response.data.products;
-    //     this.pagination = response.data.pagination;
-    //     this.$store.dispatch("updateLoading", false);
-
-    //     console.log(this.categories);
-    //   });
-    // },
-
     ...mapActions('productsModules', ['getProductsAll']),
     toProductItem (category, id) {
-      // console.log(this);
       this.$router.push({
         name: 'ProductItem',
         params: {
@@ -402,15 +230,6 @@ export default {
     addToCart (id, qty) {
       this.$store.dispatch('cartModules/addToCart', { id, qty })
     },
-    // getCart() {
-    //   this.$store.dispatch('getCart');
-
-    // },
-
-    // deleteCart(id) {
-    //   this.$store.dispatch('deleteCart', id);
-
-    // },
     toTop () {
       document.documentElement.scrollTop = 0
     },
@@ -424,8 +243,6 @@ export default {
         } else {
           this.$refs.navMenu.scrollLeft = 0
         }
-        console.log('有執行')
-        console.log(this.$refs.navMenu.scrollLeft)
       }
     }
   },
@@ -433,34 +250,7 @@ export default {
     Page
   },
   created () {
-    // console.log(process.env.VUE_APP_MAX_QTY);
-    // this.getCurrentCategory();
-    // this.getProducts();
     this.getProductsAll()
   }
-  // mounted() {
-  //   // if(!this.categories){
-  //   //   return;
-  //   // }
-
-  //   // console.log(this.$refs.navMenu);
-  //   // // this.scrollToRight;
-  //   // setTimeout( this.scrollToRight,0);
-  //   // // console.log(this.$refs.navMenu.scrollLeft);
-  //   // console.log("我改變2");
-  //   // // this.scrollToRight();
-  // },
-  // updated() {
-
-  //   // setTimeout( this.scrollToRight,0);
-  //   // this.isScroll=true;
-  //     // this.scrollToRight();
-  // },
-  // mounted() {
-  //   window.addEventListener("scroll", () => {
-  //     this.scrollPosition = window.pageYOffset;
-  //   });
-  //   console.log(this);
-  // },
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <NavbarAdmin />
     <main class="container-xl page page--pt">
       <router-view />

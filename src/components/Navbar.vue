@@ -1,10 +1,14 @@
 <template>
   <nav class="navbar" :class="{ 'bg-white': scrollPosition > 50 || checkHome }">
-    <button class="desk-hide-md button-none" @click.prevent="menuShow = !menuShow">
+    <button
+      class="desk-hide-md button-none"
+      @click.prevent="menuShow = !menuShow"
+    >
       <img src="@/assets/images/icon_bars.svg" alt="" />
     </button>
-    <router-link class="logo" to="/"><img src="@/assets/images/logo.svg" alt="" /></router-link>
-
+    <router-link class="logo" to="/"
+      ><img src="@/assets/images/logo.svg" alt=""
+    /></router-link>
     <div class="menu menu--left off-canvas" :class="{ active: menuShow }">
       <button
         class="close-position desk-hide-md button-none"
@@ -20,40 +24,52 @@
             @click.prevent="toggleDropdown"
             >購買水瓶 <i class="fas fa-chevron-down"></i
           ></a>
-          <div class="dropdown__box navbar-dropdown" :class="{ active: dropdownShow }">
-            <router-link @click.native="closeMenu()" class="dropdown__item" to="/product-list/all"
+          <div
+            class="dropdown__box navbar-dropdown"
+            :class="{ active: dropdownShow }"
+          >
+            <router-link
+              @click.native="closeMenu()"
+              class="dropdown__item"
+              to="/product-list/all"
               >所有水瓶</router-link
             >
-            <router-link @click.native="closeMenu()" class="dropdown__item" to="/product-list/straw"
+            <router-link
+              @click.native="closeMenu()"
+              class="dropdown__item"
+              to="/product-list/straw"
               >吸管水瓶</router-link
             >
-            <router-link @click.native="closeMenu()" class="dropdown__item" to="/product-list/sport"
+            <router-link
+              @click.native="closeMenu()"
+              class="dropdown__item"
+              to="/product-list/sport"
               >運動水瓶</router-link
             >
-            <router-link @click.native="closeMenu()" class="dropdown__item" to="/product-list/kid"
+            <router-link
+              @click.native="closeMenu()"
+              class="dropdown__item"
+              to="/product-list/kid"
               >兒童水瓶</router-link
             >
-            <router-link @click.native="closeMenu()" class="dropdown__item" to="/product-list/stainless-steel"
+            <router-link
+              @click.native="closeMenu()"
+              class="dropdown__item"
+              to="/product-list/stainless-steel"
               >不鏽鋼水瓶</router-link
             >
-            <!-- <a class="dropdown__item" href="">吸管水瓶</a>
-            <a class="dropdown__item" href="">運動水瓶</a>
-            <a class="dropdown__item" href="">兒童水瓶</a>
-            <a class="dropdown__item" href="">不鏽鋼水瓶</a> -->
           </div>
         </li>
         <li class="menu__item">
-          <router-link @click.native="closeMenu()" class="menu__link" to="/about">深入了解CAMELBAK</router-link>
-
-          <!-- <li class="menu__item">
-          <router-link class="menu__link" to="/check-cart"
-            >前往購物</router-link
+          <router-link
+            @click.native="closeMenu()"
+            class="menu__link"
+            to="/about"
+            >深入了解CAMELBAK</router-link
           >
-        </li> -->
         </li>
       </ul>
     </div>
-
     <ul class="menu__list menu__list--mobile-top">
       <li class="menu__item">
         <router-link class="menu__link" to="/admin"
@@ -63,7 +79,9 @@
       <li class="dropdown menu__item" ref="closeCart">
         <a href="" @click.prevent="toggleCart" class="menu__link dropdown__btn"
           ><i class="fas fa-shopping-cart"></i
-          ><span class="cart-qty-icon" v-if="cartLength > 0">{{ cartLength }}</span>
+          ><span class="cart-qty-icon" v-if="cartLength > 0">{{
+            cartLength
+          }}</span>
         </a>
         <div
           class="dropdown__box dropdown__box--right no-padding"
@@ -91,7 +109,6 @@
                       >{{ item.qty }} {{ item.product.unit }}</span
                     >
                   </div>
-
                   <div class="cart__item bag-2 cart__price">
                     {{ item.final_total | currency }}
                   </div>
@@ -111,7 +128,9 @@
           </div>
           <div class="box-default" v-else>
             <p>購物車是空的喔，趕快來選購吧</p>
-            <router-link class="btn btn-primary" to="/product-list">前往購物</router-link>
+            <router-link class="btn btn-primary" to="/product-list"
+              >前往購物</router-link
+            >
           </div>
         </div>
       </li>
@@ -126,16 +145,13 @@ export default {
       menuShow: false,
       dropdownShow: false,
       cartShow: false,
-      // changeNavBg: false,
       scrollPosition: 0
-      // width: 0,
     }
   },
   watch: {
     $route: function () {
       this.menuShow = false
       this.mobileOpenDropdown()
-      // this.dropdownShow = false;
       this.cartShow = false
     },
     width () {
@@ -157,10 +173,8 @@ export default {
     ...mapGetters('cartModules', ['cart']),
     ...mapGetters(['width'])
   },
-
   methods: {
     toggleDropdown () {
-      // e.stopPropagation();
       this.dropdownShow = !this.dropdownShow
       if (this.dropdownShow === true) {
         document.addEventListener('click', this.closeBlankDropdown)
@@ -169,7 +183,6 @@ export default {
       }
     },
     toggleCart () {
-      // e.stopPropagation();
       this.cartShow = !this.cartShow
       if (this.cartShow === true) {
         document.addEventListener('click', this.closeBlankCart)
@@ -178,27 +191,21 @@ export default {
       }
     },
     closeBlankDropdown (e) {
-      // console.log(this.$refs.closeDropdown);
       if (!this.$refs.closeDropdown.contains(e.target)) {
         this.dropdownShow = false
         document.removeEventListener('click', this.closeBlankDropdown)
       }
     },
     closeBlankCart (e) {
-      // console.log(this.$refs.closeCart);
       if (!this.$refs.closeCart.contains(e.target)) {
         this.cartShow = false
         document.removeEventListener('click', this.closeBlankCart)
       }
     },
-    // deleteCart(id) {
-    //   this.$store.dispatch('deleteCart',id);
-    // },
     ...mapActions('cartModules', ['getCart', 'deleteCart']),
     mobileOpenDropdown () {
       if (this.width < 768) {
         this.dropdownShow = true
-        // console.log(this.dropdownShow);
       } else {
         this.dropdownShow = false
       }
@@ -210,23 +217,11 @@ export default {
   },
   created () {
     this.getCart()
-    // console.log(this.cart);
   },
   mounted () {
     this.mobileOpenDropdown()
-    // this.width = window.innerWidth;
-    // console.log(this.Width);
-    // window.onresize = () => {
-    //   console.log(123);
-    //   this.width = window.innerWidth;
-    //   console.log(this.Width);
-    //   // this.Height = window.innerHeight;
-    // };
-    // this.mobileOpenDropdown();
     window.addEventListener('scroll', () => {
       this.scrollPosition = window.pageYOffset
-      // console.log(this.scrollPosition>50);
-      // console.log(document.documentElement.scrollTop,window.pageYOffset);
     })
   }
 }

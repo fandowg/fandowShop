@@ -7,12 +7,14 @@
       :temp-coupon="tempCoupon"
       :today="today"
     />
-    <!-- <Confirm :text="text"></Confirm> -->
+
     <v-dialog />
-    <!-- <modal>456456</modal> -->
+
     <div class="menu-block menu-block--inline">
       <h1 class="page__title">優惠券列表</h1>
-      <button class="btn btn-primary" @click="openModal(true)">新增優惠券</button>
+      <button class="btn btn-primary" @click="openModal(true)">
+        新增優惠券
+      </button>
     </div>
     <div class="admin">
       <div class="admin__head bag-row no-gutters">
@@ -24,7 +26,11 @@
         <div class="admin__item bag-md text-right">刪除</div>
       </div>
       <div class="admin__list">
-        <div class="admin__row bag-row no-gutters" v-for="item in coupons" :key="item.id">
+        <div
+          class="admin__row bag-row no-gutters"
+          v-for="item in coupons"
+          :key="item.id"
+        >
           <div class="admin__item admin__title bag-md-4 bag-12">
             {{ item.title }}
           </div>
@@ -39,7 +45,10 @@
             <span v-else>未啟用</span>
           </div>
           <div class="admin__item bag-md bag-6 text-right-min-md">
-            <button class="btn btn-primary btn-sm" @click="openModal(false, item)">
+            <button
+              class="btn btn-primary btn-sm"
+              @click="openModal(false, item)"
+            >
               編輯
             </button>
           </div>
@@ -61,7 +70,7 @@
 <script>
 import EditCoupons from './EditCoupons'
 import PageApi from '@/components/PaginationApi.vue'
-// import Confirm from "../components/confirm.vue";
+
 export default {
   data () {
     return {
@@ -92,7 +101,6 @@ export default {
     },
     deleteCoupon (id, item) {
       this.$modal.show('dialog', {
-        // title: "The standard Lorem Ipsum passage",
         text: `確定要刪除<br>「${item.title}」嗎？`,
         buttons: [
           {
@@ -111,7 +119,11 @@ export default {
                   this.getCoupons()
                   this.$bus.$emit('message:push', response.data.message)
                 } else {
-                  this.$bus.$emit('message:push', response.data.message, 'text-danger')
+                  this.$bus.$emit(
+                    'message:push',
+                    response.data.message,
+                    'text-danger'
+                  )
                 }
                 this.$modal.hide('dialog')
                 this.$store.commit('LOADING', false)
@@ -120,12 +132,6 @@ export default {
           }
         ]
       })
-      // this.$modal.show(
-      //   Confirm,
-      //   { text: "確定要刪除嗎？" },
-      //   // { height: "auto" },
-      //   { "before-close": (event) => {} }
-      // );
     },
     openModal (isNew, item) {
       this.$modal.show('editCoupons')
@@ -141,7 +147,6 @@ export default {
         this.tempCoupon = item
         this.isNew = isNew
       }
-      //  this.$refs.editCoupons.sendStatus();
     },
     closeModal () {
       this.$modal.hide('editCoupons')
@@ -153,7 +158,6 @@ export default {
   components: {
     EditCoupons,
     PageApi
-    // Confirm,
   },
   created () {
     this.getCoupons()

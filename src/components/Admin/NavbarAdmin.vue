@@ -1,10 +1,12 @@
 <template>
   <nav class="navbar bg-white">
-    <button class="desk-hide-md button-none" @click.prevent="menuShow = !menuShow">
+    <button
+      class="desk-hide-md button-none"
+      @click.prevent="menuShow = !menuShow"
+    >
       <img src="@/assets/images/icon_bars.svg" alt="" />
     </button>
     <a href="" class="logo"><img src="@/assets/images/logo.svg" alt="" /></a>
-
     <div class="menu menu--left off-canvas" :class="{ active: menuShow }">
       <button
         class="close-position desk-hide-md button-none"
@@ -14,20 +16,27 @@
       </button>
       <ul class="menu__list">
         <li class="menu__item">
-          <router-link class="menu__link" to="/admin/products">產品管理</router-link>
+          <router-link class="menu__link" to="/admin/products"
+            >產品管理</router-link
+          >
         </li>
         <li class="menu__item">
-          <router-link class="menu__link" to="/admin/coupons">優惠券管理</router-link>
+          <router-link class="menu__link" to="/admin/coupons"
+            >優惠券管理</router-link
+          >
         </li>
         <li class="menu__item">
-          <router-link class="menu__link" to="/admin/orderlist">訂單列表</router-link>
+          <router-link class="menu__link" to="/admin/orderlist"
+            >訂單列表</router-link
+          >
         </li>
         <li class="menu__item">
-          <router-link class="menu__link" to="/product-list">進入商城</router-link>
+          <router-link class="menu__link" to="/product-list"
+            >進入商城</router-link
+          >
         </li>
       </ul>
     </div>
-
     <ul class="menu__list menu__list--mobile-top">
       <li class="menu__item">
         <button class="menu__link" @click="logOut">
@@ -55,7 +64,6 @@ export default {
       this.$store.commit('LOADING', true)
       this.$http.post(url).then((response) => {
         if (response.data.success) {
-          // console.log(response.data);
           this.$bus.$emit('message:push', response.data.message)
           this.$router.push('/')
         }

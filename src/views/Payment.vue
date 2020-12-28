@@ -2,7 +2,9 @@
   <div>
     <v-dialog />
     <div class="alert-box" v-if="routeName === 'OrderDone'">
-      <h1 class="page__title"><i class="far fa-check-circle"></i>感謝你的購買</h1>
+      <h1 class="page__title">
+        <i class="far fa-check-circle"></i>感謝你的購買
+      </h1>
       <p>
         親愛的顧客您好，您已付款成功，商品將於2日內送達，若喜歡我們的商品，歡迎關注我們的最新消息喔。
       </p>
@@ -40,18 +42,6 @@
       </div>
       <div class="cart__bottom">
         <div class="cart__total">
-          <!-- <div class="cart__total__row" v-if="cart.total !== cart.final_total">
-            <span class="cart__total__row__title">總額：</span>
-            <span class="cart__total__row__content">
-              {{ cart.total | currency }}</span
-            >
-          </div>
-          <div class="cart__total__row" v-if="cart.total !== cart.final_total">
-            <span class="cart__total__row__title">折扣：</span>
-            <span class="cart__total__row__content text-success">
-              {{ (cart.total - cart.final_total) | currency }}
-            </span>
-          </div> -->
           <div class="cart__total__row">
             <span class="cart__total__row__title">總額：</span>
             <span class="cart__total__row__content text-danger">
@@ -62,7 +52,6 @@
       </div>
     </div>
     <h2 class="page__title--sm">訂購人資訊</h2>
-
     <div class="order-detail">
       <div class="order-detail__row">
         <div class="order-detail__title">姓名</div>
@@ -94,9 +83,12 @@
         </div>
       </div>
     </div>
-
     <div class="btn-wrapper-side">
-      <button class="btn btn-primary" @click="payOrder" v-if="routeName === 'Payment'">
+      <button
+        class="btn btn-primary"
+        @click="payOrder"
+        v-if="routeName === 'Payment'"
+      >
         確認付款
       </button>
       <router-link
@@ -108,20 +100,13 @@
     </div>
   </div>
 </template>
-
 <script>
 import { mapGetters, mapActions } from 'vuex'
 export default {
   data () {
     return {
       order: {
-        user: {
-          // name:'',
-          // email:'',
-          // tel:'',
-          // address:'',
-        }
-        // message:'',
+        user: {}
       }
     }
   },
@@ -136,11 +121,9 @@ export default {
   },
   methods: {
     getOrder () {
-      // const order_id = this.$route.params.id;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${this.orderId}`
       this.$store.commit('LOADING', true)
       this.$http.get(url).then((response) => {
-        console.log(response.data)
         if (response.data.success) {
           this.order = response.data.order
           if (response.data.order === null) {
@@ -148,7 +131,6 @@ export default {
           }
         }
         this.$store.commit('LOADING', false)
-        // console.log(response.data);
       })
     },
     payOrder () {
@@ -157,8 +139,6 @@ export default {
       this.$http.post(url).then((response) => {
         if (response.data.success) {
           this.$bus.$emit('message:push', response.data.message)
-          // console.log(response.data);
-          // this.getOrder();
           this.getOrder()
           this.$router.push({
             name: 'OrderDone',
@@ -176,13 +156,16 @@ export default {
     this.getOrder()
   },
   beforeRouteLeave (to, from, next) {
-    console.log(to, from, next)
     if (from.name === 'OrderDone' && to.name === 'Payment') {
       next({
         path: '/'
       })
     }
-    if (to.name !== 'OrderDone' && from.name !== 'OrderDone' && !this.order.is_paid) {
+    if (
+      to.name !== 'OrderDone' &&
+      from.name !== 'OrderDone' &&
+      !this.order.is_paid
+    ) {
       this.$modal.show('dialog', {
         text: '您尚未付款，確定要離開嗎？',
         buttons: [

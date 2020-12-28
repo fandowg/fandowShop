@@ -105,10 +105,10 @@
             </div>
           </div>
 
-          <!-- <button @click="updateProduct">送出</button> -->
-
           <div class="btn-wrapper-side">
-            <button class="btn btn-outline-primary" @click="$emit('close')">取消</button>
+            <button class="btn btn-outline-primary" @click="$emit('close')">
+              取消
+            </button>
             <button class="btn btn-primary" @click="handleSubmit(updateCoupon)">
               送出
             </button>
@@ -120,7 +120,6 @@
 </template>
 
 <script>
-// 需要傳送三個東西  isNew  tempCoupon  today的 due_date_model ,執行端應該要在外層，內層純粹接受isNew  tempCoupon  today的 due_date_model的資料
 export default {
   props: ['isNew', 'tempCoupon', 'today'],
   data () {
@@ -131,27 +130,17 @@ export default {
   },
   watch: {
     due_date_model () {
-      // Math.floor(new Date(日期)) 把日期轉成timestamp，input date取得的時間格式為xxxx-xx-xx，要先轉成正式的格式才能轉成timestamp
       this.editTemp.due_date = Math.floor(new Date(this.due_date_model)) / 1000
-      console.log(this.editTemp.due_date)
-      // console.log(new Date(this.due_date_model));
-      // 測試git
-      // 測試git2
-      // 測試git3
     },
     tempCoupon () {
-      // let today = new Date().toISOString().split("T")[0];
       if (this.isNew) {
         this.editTemp = { ...this.tempCoupon }
         this.due_date_model = this.today
-        // 若編輯時項目的到期日是今天，due_date_model不會watch，所以這邊強制再寫入一次
+
         this.editTemp.due_date = Math.floor(new Date(this.today)) / 1000
       } else {
         this.editTemp = Object.assign({}, this.tempCoupon)
-        // if (!this.tempCoupon.due_date) {
-        //   this.due_date_model = today;
-        //   return;
-        // }
+
         this.due_date_model = new Date(this.editTemp.due_date * 1000)
           .toISOString()
           .split('T')[0]
@@ -159,27 +148,6 @@ export default {
     }
   },
   methods: {
-    // sendStatus(){
-    //   console.log(123);
-    //   let today = new Date().toISOString().split("T")[0];
-    //   console.log(this.isNew);
-    //   if (this.isNew) {
-
-    //     this.editTemp = Object.assign({}, this.tempCoupon);
-
-    //     this.due_date_model = today;
-    //   } else {
-    //     this.editTemp = Object.assign({}, this.tempCoupon);
-
-    //     // if (!this.tempCoupon.due_date) {
-    //     //   this.due_date_model = today;
-    //     //   return;
-    //     // }
-    //     this.due_date_model = new Date(this.editTemp.due_date * 1000)
-    //       .toISOString()
-    //       .split("T")[0];
-    //   }
-    // },
     updateCoupon () {
       if (this.isNew) {
         this.$store.commit('LOADING', true)
@@ -194,7 +162,6 @@ export default {
         })
       } else {
         if (JSON.stringify(this.editTemp) === JSON.stringify(this.tempCoupon)) {
-          // this.$bus.$emit("message:push", "資料無變更");
           this.$emit('close')
           return
         }
@@ -210,7 +177,6 @@ export default {
         })
       }
     }
-  },
-  created () {}
+  }
 }
 </script>

@@ -31,7 +31,6 @@
           </div>
         </div>
       </swiper-slide>
-
       <div class="swiper-button-prev" slot="button-prev">
         <img src="@/assets/images/prev.svg" alt="" />
       </div>
@@ -94,7 +93,6 @@
           </div>
           <div class="category__content">
             <h3>吸管水瓶</h3>
-            <!-- <span class="sub-title"> EVERYDAY BOTTLE </span> -->
             <p>
               專利吸管咬嘴設計，咬嘴可自動閉合，即使不小心打翻也不溢漏，幫助你補充一整天水分。
             </p>
@@ -109,7 +107,6 @@
           </div>
           <div class="feature__content">
             <h3>運動水瓶</h3>
-            <!-- <span class="sub-title"> SPORT BOTTLE </span> -->
             <p>
               專為跑步或單車等高強度運動設計，讓運動員可以在不需停止的狀況下持續補水。
             </p>
@@ -124,7 +121,6 @@
           </div>
           <div class="feature__content">
             <h3>兒童水瓶</h3>
-            <!-- <span class="sub-title">EVERYDAY KIDS BOTTLE</span> -->
             <p>
               針對 1-8
               歲孩童所設計，有效訓練小朋友自己喝水的習慣，減少飲料的攝取，輕咬即飲直覺式飲水模式。
@@ -140,7 +136,6 @@
           </div>
           <div class="feature__content">
             <h3>不鏽鋼水瓶</h3>
-            <!-- <span class="sub-title">EVERYDAY DRINKWARE</span> -->
             <p>
               採用18/8
               不鏽鋼製成，真空保冰保溫，瓶身不冒汗，保養清洗簡單容易，瓶蓋可放置於洗碗機做清洗。
@@ -152,13 +147,11 @@
         </div>
       </div>
     </section>
-
     <section class="section container-xl">
       <div class="bag-row feature">
         <div class="bag-lg-6 feature__item" v-scrollanimate>
           <div class="bag-row">
             <div class="bag-xl-6 bag-sm-4 feature__img img-small-md">
-              <!-- <img src="@/assets/images/feature.jpg" alt="" /> -->
               <img src="@/assets/images/feature.jpg" alt="" />
             </div>
             <div class="bag-lg-6 bag-sm-8 feature__content">
@@ -230,7 +223,6 @@
     </section>
   </main>
 </template>
-
 <script>
 import { mapGetters, mapActions } from 'vuex'
 export default {
@@ -249,18 +241,8 @@ export default {
           require('@/assets/images/top_2_m.jpg')
         ]
       },
-      // bgImgM: [
-      //   require("@/assets/images/top_1_m.jpg"),
-      //   require("@/assets/images/top_2_m.jpg"),
-      // ],
-      // width: 0,
-      // Height: 0,
       swiperOptions: {
         loop: true,
-        // autoplay: {
-        //   delay: 5000,
-        //   disableOnInteraction: false,
-        // },
         speed: 800,
         navigation: {
           nextEl: '.swiper-button-next',
@@ -270,7 +252,6 @@ export default {
           el: '.swiper-pagination',
           clickable: true
         }
-        // Some Swiper option/callback...
       }
     }
   },
@@ -293,7 +274,6 @@ export default {
       this.$store.dispatch('cartModules/addToCart', { id, qty })
     },
     toProductItem (category, id) {
-      // console.log(this);
       this.$router.push({
         name: 'ProductItem',
         params: {
@@ -310,7 +290,6 @@ export default {
       }
     },
     ...mapActions('productsModules', ['getProductsAll']),
-
     getTop (e) {
       var offset = e.offsetTop
       if (e.offsetParent != null) {
@@ -323,34 +302,7 @@ export default {
     this.getProductsAll()
   },
   mounted () {
-    // console.log(this);
-    // this.width = window.innerWidth;
-    // console.log(this.Width);
-
-    // window.onresize = () => {
-    //   this.Width = window.innerWidth;
-    //   // this.Height = window.innerHeight;
-    // };
     this.changeDevice()
-    // window.addEventListener("scroll", () => {
-    //   console.log(this.$refs.test.getBoundingClientRect().top);
-    //   console.log(this.getTop(this.$refs.test));
-    //   console.log(this.$refs.test.offsetTop);
-    //   console.log(document.documentElement.scrollTop);
-    //   console.log(window.pageYOffset);
-    // });
-    // console.log(this.bgImg[this.device][0]);
-
-    // //不知為何mounted後的值少100多，除非有事件或者是資料讀完才正常
-    //     console.log(this.getTop(this.$refs.test));
-    // window.addEventListener("scroll", () => {
-    //   console.log(this.getTop(this.$refs.test));
-    //   console.log(this.$refs.test.offsetTop);
-    //   console.log(this.$refs.test.scrollTop);
-
-    //   // console.log(this.scrollPosition>50);
-    //   // console.log(document.documentElement.scrollTop,window.pageYOffset);
-    // });
   }
 }
 </script>

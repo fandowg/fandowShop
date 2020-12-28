@@ -10,13 +10,10 @@
       <button class="close-position button-none" @click="deleteMessage(key)">
         <img src="@/assets/images/icon_close.svg" alt="" />
       </button>
-      <!-- <button @click="deleteMessage(key)">close</button> -->
     </div>
   </div>
 </template>
-
 <script>
-// import {EventBus} from '@/bus'
 export default {
   data () {
     return {
@@ -26,7 +23,6 @@ export default {
   methods: {
     updateMessage (message, status) {
       const timestamp = Math.floor(new Date() / 1000)
-      console.log('有觸發')
       this.message.push({
         message,
         status,
@@ -49,7 +45,6 @@ export default {
   created () {
     this.$bus.$on('message:push', (message, status = 'text-success') => {
       this.updateMessage(message, status)
-      // console.log("發送訊息");
     })
   },
   beforeDestroy () {

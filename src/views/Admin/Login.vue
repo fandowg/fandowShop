@@ -51,7 +51,6 @@
 </template>
 
 <script>
-// import { EventBus } from "@/bus";
 export default {
   data () {
     return {
@@ -62,16 +61,13 @@ export default {
     }
   },
   methods: {
-    // input加上id，才會自動填入
     signIn () {
-      // console.log(EventBus);
       const url = `${process.env.VUE_APP_APIPATH}/admin/signin`
       this.$store.commit('LOADING', true)
       this.$http.post(url, this.user).then((response) => {
-        console.log(response.data)
         if (response.data.success) {
           this.$bus.$emit('message:push', response.data.message)
-          // this.$emit("close");
+
           this.$router.push('/admin')
         } else {
           this.$bus.$emit('message:push', response.data.message, 'text-danger')

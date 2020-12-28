@@ -1,5 +1,5 @@
 import Vue from 'vue'
-// import '@/bus'
+
 import axios from 'axios'
 export default {
   strict: true,
@@ -7,7 +7,7 @@ export default {
   state: {
     productsAll: [],
     categories: []
-    // productReady: false,
+
   },
   actions: {
 
@@ -18,7 +18,6 @@ export default {
         if (response.data.success) {
           context.commit('PRODUCTSALL', response.data.products)
           context.commit('CATEGORIES', response.data.products)
-          // context.commit('PRODUCTREADY', true);
         } else {
           Vue.prototype.$bus.$emit('message:push', '取得資料錯誤', 'text-danger')
         }
@@ -27,9 +26,7 @@ export default {
     }
   },
   mutations: {
-    // PRODUCTREADY(state, payload) {
-    //   state.productReady = payload;
-    // },
+
     PRODUCTSALL (state, payload) {
       state.productsAll = payload
     },
@@ -40,9 +37,7 @@ export default {
     }
   },
   getters: {
-    // productReady(state) {
-    //   return state.productReady;
-    // },
+
     categories (state) {
       return state.categories
     },

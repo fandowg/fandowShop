@@ -248,16 +248,14 @@
     }
 
   }
-  &__side{
-    
-  }
+  &__side {}
 
   &__link {
     font-size: $h3-font-size;
     color: #fff;
-  
-      margin-left: $spacer-sm;
-    
+
+    margin-left: $spacer-sm;
+
     &:hover {
       color: $gray-400;
     }
@@ -265,8 +263,8 @@
   &__word {
     display: inline-block;
     @include min(md) {
-      & + .footer__word {
-      padding-left: $spacer;
+      &+.footer__word {
+        padding-left: $spacer;
       }
     }
     @include max(md) {
@@ -915,7 +913,7 @@
   scrollbar-width: none;
   margin-bottom: $spacer;
   -webkit-overflow-scrolling: touch;
-  -ms-overflow-style:none;
+  -ms-overflow-style: none;
   @include max(md) {
     margin-bottom: $spacer-bg;
   }

@@ -19,31 +19,31 @@
         <div class="edit">
           <div class="edit__item form-group">
             <label>輸入圖片網址</label>
-            <input type="text" class="form-control" v-model="editTemp.imageUrl" />
+            <input
+              type="text"
+              class="form-control"
+              v-model="editTemp.imageUrl"
+            />
           </div>
           <div class="edit__row form-row">
             <div class="edit__item bag-md-9 form-group">
               <label style="margin-right: 1rem"
                 >或上傳圖片
-                <i class="fas fa-circle-notch fa-spin" v-if="loadStatus.upLoadImage"></i
+                <i
+                  class="fas fa-circle-notch fa-spin"
+                  v-if="loadStatus.upLoadImage"
+                ></i
               ></label>
 
               <input type="file" ref="upImage" @change="upLoadImage" />
             </div>
-            <div v-if="editTemp.imageUrl" class="edit__item bag-md-3 bag-6 form-group">
+            <div
+              v-if="editTemp.imageUrl"
+              class="edit__item bag-md-3 bag-6 form-group"
+            >
               <img :src="editTemp.imageUrl" alt />
             </div>
           </div>
-          <!-- <div class="edit__row">
-          <div class="one">
-            <ValidationProvider name="email" rules="required|email" v-slot="{failed, errors }">
-              <label for>產品名稱</label>
-              <input type="text" id="title" placeholder="請輸入產品名稱" v-model="editTemp.title" />
-
-              <span class="text-danger" v-if="failed">{{errors[0]}}</span>
-            </ValidationProvider>
-          </div>
-         </div> -->
 
           <div class="edit__item form-group">
             <ValidationProvider
@@ -83,13 +83,7 @@
                     {{ item | categoryChangeCn }}
                   </option>
                 </select>
-                <!-- <input
-                  type="text"
-                  class="form-control"
-                  id="category"
-                  placeholder="請輸入分類"
-                  v-model="editTemp.category"
-                /> -->
+
                 <span class="text-danger" v-if="failed">{{ errors[0] }}</span>
               </ValidationProvider>
             </div>
@@ -163,9 +157,6 @@
                 v-model="editTemp.content"
               ></textarea>
             </div>
-            <!-- <div class="one">
-            <input type="text" v-model="editTemp.video">
-          </div> -->
           </div>
           <div class="edit__row form-row">
             <div class="edit__item bag-6 form-group">
@@ -178,7 +169,9 @@
                   :true-value="1"
                   :false-value="0"
                 />
-                <label class="form-check-label" for="is_enabled">是否啟用</label>
+                <label class="form-check-label" for="is_enabled"
+                  >是否啟用</label
+                >
               </div>
             </div>
             <div class="edit__item bag-6 form-group">
@@ -191,14 +184,21 @@
                   :true-value="1"
                   :false-value="0"
                 />
-                <label class="form-check-label" for="hotProducts">是否熱銷</label>
+                <label class="form-check-label" for="hotProducts"
+                  >是否熱銷</label
+                >
               </div>
             </div>
           </div>
           <!-- <button @click="updateProduct">送出</button> -->
           <div class="btn-wrapper-side">
-            <button class="btn btn-outline-primary" @click="$emit('close')">取消</button>
-            <button class="btn btn-primary" @click="handleSubmit(updateProduct)">
+            <button class="btn btn-outline-primary" @click="$emit('close')">
+              取消
+            </button>
+            <button
+              class="btn btn-primary"
+              @click="handleSubmit(updateProduct)"
+            >
               送出
             </button>
           </div>
@@ -243,9 +243,9 @@ export default {
           this.$store.commit('LOADING', false)
         })
       } else {
-        // console.log(JSON.stringify(this.editTemp), JSON.stringify(this.tempCoupon));
-        if (JSON.stringify(this.editTemp) === JSON.stringify(this.tempProduct)) {
-          // this.$bus.$emit("message:push", "資料無變更");
+        if (
+          JSON.stringify(this.editTemp) === JSON.stringify(this.tempProduct)
+        ) {
           this.$emit('close')
           return
         }
@@ -254,7 +254,7 @@ export default {
         this.$http.put(url, { data: this.editTemp }).then((response) => {
           if (response.data.success) {
             this.$bus.$emit('message:push', response.data.message)
-            // console.log(response.data);
+
             this.$emit('get-products')
           }
           this.$emit('close')
@@ -263,7 +263,6 @@ export default {
       }
     },
     upLoadImage () {
-      console.log(this)
       const image = this.$refs.upImage.files[0]
       const formData = new FormData()
       formData.append('file-to-upload', image)
@@ -276,20 +275,18 @@ export default {
           }
         })
         .then((response) => {
-          // console.log(this.editTemp);
           if (response.data.success) {
             this.$set(this.editTemp, 'imageUrl', response.data.imageUrl)
-            // this.tempProduct.imageUrl=response.data.imageUrl;
           } else {
-            this.$bus.$emit('message:push', response.data.message, 'text-danger')
+            this.$bus.$emit(
+              'message:push',
+              response.data.message,
+              'text-danger'
+            )
           }
           this.loadStatus.upLoadImage = false
         })
     }
-  },
-  created () {},
-  mounted () {
-    // console.log(category);
   }
 }
 </script>

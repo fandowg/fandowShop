@@ -41,12 +41,11 @@
             <span class="price">{{ item.total }}</span>
           </div>
           <div class="admin__item bag-md bag-6 text-right">
-            <span v-if="item.is_paid === true" class="text-success">已付款</span>
+            <span v-if="item.is_paid === true" class="text-success"
+              >已付款</span
+            >
             <span v-else class="text-danger">尚未付款</span>
           </div>
-          <!-- <div class="one">
-          <button @click="openModal(false,item)">編輯</button>
-        </div> -->
         </div>
       </div>
     </div>
@@ -75,7 +74,6 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`
       this.$http.get(url).then((response) => {
         if (response.data.success) {
-          // console.log(response.data);
           this.orderlist = response.data.orders
           this.pagination = response.data.pagination
         }

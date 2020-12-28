@@ -17,7 +17,7 @@ const routes = [
   },
   {
     path: '/product-list',
-    // name: 'ProductList',
+
     component: () => import('@/views/ProductList'),
     children: [
 
@@ -31,11 +31,7 @@ const routes = [
         name: 'ProductListCategory',
         component: () => import('@/views/ProductList')
       }
-      // 不知為何重導向放到children第一個就會出錯
-    // {
-    //   path: '*',
-    //   redirect:'/product-list/all/',
-    // },
+
     ]
   },
   {
@@ -48,11 +44,7 @@ const routes = [
     name: 'Login',
     component: () => import('@/views/Admin/Login.vue')
   },
-  // {
-  //   path: '/shopping-list',
-  //   name: 'ShoppingList',
-  //   component: () => import('@/views/ShoppingList.vue')
-  // },
+
   {
     path: '/check-cart',
     name: 'CheckCart',
@@ -60,7 +52,7 @@ const routes = [
   },
   {
     path: '/order',
-    // name: 'Order',
+
     component: () => import('@/views/Order.vue'),
     children: [
       {
@@ -145,8 +137,6 @@ router.beforeEach((to, from, next) => {
       }
     })
   } else {
-    // Vue.prototype.$bus.$emit('message:push',103);
-    // console.log('換頁了');
     next()
   }
 })

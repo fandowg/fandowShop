@@ -19,13 +19,8 @@ export default new Vuex.Store({
       context.commit('LOADING', payload)
     },
     watchResize (context) {
-      console.log('有動作')
       window.onresize = () => {
-        // console.log(window);
-        // console.log(Vue.prototype);
-        // this.width = window.innerWidth;
         context.commit('WIDTH', window.innerWidth)
-        // this.Height = window.innerHeight;
       }
     }
 

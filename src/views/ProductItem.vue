@@ -5,14 +5,14 @@
         <li class="breadcrumb__item">
           <router-link to="/"><i class="fas fa-home"></i></router-link>
         </li>
-
         <li class="breadcrumb__item">
           <router-link to="/product-list">購買水瓶</router-link>
         </li>
         <li class="breadcrumb__item">
-          <router-link :to="{ name: 'ProductListCategory', params: { category } }">{{
-            category | categoryChangeCn
-          }}</router-link>
+          <router-link
+            :to="{ name: 'ProductListCategory', params: { category } }"
+            >{{ category | categoryChangeCn }}</router-link
+          >
         </li>
         <li class="breadcrumb__item active" aria-current="page">
           {{ product.title }}
@@ -25,13 +25,16 @@
           <img :src="product.imageUrl" :alt="product.title" />
         </div>
         <div class="bag-md-7 detail__info">
-          <span class="detail__category">{{ product.category | categoryChangeCn }}</span>
+          <span class="detail__category">{{
+            product.category | categoryChangeCn
+          }}</span>
           <h1 class="detail__title">{{ product.title }}</h1>
           <h2 class="detail__title__sm">產品特色</h2>
           <p>{{ product.description }}</p>
-          <span class="product__origin_price"> NT${{ product.origin_price }} </span>
+          <span class="product__origin_price">
+            NT${{ product.origin_price }}
+          </span>
           <span class="product__price">NT${{ product.price }}</span>
-
           <div class="input-group detail__qty">
             <select name="" id="" class="form-control" v-model="qty">
               <option v-for="num in 5" :value="num" :key="num">
@@ -58,7 +61,6 @@
 export default {
   data () {
     return {
-      // id: "",
       product: {},
       qty: 1
     }
@@ -94,7 +96,6 @@ export default {
     }
   },
   created () {
-    // this.id = this.$route.params.id;
     this.getProductItem()
   }
 }

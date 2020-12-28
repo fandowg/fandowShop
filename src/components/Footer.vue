@@ -2,13 +2,11 @@
   <footer class="footer">
     <div class="container-xl footer__inner">
       <div class="footer__side">
-        <span class="footer__word">
-        關注我們
-        </span>
+        <span class="footer__word"> 關注我們 </span>
         <a href="#" class="footer__link">
           <i class="fab fa-facebook-square"></i>
         </a>
-        <a href="#" class="footer__link ">
+        <a href="#" class="footer__link">
           <i class="fab fa-instagram"></i>
         </a>
       </div>
