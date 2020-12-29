@@ -155,7 +155,7 @@
                   id=""
                   v-model="area"
                 >
-                  <option :value="{}" selected disabled>請選擇鄉政市區</option>
+                  <option :value="{}" selected disabled>請選擇區域</option>
                   <option
                     :value="item"
                     v-for="item in areaArray"
@@ -242,6 +242,11 @@ export default {
     },
     address (val) {
       this.user.address = val
+    },
+    cart (val) {
+      if (val.carts.length === 0) {
+        this.$router.go(-1)
+      }
     }
   },
   computed: {
@@ -275,11 +280,6 @@ export default {
       })
     },
     ...mapActions('cartModules', ['getCart'])
-  },
-  created () {
-    if (this.cart.carts.length === 0) {
-      this.$router.go(-1)
-    }
   },
   beforeRouteLeave (to, from, next) {
     if (to.name !== 'Payment' && this.cart.carts.length !== 0) {

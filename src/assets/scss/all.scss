@@ -399,8 +399,8 @@
 .cart-qty-icon {
   position: absolute;
   width: 16px;
-  right: -3px;
-  top: -3px;
+  right: 0;
+  top: 0;
   height: 16px;
   text-align: center;
   line-height: 1;
@@ -867,6 +867,11 @@
   display: flex;
   align-items: center;
   margin-bottom: $spacer;
+  select {
+    @include max(sm) {
+      flex-grow: 1;
+    }
+  }
 }
 .menu-block {
   margin-bottom: $spacer;
@@ -888,12 +893,21 @@
   @include min(md) {}
 }
 .search {
+  @include max(sm) {
+    width: 100%;
+    flex-grow: 1;
+
+  }
   position: relative;
   margin-left: $spacer;
   // @include border;
   input {
     min-width: 200px;
     padding-right: 30px;
+    @include max(sm) {
+
+      min-width: 0;
+    }
   }
   label {
     position: absolute;
@@ -907,6 +921,7 @@
     width: 30px;
     margin-bottom: 0;
   }
+
 }
 .nav-menu {
   overflow-x: scroll;
