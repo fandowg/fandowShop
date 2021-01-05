@@ -1,0 +1,65 @@
+.admin {
+  text-align: left;
+  margin-bottom: $spacer-bottom;
+  &__title {
+    @include min(md) {
+      padding-right: $spacer-sm;
+      text-align: justify;
+    }
+  }
+  &__table {}
+  &__head {
+    padding: $spacer;
+    @include border-top;
+    font-weight: $font-weight-bolder;
+    @include max(md) {
+      display: none;
+    }
+  }
+  &__list {
+    @include border-bottom;
+  }
+  &__row {
+    min-height: 63px;
+    @include border-top;
+    padding: $spacer;
+    align-items: center;
+    @include max(md) {
+      padding: $spacer 0 $spacer-sm-2;
+    }
+  }
+  &__item {
+    @include max(md) {
+      margin-bottom: $spacer;
+    }
+  }
+  &__order-product {
+    margin-bottom: 0;
+    list-style: disc;
+    padding-left: 20px;
+    &__item {
+      vertical-align: top;
+      line-height: 1.5;
+    }
+  }
+}
+
+.edit-page {
+  padding: $spacer-bg-1;
+  @include max(md) {
+    padding: $spacer;
+  }
+  &__title {
+    margin-bottom: $spacer-bottom;
+  }
+  .close-position {
+    @include min(md) {
+      right: $spacer-bg-1;
+      top: $spacer-bg-1;
+    }
+  }
+}
+.edit {
+  &__row {}
+  &__item {}
+}

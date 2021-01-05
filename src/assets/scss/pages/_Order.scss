@@ -1,0 +1,46 @@
+.step {
+  display: flex;
+  justify-content: center;
+  color: $gray-500;
+  margin-bottom: $spacer-bottom;
+  @include border;
+  padding: $spacer-sm;
+  &__list {
+    display: flex;
+    margin-bottom: 0;
+  }
+  &__item {
+    margin-left: $spacer-sm;
+    margin-right: $spacer-sm;
+    &__num {
+      font-weight: $font-weight-bolder;
+    }
+    &.active {
+      color: $primary;
+      .step__item__num {
+        color: $secondary;
+      }
+    }
+  }
+}
+.order {}
+.order-detail {
+  @include border-top;
+  margin-bottom: $spacer-bottom;
+  &__row {
+    @include border-bottom;
+    display: flex;
+    padding: $spacer;
+    @include max(md) {
+      padding: $spacer 0;
+    }
+  }
+  &__title {
+    flex-shrink: 0;
+    flex-basis: 120px;
+  }
+  &__content {}
+}
+.coupon {
+  margin-bottom: $spacer;
+}

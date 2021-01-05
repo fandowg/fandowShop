@@ -1,0 +1,31 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  justify-content: space-between;
+  padding: $spacer-sm-2 $spacer;
+  @include transition;
+  &.bg-white {
+    background-color: $gray-100;
+    @include border-bottom;
+  }
+  @include min(md) {
+    padding: $spacer-sm $spacer-bg-1;
+  }
+  @include max(sm) {}
+  .logo {
+    width: 100px;
+    padding: $spacer-sm;
+    @include min(md) {
+      margin-right: $spacer;
+    }
+    @include max(md) {
+      position: absolute;
+      left: calc(50% - 50px);
+      top: 3px;
+    }
+  }
+}

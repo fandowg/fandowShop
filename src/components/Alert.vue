@@ -8,7 +8,7 @@
     >
       {{ item.message }}
       <button class="close-position button-none" @click="deleteMessage(key)">
-        <img src="@/assets/images/icon_close.svg" alt="" />
+        <img src="@/assets/images/icon_close.svg"  />
       </button>
     </div>
   </div>

@@ -1,0 +1,125 @@
+//覆蓋套件的css
+
+.vm--container {
+  padding-top: $spacer;
+  .vm--overlay {}
+  .vm--modal {
+    box-shadow: none !important;
+    height: auto !important;
+    overflow-y: auto !important;
+  }
+  .vue-dialog {
+    padding: $spacer-bg-2 $spacer;
+    font-size: $font-size-base;
+    text-align: center;
+    @include max(sm) {
+      width: 95% !important;
+      left: 2.5% !important;
+    }
+
+  }
+  .vue-dialog-content {
+    padding: 0;
+    margin-bottom: $spacer;
+  }
+  .vue-dialog-buttons {
+    display: flex;
+    flex: 0 1 auto;
+    justify-content: center;
+    width: 100%;
+    border-top: 0;
+
+  }
+  .vue-dialog-button {
+    @extend .btn;
+    width: auto;
+    flex: 0 0 auto !important;
+    &:nth-child(1) {
+      @extend .btn-outline-primary;
+      margin-right: $spacer;
+    }
+    &:nth-child(2) {
+      @extend .btn-primary;
+    }
+  }
+  .vue-dialog-button:not(:first-of-type) {
+    border-left: 0;
+  }
+}
+
+
+// .vm-transition--modal{
+//   opacity: 0;
+// }
+//初始化 vue js modal
+.vm-transition--overlay-enter-active.vm-transition--overlay-enter-active,
+.vm-transition--overlay-leave-active.vm-transition--overlay-leave-active {
+  transition: none;
+}
+.vm-transition--overlay-enter.vm-transition--overlay-enter,
+.vm-transition--overlay-leave-active.vm-transition--overlay-leave-active {
+  opacity: 0;
+}
+.vm-transition--modal-enter-active.vm-transition--modal-enter-active,
+.vm-transition--modal-leave-active.vm-transition--modal-leave-active {
+  transition: all 100ms;
+}
+.vm-transition--modal-enter.vm-transition--modal-enter,
+.vm-transition--modal-leave-active.vm-transition--modal-leave-active {
+  opacity: 0;
+  transform: none;
+}
+.vm-transition--default-enter-active.vm-transition--default-enter-active,
+.vm-transition--default-leave-active.vm-transition--default-leave-active {
+  transition: all 2ms;
+}
+.vm-transition--default-enter.vm-transition--default-enter,
+.vm-transition--default-leave-active.vm-transition--default-leave-active {
+  opacity: 0;
+}
+/*
+.vm-transition--overlay-enter{
+  opacity: 0;
+  transform: none;
+}
+.vm-transition--overlay-enter-active{
+  opacity: 1;
+}
+.vm-transition--overlay-enter-to{
+  opacity: 1;
+}
+.vm-transition--modal-enter{
+  opacity: 0;
+  transform: none;
+}
+.vm-transition--modal-enter-active{
+  opacity: 1;
+}
+.vm-transition--modal-v-enter-to{
+  opacity: 1;
+}
+*/
+
+.swiper-button-next.swiper-button-next,
+.swiper-button-prev.swiper-button-prev {
+  width: 50px;
+  @include max(sm) {
+    display: none;
+  }
+}
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  display: none;
+}
+.swiper-pagination-bullet.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 100%;
+  background: $black;
+  opacity: 0.2;
+}
+.swiper-pagination-bullet-active.swiper-pagination-bullet-active {
+  background: $secondary;
+  opacity: 1;
+}

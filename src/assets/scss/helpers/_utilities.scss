@@ -1,0 +1,63 @@
+//mobile or desk show
+.desk-hide-md {
+  @include min(md) {
+    display: none;
+  }
+}
+.mobile-hide-md {
+  @include max(md) {
+    display: none;
+  }
+}
+
+//img
+.img-small-md {
+  text-align: center;
+  @include max(md) {
+    img {
+      max-width: 80%;
+    }
+
+  }
+}
+//text
+.text-tip-in-title {
+  font-weight: $font-weight-base;
+  font-size: $font-size-base;
+  padding-left: $spacer;
+}
+.text-success {
+  color: $success;
+}
+.text-success-message {
+  color: $success;
+  display: block;
+  padding-top: $spacer-sm-2;
+}
+.text-danger {
+  color: $danger;
+}
+.text-danger-message {
+  color: $danger;
+  display: block;
+  padding-top: $spacer-sm-2;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+.text-right-max-md {
+  @include max(md) {
+    text-align: right;
+  }
+}
+.text-right-min-md {
+  @include min(md) {
+    text-align: right;
+  }
+}

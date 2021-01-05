@@ -1,0 +1,45 @@
+.footer {
+  background-color: #000;
+
+  padding: $spacer-bg $spacer;
+
+  &__inner {
+    align-items: center;
+    @include min(md) {
+      display: flex;
+      justify-content: space-between;
+    }
+
+  }
+  &__side {
+    @include min(md) {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__link {
+    font-size: $h3-font-size;
+    color: #fff;
+
+    margin-left: $spacer-sm;
+
+    &:hover {
+      color: $gray-400;
+    }
+  }
+  &__word {
+    display: inline-block;
+    margin-bottom: 0;
+    color: $white;
+    font-weight: $font-weight-base;
+    @include min(sm) {
+      &+.footer__word {
+        padding-left: $spacer;
+      }
+    }
+    @include max(md) {
+      padding-top: $spacer-sm;
+    }
+  }
+}

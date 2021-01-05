@@ -72,7 +72,7 @@ export default {
       id,
       qty
     }) {
-      if (context.state.cart.carts.length >= 9) {
+      if (context.state.cart.carts.length >= 9 && qty !== -1) {
         Vue.prototype.$bus.$emit('message:push', '購物車已滿', 'text-danger')
 
         return

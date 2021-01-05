@@ -2,63 +2,72 @@
   <nav class="navbar" :class="{ 'bg-white': scrollPosition > 50 || checkHome }">
     <button
       class="desk-hide-md button-none"
-      @click.prevent="menuShow = !menuShow"
+      @click="menuShow = !menuShow"
     >
-      <img src="@/assets/images/icon_bars.svg" alt="" />
+      <img src="@/assets/images/icon_bars.svg"  />
     </button>
     <router-link class="logo" to="/"
-      ><img src="@/assets/images/logo.svg" alt=""
+      ><img src="@/assets/images/logo.svg" alt="CAMELBAK"
     /></router-link>
     <div class="menu menu--left off-canvas" :class="{ active: menuShow }">
       <button
         class="close-position desk-hide-md button-none"
-        @click.prevent="menuShow = false"
+        @click="menuShow = false"
       >
-        <img src="@/assets/images/icon_close.svg" alt="" />
+        <img src="@/assets/images/icon_close.svg"  />
       </button>
       <ul class="menu__list">
         <li class="menu__item dropdown" ref="closeDropdown">
           <a
-            href=""
             class="menu__link dropdown__btn"
             @click.prevent="toggleDropdown"
             >購買水瓶 <i class="fas fa-chevron-down"></i
           ></a>
-          <div
+          <ul
             class="dropdown__box navbar-dropdown"
             :class="{ active: dropdownShow }"
           >
+          <li class="dropdown__item">
             <router-link
               @click.native="closeMenu()"
-              class="dropdown__item"
+              class="dropdown__link"
               to="/product-list/all"
               >所有水瓶</router-link
             >
+          </li>
+          <li class="dropdown__item">
             <router-link
               @click.native="closeMenu()"
-              class="dropdown__item"
+              class="dropdown__link"
               to="/product-list/straw"
               >吸管水瓶</router-link
             >
+          </li>
+          <li class="dropdown__item">
             <router-link
               @click.native="closeMenu()"
-              class="dropdown__item"
+              class="dropdown__link"
               to="/product-list/sport"
               >運動水瓶</router-link
             >
+          </li>
+          <li class="dropdown__item">
             <router-link
               @click.native="closeMenu()"
-              class="dropdown__item"
+              class="dropdown__link"
               to="/product-list/kid"
               >兒童水瓶</router-link
             >
+          </li>
+          <li class="dropdown__item">
             <router-link
               @click.native="closeMenu()"
-              class="dropdown__item"
+              class="dropdown__link"
               to="/product-list/stainless-steel"
               >不鏽鋼水瓶</router-link
             >
-          </div>
+          </li>
+          </ul>
         </li>
         <li class="menu__item">
           <router-link
@@ -77,7 +86,7 @@
         ></router-link>
       </li>
       <li class="dropdown menu__item" ref="closeCart">
-        <a href="" @click.prevent="toggleCart" class="menu__link dropdown__btn"
+        <a  @click.prevent="toggleCart" class="menu__link dropdown__btn"
           ><i class="fas fa-shopping-cart"></i
           ><span class="cart-qty-icon" v-if="cartLength > 0">{{
             cartLength

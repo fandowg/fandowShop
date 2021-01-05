@@ -4,15 +4,13 @@
       <div class="product-top">
         <div class="bag-row no-gutters">
           <div class="bag-md-2 bag-4">
-            <img src="@/assets/images/feature.jpg" alt="" />
+            <img src="@/assets/images/feature.jpg" alt="領取折扣，一起加油" />
           </div>
           <div class="bag-md-10 bag-8 product-top__content">
             <h2 class="product-top__title">領取折扣，一起加油</h2>
             <p class="product-top__text">
-              結帳輸入 <span class="product-top__text__sp">needwater</span> ,
-              <br />
-              全品項8折優惠<span class="mobile-hide-md"
-                >，CAMELBAK支持你的每個決定</span
+              結帳輸入 <span class="product-top__text__sp">needwater</span>，<br />全品項 8 折優惠<span class="mobile-hide-md"
+                >，CAMELBAK 支持你的每個決定</span
               >。
             </p>
           </div>
@@ -48,7 +46,7 @@
           </ul>
         </div>
         <div class="side-box">
-          <select class="form-control" name="" id="" v-model="sort">
+          <select class="form-control" name="sort" id="sort" v-model="sort">
             <option value="" disabled>價格排序</option>
             <option value="priceUp">價格高到低</option>
             <option value="priceDown">價格低到高</option>
@@ -65,8 +63,8 @@
           </div>
         </div>
       </div>
-      <div class="product bag-row">
-        <div
+      <ul class="product bag-row">
+        <li
           v-for="item in productsByPage[currentPage]"
           :key="item.id"
           @click="toProductItem(item.category, item.id)"
@@ -82,10 +80,10 @@
             </h3>
             <div class="product__bottom">
               <div>
-                <div class="product__origin_price">
+                <h5 class="product__origin_price">
                   NT${{ item.origin_price }}
-                </div>
-                <div class="product__price">NT${{ item.price }}</div>
+                </h5>
+                <h5 class="product__price">NT${{ item.price }}</h5>
               </div>
               <button
                 class="product__addToCart btn btn-sm btn-primary"
@@ -95,8 +93,8 @@
               </button>
             </div>
           </div>
-        </div>
-      </div>
+        </li>
+      </ul>
       <Page
         ref="page"
         :products="filterProducts"

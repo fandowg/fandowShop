@@ -1,7 +1,0 @@
-@each $key, $value in $grid-breakpoints {
-  .container-#{$key}{
-    max-width:  $value;
-    padding:0 $spacer-wrapper;
-    margin: 0 auto;
-  }
-}

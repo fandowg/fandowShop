@@ -10,9 +10,9 @@
           <img
             v-if="pagination.has_pre"
             src="@/assets/images/prev_page.svg"
-            alt=""
+
           />
-          <img v-else src="@/assets/images/prev_page_disabled.svg" alt="" />
+          <img v-else src="@/assets/images/prev_page_disabled.svg"  />
         </a>
       </li>
       <li
@@ -26,7 +26,6 @@
             active: pagination.current_page === page,
             disabled: pagination.total_pages <= 1,
           }"
-          href=""
           @click.prevent="$emit('get-pages', page)"
           >{{ page }}</a
         >
@@ -39,8 +38,8 @@
           ><img
             v-if="pagination.has_next"
             src="@/assets/images/next_page.svg"
-            alt="" />
-          <img v-else src="@/assets/images/next_page_disabled.svg" alt=""
+           />
+          <img v-else src="@/assets/images/next_page_disabled.svg"
         /></a>
       </li>
     </ul>

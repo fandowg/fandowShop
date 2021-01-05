@@ -11,7 +11,7 @@
     <div class="edit-page">
       <ValidationObserver v-slot="{ handleSubmit }">
         <button @click="$emit('close')" class="close-position button-none">
-          <img src="@/assets/images/icon_close.svg" alt="" />
+          <img src="@/assets/images/icon_close.svg" />
         </button>
         <h2 class="edit-page__title">
           <span v-if="isNew">新增</span>

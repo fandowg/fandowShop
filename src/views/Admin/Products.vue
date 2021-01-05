@@ -30,7 +30,7 @@
           :key="item.id"
         >
           <div class="admin__item bag-md bag-2 text-center">
-            <img :src="item.imageUrl" alt="" />
+            <img :src="item.imageUrl" alt="item.title" />
           </div>
 
           <div class="admin__item admin__title bag-md-4 bag-10">

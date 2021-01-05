@@ -1,0 +1,15 @@
+.alert {
+  position: fixed;
+  right: $spacer;
+  top: 75px;
+  display: flex;
+  @include max(md) {
+    top: 50px;
+
+  }
+  &__item {
+    @include border;
+    padding: $spacer 50px $spacer $spacer;
+    background-color: #fff;
+  }
+}

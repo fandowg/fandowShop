@@ -1,0 +1,193 @@
+.cart {
+
+  text-align: left;
+  margin-bottom: $spacer-bottom;
+  &__head {
+    @include border-top;
+    padding: $spacer;
+    font-weight: $font-weight-bolder;
+
+    .cart__item {
+      &:nth-child(1) {
+        padding-left: $spacer-bg-1;
+        width: 61%;
+        text-align: left;
+      }
+      &:nth-child(2) {
+        width: 22.2%;
+      }
+      &:nth-child(3) {
+        width: 13%;
+        text-align: right;
+      }
+    }
+    @include max(md) {
+      display: none;
+    }
+  }
+  &__item {}
+  &__list {
+    @include border-bottom;
+  }
+  &__img {
+    img {
+      width: 100px;
+    }
+    text-align: left;
+  }
+  &__title {
+    padding-right: $spacer-sm;
+  }
+  &__num {
+    @include max(md) {
+      text-align: left;
+    }
+    &__content {
+      padding: 0 $spacer-sm;
+      &.no-padding {
+        padding: 0;
+      }
+    }
+  }
+  &__row {
+    position: relative;
+    align-items: center;
+    padding: $spacer;
+    @include border-top;
+    @include max(md) {
+      align-items: stretch;
+      padding: $spacer 0;
+    }
+  }
+  &__group {
+    align-items: center;
+    @include max(md) {
+      align-items: stretch;
+    }
+  }
+  &__delete {
+    text-align: right;
+    @include max(md) {
+      order: 0;
+    }
+  }
+  &__price {
+    text-align: right;
+    @include max(md) {
+      order: 1;
+    }
+  }
+  &__total {
+    text-align: right;
+    &__row {
+      margin-bottom: $spacer;
+      display: flex;
+      justify-content: space-between;
+      &__title {
+        margin-right: $spacer;
+      }
+      &__content {}
+    }
+  }
+  &__bottom {
+    padding-top: $spacer;
+    @include border-bottom;
+    @include min(md) {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 6%;
+    }
+  }
+  &.no-delete {
+    .cart__head {
+      .cart__item {
+        &:nth-child(1) {
+          padding-left: $spacer-bg-1;
+          width: 61%;
+          text-align: left;
+        }
+        &:nth-child(2) {
+          width: 22.2%;
+        }
+        &:nth-child(3) {
+          width: 16.8%;
+          text-align: right;
+        }
+      }
+    }
+    .cart__bottom {
+      @include min(md) {
+        justify-content: flex-end;
+        padding-right: $spacer;
+      }
+    }
+    .cart__price {
+      justify-content: flex-end;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+//客製化購物車的dropdown
+.cart-qty-icon {
+  position: absolute;
+  width: 16px;
+  right: 0;
+  top: 0;
+  height: 16px;
+  text-align: center;
+  line-height: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: $danger;
+  color: #fff;
+  font-size: 12px;
+}
+.dropdown__box {
+  .cart {
+    width: 340px;
+    @include max(360) {
+      width: 320px;
+      max-width: 85vw;
+    }
+    margin-bottom: 0;
+  }
+  .cart__head {
+    border-top: 0;
+    @include border-bottom;
+    @include max(md) {
+      display: flex;
+    }
+    .cart__item {
+      &:nth-child(1) {
+        padding-left: 0
+      }
+    }
+  }
+  .cart__row {
+    align-items: center;
+    border-top: 0;
+    &+.cart__row {
+      @include border-top;
+    }
+    padding: $spacer 0;
+  }
+  .cart__list {
+    border: 0;
+    padding: 0 $spacer;
+  }
+  .cart__num {}
+  .cart__price {
+    order: 1;
+  }
+  .cart__delete {
+    order: 2;
+  }
+  .btn-wrapper-side {
+    padding: 0 $spacer $spacer;
+    margin-bottom: 0;
+  }
+}

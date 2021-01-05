@@ -1,0 +1,63 @@
+.about {
+  &__logo {
+    max-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1.5rem;
+    @include min(md) {
+      margin-bottom: 4rem;
+      margin-top: 3rem;
+    }
+  }
+  &__title {
+    margin-top: $spacer-bg-1;
+    margin-bottom: $spacer-bg-1;
+    line-height: 1.3;
+    @include max(lg) {
+      font-size: $h2-font-size;
+    }
+    @include max(md) {
+      text-align: center;
+    }
+    &--sm {
+      @include max(lg) {
+        font-size: $h3-font-size;
+      }
+    }
+  }
+  &__top {
+    margin-bottom: $spacer-bottom*2;
+    @include max(md) {
+      margin-bottom: $spacer-bottom;
+    }
+  }
+  &__item {
+    margin-bottom: $spacer-bottom;
+    @include max(md) {
+      margin-bottom: $spacer;
+    }
+    .about__title--sm {
+      border-bottom: $primary 1px solid;
+      margin-bottom: $spacer;
+      padding-bottom: $spacer;
+    }
+    p {
+      @include max(md) {}
+    }
+  }
+  &__bottom {
+    margin-bottom: $spacer-bottom;
+    .about__title--sm {
+      margin-top: $spacer;
+    }
+  }
+  p {
+    font-size: $h5-font-size;
+    line-height: 2rem;
+  }
+  .btn {
+    @include max(md) {
+      width: 100%;
+    }
+  }
+}

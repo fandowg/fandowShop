@@ -2,17 +2,19 @@
   <nav class="navbar bg-white">
     <button
       class="desk-hide-md button-none"
-      @click.prevent="menuShow = !menuShow"
+      @click="menuShow = !menuShow"
     >
-      <img src="@/assets/images/icon_bars.svg" alt="" />
+      <img src="@/assets/images/icon_bars.svg"  />
     </button>
-    <a href="" class="logo"><img src="@/assets/images/logo.svg" alt="" /></a>
+     <router-link class="logo" to="/"
+      ><img src="@/assets/images/logo.svg" alt="CAMELBAK"
+    /></router-link>
     <div class="menu menu--left off-canvas" :class="{ active: menuShow }">
       <button
         class="close-position desk-hide-md button-none"
-        @click.prevent="menuShow = false"
+        @click="menuShow = false"
       >
-        <img src="@/assets/images/icon_close.svg" alt="" />
+        <img src="@/assets/images/icon_close.svg"/>
       </button>
       <ul class="menu__list">
         <li class="menu__item">

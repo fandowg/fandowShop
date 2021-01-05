@@ -31,12 +31,12 @@
           <h1 class="detail__title">{{ product.title }}</h1>
           <h2 class="detail__title__sm">產品特色</h2>
           <p>{{ product.description }}</p>
-          <span class="product__origin_price">
+          <h5 class="product__origin_price">
             NT${{ product.origin_price }}
-          </span>
-          <span class="product__price">NT${{ product.price }}</span>
+          </h5>
+          <h5 class="product__price">NT${{ product.price }}</h5>
           <div class="input-group detail__qty">
-            <select name="" id="" class="form-control" v-model="qty">
+            <select name="qty" id="qty" class="form-control" v-model="qty">
               <option v-for="num in 5" :value="num" :key="num">
                 {{ num }}
               </option>

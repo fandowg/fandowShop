@@ -1,0 +1,26 @@
+@mixin container($width) {
+  .container-#{$width} {
+    max-width: $width#{px};
+    padding: 0 $spacer-wrapper;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@each $key,
+$value in $grid-breakpoints {
+  .container-#{$key} {
+    max-width: $value;
+    padding: 0 $spacer-wrapper;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.container-full {
+  padding: 0 $spacer-wrapper;
+  width: 100%;
+}
+@include container(1800);
+@include container(800);
+@include container(500);

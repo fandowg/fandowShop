@@ -1,0 +1,144 @@
+.menu {
+  &--left {
+    margin-right: auto;
+  }
+  &__list {
+    display: flex;
+    margin-bottom: 0;
+    &--mobile-top {
+      @include max(md) {
+        margin-right: -$spacer-sm;
+      }
+    }
+  }
+  &__item {
+    position: relative;
+  }
+  &__link,
+  button.menu__link {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    display: block;
+    padding: $spacer-sm-1 $spacer-sm;
+    &+&__link {}
+  }
+  &.off-canvas {
+    @include max(md) {
+      transform: translateX(-120%);
+      padding-top: $spacer*3;
+      position: fixed;
+      right: 0;
+      left: 0;
+      top: 0;
+      background-color: $light-bg;
+      height: 100%;
+      @include transition;
+      &.active {
+        transform: translateX(0);
+      }
+    }
+    .menu__list {
+      @include max(md) {
+        display: block;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.nav-menu {
+  overflow-x: scroll;
+  scrollbar-width: none;
+  margin-bottom: $spacer;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+  @include max(md) {
+    margin-bottom: $spacer-bg;
+  }
+  &::-webkit-scrollbar {
+    display: none
+  }
+  &__box {
+    display: flex;
+    margin-bottom: 0;
+    font-size: $h5-font-size;
+  }
+  &__item {
+    &+.nav-menu__item {
+      margin-left: $spacer-sm*2;
+    }
+    @include max(md) {
+      flex: none;
+    }
+  }
+  &__link {
+    display: block;
+    font-weight: $font-weight-bolder;
+    cursor: pointer;
+    @include transition;
+    &:hover {
+      color: $secondary;
+    }
+    &.active {
+      color: $secondary;
+      position: relative;
+      &:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        left: 0;
+        bottom: -2px;
+        @include max(md) {}
+        height: 4px;
+        background-color: $secondary;
+      }
+    }
+  }
+}
+
+
+.menu-block {
+  margin-bottom: $spacer;
+  @include max(md) {}
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  &--inline {
+    margin-bottom: $spacer-bottom;
+  }
+  .page__title {
+    margin-bottom: 0;
+  }
+  @include min(md) {}
+}
+.search {
+  @include max(sm) {
+    width: 100%;
+    flex-grow: 1;
+  }
+  position: relative;
+  margin-left: $spacer;
+  input {
+    min-width: 200px;
+    padding-right: 30px;
+    @include max(sm) {
+
+      min-width: 0;
+    }
+  }
+  label {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 30px;
+    margin-bottom: 0;
+  }
+
+}

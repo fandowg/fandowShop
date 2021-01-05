@@ -1,84 +1,61 @@
 @import 'reboot';
-
-:root {
-  
-}
-
+:root {}
 html {
   font-size: $font-size-base;
 }
-
 body {
   font-family: Arial, Helvetica, 微軟正黑體, sans-serif;
 }
-
 img {
   max-width: 100%;
   height: auto;
 }
-
 a {
-  @include transition; 
+  @include transition;
   // &:focus,&:active {
   //   color: $link-hover-color;
   //   text-decoration: $link-hover-decoration;
   // }
-  &:focus{
+  &:focus {
     outline: 0;
   }
 }
-
 .for-mobile-lg {
   display: none !important;
   @include max(lg) {
     display: block !important;
   }
-
 }
-
 .for-desk-lg {
-
   @include max(lg) {
     display: none !important;
   }
-
 }
-
-
-
 ul {
   padding: 0;
   list-style: none;
 }
-
 ol {
   padding-left: 20px;
 }
-
 h1 {
   font-size: $h1-font-size;
 }
-
 h2 {
   font-size: $h2-font-size;
 }
-
 h3 {
   font-size: $h3-font-size;
 }
-
 h4 {
   font-size: $h4-font-size;
 }
-
 h5 {
   font-size: $h5-font-size;
 }
-
 h6 {
   font-size: $h6-font-size;
 }
-
 p {
   // font-size: $p-font-size;
   // @include max(lg) {

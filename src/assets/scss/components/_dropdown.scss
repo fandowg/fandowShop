@@ -1,0 +1,38 @@
+.dropdown {
+  position: relative;
+  &__btn {}
+  &__box {
+    @include border;
+    padding: $spacer-sm 0;
+    background-color: $white;
+    min-width: 150px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate3d(0, 38px, 0);
+    display: none;
+    &.active {
+      display: block;
+    }
+    &.navbar-dropdown {
+      @include max(md) {
+        position: static;
+        transform: translate3d(0, 0, 0);
+        background-color: transparent;
+        border: 0;
+      }
+    }
+    &--right {
+      right: 0;
+      left: auto;
+    }
+    &.no-padding {
+      padding: 0;
+    }
+  }
+  &__link {
+    display: block;
+    white-space: nowrap;
+    padding: $spacer-sm $spacer-bg;
+  }
+}

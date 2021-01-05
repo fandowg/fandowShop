@@ -1,43 +1,19 @@
-// @mixin min ($breakpoint) {  
-//   $min: 0;
-//   @if map-has-key($grid-breakpoints,$breakpoint){
-//     $min: map-get($grid-breakpoints, $breakpoint);
-//   } @else{
-//     $min:$breakpoint#{px};
-//   }
-//   @media(min-width:$min) {
-//     @content;
-//   }
-  
-// }
-
-// @mixin max ($breakpoint) {
-//   $max: 0;
-//   @if map-has-key($grid-breakpoints,$breakpoint){
-//     $max: map-get($grid-breakpoints, $breakpoint);
-//   } @else{
-//     $max:$breakpoint#{px};
-//   }
-//   @media(max-width:$max) {
-//     @content;
-//   }
-// }
 @mixin min ($breakpoint) {
-  $has-key: map-has-key($grid-breakpoints,$breakpoint);
-  $get-value: map-get($grid-breakpoints, $breakpoint);  
-  $min:if($has-key,$get-value,$breakpoint#{px}); 
+  $has-key: map-has-key($grid-breakpoints, $breakpoint);
+  $get-value: map-get($grid-breakpoints, $breakpoint);
+  $min:if($has-key, $get-value, $breakpoint#{px});
   @media(min-width:$min) {
     @content;
-  }  
+  }
 }
 
 @mixin max ($breakpoint) {
-  $has-key: map-has-key($grid-breakpoints,$breakpoint);    
-  $get-value: map-get($grid-breakpoints, $breakpoint);  
-  $max:if($has-key,$get-value,$breakpoint#{px}); 
+  $has-key: map-has-key($grid-breakpoints, $breakpoint);
+  $get-value: map-get($grid-breakpoints, $breakpoint);
+  $max:if($has-key, $get-value, $breakpoint#{px});
   @media(max-width:$max) {
     @content;
-  }  
+  }
 }
 
 @mixin border {
@@ -52,7 +28,7 @@
   border-top: $border-color 1px solid;
 }
 
-@mixin box-shadow{
+@mixin box-shadow {
   box-shadow: 0 0 2px #ccc;
 }
 
@@ -79,15 +55,3 @@
 @mixin text-no {
   font: 0/0 a;
 }
-
-// @mixin media-breakpoint ($breakpoint){
-//   @media(max-width:$breakpoint){
-//     @content;
-//   }
-// }
-
-// @each $key,$value in $grid-breakpoints{
-//   @mixin media-breakpoint-do($value){
-//     @include media-breakpoint($value)
-//   }  
-// }

@@ -55,8 +55,10 @@
         </div>
       </div>
     </div>
-    <h2 class="page__title--sm">填寫資料</h2>
-    <ValidationObserver v-slot="{ handleSubmit }">
+    <div class="flex-box-end">
+    <h2 class="page__title--sm">填寫資料</h2><h4 class="text-tip-in-title text-danger">* 為必填</h4>
+    </div>
+    <ValidationObserver v-slot="{ handleSubmit,invalid }">
       <div class="form order">
         <div class="form-row">
           <div class="bag-md-6 form-group">
@@ -65,7 +67,7 @@
               rules="required"
               v-slot="{ failed, passed, errors }"
             >
-              <label for="name">姓名</label>
+              <label for="name">姓名 *</label>
               <input
                 type="text"
                 v-model="user.name"
@@ -80,16 +82,17 @@
           <div class="bag-md-6 form-group">
             <ValidationProvider
               name="手機"
-              rules="required"
+              rules="required|phone|numberLength"
               v-slot="{ failed, passed, errors }"
             >
-              <label for="phone">手機</label>
+              <label for="phone">手機 *</label>
               <input
                 type="tel"
                 v-model="user.tel"
                 class="form-control"
                 :class="{ 'is-invalid': failed, 'is-valid': passed }"
                 id="phone"
+                maxlength="10"
                 placeholder="請輸入手機號碼"
               />
               <span class="text-danger" v-if="failed">{{ errors[0] }}</span>
@@ -102,7 +105,7 @@
             rules="required|email"
             v-slot="{ failed, passed, errors }"
           >
-            <label for="email">email</label>
+            <label for="email">email *</label>
             <input
               type="email"
               v-model="user.email"
@@ -115,7 +118,7 @@
           </ValidationProvider>
         </div>
         <div class="form-group-wrapper">
-          <label for="address">收件人地址</label>
+          <label for="address">收件人地址 *</label>
           <div class="form-row">
             <div class="bag-md-3 bag-6 form-group">
               <ValidationProvider
@@ -126,8 +129,8 @@
                 <select
                   class="form-control"
                   :class="{ 'is-invalid': failed, 'is-valid': passed }"
-                  name=""
-                  id=""
+                  name="city"
+                  id="city"
                   v-model="city"
                 >
                   <option :value="null" selected disabled>請選擇縣市</option>
@@ -151,8 +154,8 @@
                 <select
                   class="form-control"
                   :class="{ 'is-invalid': failed, 'is-valid': passed }"
-                  name=""
-                  id=""
+                  name="area"
+                  id="area"
                   v-model="area"
                 >
                   <option :value="{}" selected disabled>請選擇區域</option>
@@ -187,30 +190,23 @@
           </div>
         </div>
         <div class="form-group">
-          <ValidationProvider
-            name="備註"
-            rules="required"
-            v-slot="{ failed, passed, errors }"
-          >
+
             <label for="comment">備註</label>
             <textarea
               class="form-control"
-              :class="{ 'is-invalid': failed, 'is-valid': passed }"
-              name=""
+              name="comment"
               v-model="message"
               id="comment"
               rows="4"
-              placeholder=""
             ></textarea>
-            <span class="text-danger" v-if="failed">{{ errors[0] }}</span>
-          </ValidationProvider>
+
         </div>
       </div>
       <div class="btn-wrapper-side">
         <router-link class="btn btn-outline-primary" to="/check-cart"
           >回購物車</router-link
         >
-        <button class="btn btn-primary" @click="handleSubmit(createOrder)">
+        <button :disabled="invalid" class="btn btn-primary" @click="handleSubmit(createOrder)">
           建立訂單
         </button>
       </div>

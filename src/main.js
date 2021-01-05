@@ -31,6 +31,19 @@ Vue.use(VModal, {
     draggable: false
   }
 })
+extend('numberLength', (value) => {
+  if (value.length === 10) {
+    return true
+  }
+  return '手機號碼必須為10碼'
+})
+extend('phone', (value) => {
+  const num = value.split('')
+  if (num[0] === '0' || num[1] === '9') {
+    return true
+  }
+  return '請輸入正確的手機格式'
+})
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
 axios.defaults.withCredentials = true

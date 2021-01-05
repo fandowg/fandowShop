@@ -12,9 +12,9 @@
           <img
             v-if="currentPage !== 0"
             src="@/assets/images/prev_page.svg"
-            alt=""
+
           />
-          <img v-else src="@/assets/images/prev_page_disabled.svg" alt="" />
+          <img v-else src="@/assets/images/prev_page_disabled.svg"  />
         </a>
       </li>
       <li class="pagination__item" v-for="page in totalPage" :key="page">
@@ -24,7 +24,6 @@
             active: currentPage === page - 1,
             disabled: totalPage === 1,
           }"
-          href=""
           @click.prevent="$emit('update:currentPage', page - 1)"
           >{{ page }}</a
         >
@@ -39,8 +38,8 @@
           ><img
             v-if="currentPage !== totalPage - 1"
             src="@/assets/images/next_page.svg"
-            alt="" />
-          <img v-else src="@/assets/images/next_page_disabled.svg" alt=""
+             />
+          <img v-else src="@/assets/images/next_page_disabled.svg"
         /></a>
       </li>
     </ul>

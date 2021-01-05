@@ -11,16 +11,15 @@
     <router-view />
     <Footer v-if="isShow" />
     <a
-      href=""
       @click.prevent="toTop"
       class="to-top-btn"
       :class="{ show: scrollPosition > 100 }"
-      ><img src="@/assets/images/totop.svg" alt=""
+      ><img src="@/assets/images/totop.svg"
     /></a>
   </div>
 </template>
 <style lang="scss">
-@import "@/assets/scss/all";
+@import "@/assets/scss/main";
 </style>
 <script>
 import Alert from './components/Alert.vue'

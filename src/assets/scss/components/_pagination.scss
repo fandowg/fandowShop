@@ -1,0 +1,35 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacer;
+  &__item {
+    margin: 0 $spacer-sm-1;
+  }
+  &__link {
+    color: $gray-600;
+    cursor: pointer;
+    img {
+      display: block;
+      width: 20px;
+      margin-top: -3px;
+    }
+    &.active {
+      color: $secondary;
+      font-weight: $font-weight-bolder;
+    }
+    &.disabled {
+      color: $gray-400;
+      pointer-events: none;
+      cursor: none;
+    }
+  }
+}
+
+.origin_price {
+  color: $gray-500;
+  font-weight: $font-weight-bolder;
+}
+.price {
+  color: $secondary;
+  font-weight: $font-weight-bolder;
+}
