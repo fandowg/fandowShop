@@ -1,6 +1,7 @@
-# fandowshop
+# <a href="https://huiyuliz.github.io/vue-ecommerce/#/" target="_blank">CAMELBAK 購物商城</a>
+![image]( https://raw.githubusercontent.com/HuiyuLiz/vue-ecommerce/master/src/assets/img/captureimg/halfpage.png)  
 
-## Project setup
+## 專案說明
 ```
 npm install
 ```
