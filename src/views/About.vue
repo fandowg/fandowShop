@@ -61,7 +61,9 @@
 <script>
 export default {
   data () {
-    return {}
+    return {
+      test: ''
+    }
   }
 }
 </script>
